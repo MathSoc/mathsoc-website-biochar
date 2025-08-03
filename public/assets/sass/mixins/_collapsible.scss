@@ -1,0 +1,35 @@
+@import "../util/_sass-mixins";
+
+.collapsible-button {
+  background-color: #fff;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  border-top: 2px solid;
+
+  font-size: 1.2em;
+  text-transform: uppercase;
+  font-weight: 300;
+
+  &:after {
+    content: "+"; /* Unicode character for "plus" sign (+) */
+    float: right;
+    margin-left: 5px;
+    line-height: 1.2em;
+  }
+
+  &.active:after {
+    content: "-"; /* Unicode character for "minus" sign (-) */
+  }
+}
+
+.collapsible-content {
+  padding: 0 18px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}

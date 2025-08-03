@@ -1,0 +1,87 @@
+@import "util/_variables";
+
+body {
+  background-color: var(--background-colour);
+  font-family: var(--primary-font);
+  color: var(--text-color);
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--title-font);
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 0.2em;
+}
+
+h2 {
+  font-size: 1.8em;
+}
+
+h3 {
+  font-size: 1.6em;
+}
+
+h4 {
+  font-size: 1.4em;
+}
+
+p {
+  color: var(--text-color);
+  overflow-wrap: break-word;
+}
+
+a,
+a:hover,
+a:visited {
+  color: var(--mathsoc-pink);
+}
+
+// Reset buttons to not use default appearance
+button {
+  appearance: none;
+  height: unset;
+  width: unset;
+  background: none;
+  border: none;
+  font-size: inherit;
+  font-family: var(--primary-font);
+  color: var(--text-color);
+}
+
+$input-padding: 8px;
+
+input,
+select,
+textarea {
+  padding: 8px;
+
+  margin: 0;
+  border: 0;
+  background-color: var(--background-hover);
+  color: var(--text-color);
+
+  font-family: var(--primary-font);
+}
+
+section:last-child {
+  padding-bottom: 30px;
+}
+
+#body {
+  position: relative;
+  min-height: 70vh;
+}
+
+.highlight {
+  background: yellow;
+  color: inherit;
+  padding: 0 2px;
+  border-radius: 2px;
+}
