@@ -18,8 +18,8 @@
 
 // Fonts
 :root {
-  --primary-font: "Open Sans", Verdana, sans-serif;
-  --title-font: "Open Sans", Verdana, sans-serif;
+  --primary-font: var(--font-open-sans), "Open Sans", Verdana, sans-serif;
+  --title-font: var(--font-open-sans), "Open Sans", Verdana, sans-serif;
 }
 
 // Measurements

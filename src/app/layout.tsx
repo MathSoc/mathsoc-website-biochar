@@ -1,7 +1,15 @@
 import type { Metadata } from "next";
+import { Open_Sans } from "next/font/google";
 import "./globals.scss";
 import { Navbar } from "./components/navbar/navbar";
 import Footer from "./components/footer/footer";
+
+const openSans = Open_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-open-sans",
+});
 
 export const metadata: Metadata = {
   title: "MATHSOC",
@@ -15,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${openSans.variable}`}>
       <body id="body">
         <Navbar />
         {children}
