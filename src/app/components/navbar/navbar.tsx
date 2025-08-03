@@ -1,14 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import "./navbar.scss";
+import navItems from "./navbar.json";
 
-interface NavItem {
-  title: string;
-  ref?: string;
-  children?: NavItem[];
-}
-
-export function Navbar({ navItems = [] }: { navItems?: NavItem[] }) {
+export function Navbar() {
   return (
     <>
       <a className="skip-to-main-content" href="#body">

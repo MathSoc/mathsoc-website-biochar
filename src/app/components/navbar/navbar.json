@@ -1,0 +1,99 @@
+[
+  {
+    "title": "Get involved",
+    "children": [
+      {
+        "title": "Volunteer at MathSoc",
+        "ref": "/get-involved/volunteer"
+      },
+      {
+        "title": "Math community",
+        "ref": "/get-involved/community"
+      },
+      {
+        "title": "MathSoc clubs",
+        "ref": "/get-involved/clubs"
+      },
+      {
+        "title": "MathSoc council",
+        "ref": "/get-involved/council"
+      }
+    ]
+  },
+  {
+    "title": "Services",
+    "children": [
+      {
+        "title": "MathSoc office",
+        "ref": "/services/mathsoc-office"
+      },
+      {
+        "title": "Student services",
+        "ref": "/services/student-services"
+      }
+    ]
+  },
+  {
+    "title": "Cartoons",
+    "children": [
+      {
+        "title": "About us",
+        "ref": "/cartoons/about-us"
+      },
+      {
+        "title": "Cartoons team",
+        "ref": "/cartoons/team"
+      },
+      {
+        "title": "Cartoons archive",
+        "ref": "/cartoons/archive"
+      }
+    ]
+  },
+  {
+    "title": "Resources",
+    "children": [
+      {
+        "title": "Exam bank",
+        "ref": "/resources/exam-bank"
+      },
+      {
+        "title": "Forms",
+        "ref": "/resources/forms"
+      },
+      {
+        "title": "Meetings",
+        "ref": "/resources/meetings"
+      },
+      {
+        "title": "Policies and bylaws",
+        "ref": "/resources/policies-and-bylaws"
+      },
+      {
+        "title": "Budgets",
+        "ref": "/resources/budgets"
+      },
+      {
+        "title": "Discord access",
+        "ref": "/resources/discord-access"
+      },
+      {
+        "title": "Elections",
+        "ref": "/elections",
+        "children": []
+      },
+      {
+        "title": "Important links",
+        "ref": "/resources/important-links"
+      }
+    ]
+  },
+  {
+    "title": "Inventory",
+    "ref": "/inventory"
+  },
+  {
+    "title": "Contact us",
+    "ref": "/contact-us"
+  }
+]
