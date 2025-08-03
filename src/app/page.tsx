@@ -1,4 +1,8 @@
 import "./home.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDiscord, faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
 export default function Home() {
   return (
@@ -26,23 +30,40 @@ export default function Home() {
         </div>
         <h1 className="section-head">Hear about our upcoming events!</h1>
         <div className="social-buttons">
-          <a className="social-button" href="/resources/discord-access">
-            <i className="fa-brands fa-discord social-icon fa-3x"></i>
-            <span>Discord</span>
-          </a>
-          <a
-            className="social-button"
+          <SocialButton
+            href="/resources/discord-access"
+            icon={faDiscord}
+            label="Discord"
+          />
+          <SocialButton
             href="https://www.instagram.com/uwmathsoc/"
-          >
-            <i className="fa fa-instagram social-icon fa-3x"></i>
-            <span>Instagram</span>
-          </a>
-          <a className="social-button" href="mailto:info@mathsoc.uwaterloo.ca">
-            <i className="fa fa-envelope-o social-icon fa-3x"></i>
-            <span>Mail</span>
-          </a>
+            icon={faInstagram}
+            label="Instagram"
+          />
+          <SocialButton
+            href="mailto:info@mathsoc.uwaterloo.ca"
+            icon={faEnvelope}
+            label="Mail"
+          />
         </div>
       </div>
     </div>
+  );
+}
+
+function SocialButton({
+  href,
+  icon,
+  label,
+}: {
+  href: string;
+  icon: IconDefinition;
+  label: string;
+}) {
+  return (
+    <a className="social-button" href={href}>
+      <FontAwesomeIcon icon={icon} className="social-icon" size="3x" />
+      <span>{label}</span>
+    </a>
   );
 }

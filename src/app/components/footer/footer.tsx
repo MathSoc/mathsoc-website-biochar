@@ -1,16 +1,6 @@
 import "./footer.scss";
 
-interface FooterProps {
-  footer?: {
-    socialLinks: {
-      discord: string;
-      instagram: string;
-      mail: string;
-    };
-  };
-}
-
-export default function Footer({ footer }: FooterProps) {
+export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -27,40 +17,34 @@ export default function Footer({ footer }: FooterProps) {
         </div>
         <div className="social-section">
           <div className="socials">
-            {footer?.socialLinks.discord && (
-              <a
-                href={footer.socialLinks.discord}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/assets/img/social/discord.svg" alt="Discord Icon" />
-              </a>
-            )}
-            {footer?.socialLinks.instagram && (
-              <a
-                href={footer.socialLinks.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/assets/img/social/instagram.svg"
-                  alt="Instagram Icon"
-                />
-              </a>
-            )}
-            {footer?.socialLinks.mail && (
-              <a
-                href={footer.socialLinks.mail}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mail-icon"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/assets/img/social/mail.svg" alt="Mail Icon" />
-              </a>
-            )}
+            <a
+              href={"/resources/discord-access"}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/assets/img/social/discord.svg" alt="Discord Icon" />
+            </a>
+            <a
+              href={"https://www.instagram.com/uwmathsoc/"}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/assets/img/social/instagram.svg"
+                alt="Instagram Icon"
+              />
+            </a>
+            <a
+              href={"mailto:info@mathsoc.uwaterloo.ca"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mail-icon"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/assets/img/social/mail.svg" alt="Mail Icon" />
+            </a>
           </div>
         </div>
       </div>

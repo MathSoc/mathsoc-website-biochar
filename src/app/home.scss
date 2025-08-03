@@ -79,6 +79,7 @@
 
     .social-buttons {
       display: flex;
+      height: 100px;
 
       .social-button {
         color: var(--inverted-text-color);
@@ -87,9 +88,11 @@
         align-items: center;
         text-decoration: none;
         padding: 5px;
+        height: 100px;
 
         .social-icon {
           margin-bottom: 10px;
+          height: 40px;
         }
       }
     }
