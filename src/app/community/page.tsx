@@ -1,5 +1,5 @@
-import { MarkdownPage } from "../components/markdown-page/markdown-page";
+import { MarkdownSection } from "../components/markdown-section/markdown-section";
 
 export default async function CommunityPage() {
-  return <MarkdownPage markdownFilePath="src/app/community/community.md" />;
+  return <MarkdownSection markdownFilePath="src/app/community/community.md" />;
 }

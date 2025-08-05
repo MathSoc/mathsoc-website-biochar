@@ -1,0 +1,10 @@
+.markdown-section {
+  .inner-contents {
+    max-width: var(--content-width);
+    margin: auto;
+  }
+
+  p {
+    line-height: 1.5em;
+  }
+}
