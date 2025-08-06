@@ -6,7 +6,7 @@ import "./office.scss";
 export default async function CndPage() {
   return (
     <Page id="cnd-page">
-      <Banner imgPath="/banners/board-games.jpeg" variant="pink">
+      <Banner imgPath="/img/banners/board-games.jpeg" variant="pink">
         <BannerTitles subtitle="The MathSoc Office" title="MC 3038" />
       </Banner>
       <MarkdownSection markdownFilePath="src/app/services/office/office.md" />

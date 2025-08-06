@@ -57,13 +57,8 @@
         "ref": "/resources/budgets"
       },
       {
-        "title": "Discord access",
-        "ref": "/resources/discord-access"
-      },
-      {
         "title": "Elections",
-        "ref": "/elections",
-        "children": []
+        "ref": "/elections"
       },
       {
         "title": "Important links",

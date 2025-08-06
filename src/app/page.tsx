@@ -8,11 +8,15 @@ import { Banner } from "./components/banner/banner";
 export default function Home() {
   return (
     <div id="homepage">
-      <Banner imgPath="/banners/mathsoc-wall.jpeg" variant="pink" size="large">
+      <Banner
+        imgPath="/img/banners/mathsoc-wall.jpeg"
+        variant="pink"
+        size="large"
+      >
         <div className="home-content">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/logos/horizontal-logo-white.svg"
+            src="/img/logos/horizontal-logo-white.svg"
             alt="Mathsoc Logo"
             id="logo"
             // fill
@@ -32,7 +36,7 @@ export default function Home() {
         <h1 className="section-head">Hear about our upcoming events!</h1>
         <div className="social-buttons">
           <SocialButton
-            href="/resources/discord-access"
+            href="/resources/discord"
             icon={faDiscord}
             label="Discord"
           />

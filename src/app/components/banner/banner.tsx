@@ -4,7 +4,7 @@ import "./banner.scss";
 export const Banner: React.FC<{
   imgPath: string;
   children: React.ReactNode;
-  variant?: "pink";
+  variant: "pink";
   size?: "normal" | "large";
 }> = ({ imgPath, children, variant, size }) => {
   return (

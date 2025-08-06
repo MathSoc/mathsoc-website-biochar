@@ -7,7 +7,11 @@ export default async function CndPage() {
   return (
     <Page id="cnd-page" variant="pink">
       {/* @todo update this to a photo of cnd */}
-      <Banner imgPath="/banners/board-games.jpeg" variant="pink" size="large">
+      <Banner
+        imgPath="/img/banners/board-games.jpeg"
+        variant="pink"
+        size="large"
+      >
         <BannerTitles title={getDailySpecial()} subtitle="Today's Special" />
       </Banner>
       <MarkdownSection markdownFilePath="src/app/services/cnd/cnd.md" />

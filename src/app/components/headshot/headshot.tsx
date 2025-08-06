@@ -9,7 +9,12 @@ export const Headshot: React.FC<{
   position: string;
   email: string;
   path?: string;
-}> = ({ name, position, email, path = "/councillor-images/default.png" }) => {
+}> = ({
+  name,
+  position,
+  email,
+  path = "/img/councillor-images/default.png",
+}) => {
   return (
     <div className="headshot">
       <Image

@@ -16,14 +16,14 @@ export function Navbar() {
             <div className="nav-logo">
               <Image
                 fill
-                src="/logos/horizontal-logo.svg"
+                src="/img/logos/horizontal-logo.svg"
                 className="nav-logo"
                 id="pink-logo"
                 alt="MathSoc Logo. Click to return to homepage"
               />
               {/* <Image
                 fill
-                src="/logos/horizontal-logo-white.svg"
+                src="/img/logos/horizontal-logo-white.svg"
                 id="white-logo"
                 alt="MathSoc Logo. Click to return to homepage"
               /> */}
@@ -57,7 +57,7 @@ export function Navbar() {
             <Image
               width={30}
               height={30}
-              src="/logos/single-downvote.svg"
+              src="/img/logos/single-downvote.svg"
               alt="Mobile menu"
             />
           </button>

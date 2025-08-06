@@ -20,7 +20,7 @@ export default function Footer() {
             <div className="socials">
               {/* @todo replace these (broken) images with fontawesome links */}
               <SocialLink
-                href="/resources/discord-access"
+                href="/resources/discord"
                 imageSrc="/social/discord.svg"
                 alt="Discord Icon"
               />
