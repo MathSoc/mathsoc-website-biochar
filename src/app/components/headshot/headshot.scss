@@ -1,0 +1,23 @@
+.headshot {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+
+  .headshot-name {
+    text-transform: uppercase;
+    font-size: 1.2em;
+    margin-bottom: 12px;
+  }
+
+  $small-text-size: 0.8em;
+  .headshot-position {
+    text-transform: uppercase;
+    font-size: $small-text-size;
+  }
+
+  .headshot-email {
+    font-size: $small-text-size;
+  }
+}

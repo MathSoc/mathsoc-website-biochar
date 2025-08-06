@@ -1,0 +1,1 @@
+The MathSoc Executive Team is responsible for the day-to-day operations of MathSoc, as well as participating in both Council and Board. They're often your go-to points of contact if you ever need assistance during the term.

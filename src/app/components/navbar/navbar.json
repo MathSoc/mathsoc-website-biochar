@@ -3,16 +3,16 @@
     "title": "Get involved",
     "children": [
       {
-        "title": "Volunteer at MathSoc",
+        "title": "Volunteer opportunities",
         "ref": "/community/volunteer"
       },
       {
-        "title": "Math community",
-        "ref": "/community/community"
+        "title": "Leadership opportunities",
+        "ref": "/community/leadership"
       },
       {
-        "title": "MathSoc council",
-        "ref": "/community/governance"
+        "title": "Community",
+        "ref": "/community/community"
       }
     ]
   },
