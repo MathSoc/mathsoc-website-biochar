@@ -26,6 +26,10 @@
       {
         "title": "Student services",
         "ref": "/services/student-services"
+      },
+      {
+        "title": "Math CnD",
+        "ref": "/services/cnd"
       }
     ]
   },

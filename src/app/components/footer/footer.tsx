@@ -17,19 +17,20 @@ export default function Footer() {
         </div>
         <div className="social-section">
           <div className="socials">
+            {/* @todo replace these (broken) images with fontawesome links */}
             <SocialLink
               href="/resources/discord-access"
-              imageSrc="/assets/img/social/discord.svg"
+              imageSrc="/social/discord.svg"
               alt="Discord Icon"
             />
             <SocialLink
               href="https://www.instagram.com/uwmathsoc/"
-              imageSrc="/assets/img/social/instagram.svg"
+              imageSrc="/social/instagram.svg"
               alt="Instagram Icon"
             />
             <SocialLink
               href="mailto:info@mathsoc.uwaterloo.ca"
-              imageSrc="/assets/img/social/mail.svg"
+              imageSrc="/social/mail.svg"
               alt="Mail Icon"
               className="mail-icon"
             />

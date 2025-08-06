@@ -9,13 +9,13 @@ export default function Home() {
     <div id="home-container">
       <div id="banner-container">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/assets/img/banners/mathsoc-wall.jpeg" alt="" id="banner" />
+        <img src="/banners/mathsoc-wall.jpeg" alt="" id="banner" />
         <div id="banner-gradient"></div>
       </div>
       <div id="home-content">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/assets/img/icons/horizontal-logo-white.svg"
+          src="/logos/horizontal-logo-white.svg"
           alt="Mathsoc Logo"
           id="logo"
           // fill

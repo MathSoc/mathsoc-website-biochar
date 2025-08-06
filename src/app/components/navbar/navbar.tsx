@@ -15,14 +15,14 @@ export function Navbar() {
           <Link href="/" className="nav-logo-container">
             <Image
               fill
-              src="/assets/img/icons/horizontal-logo.svg"
+              src="/logos/horizontal-logo.svg"
               className="nav-logo"
               id="pink-logo"
               alt="MathSoc Logo. Click to return to homepage"
             />
             <Image
               fill
-              src="/assets/img/icons/horizontal-logo-white.svg"
+              src="/logos/horizontal-logo-white.svg"
               className="nav-logo"
               id="white-logo"
               alt="MathSoc Logo. Click to return to homepage"
@@ -53,11 +53,7 @@ export function Navbar() {
           </ul>
 
           <button id="mobile-menu-button">
-            <Image
-              fill
-              src="/assets/img/icons/single-downvote.svg"
-              alt="Mobile menu"
-            />
+            <Image fill src="/logos/single-downvote.svg" alt="Mobile menu" />
           </button>
         </div>
       </nav>
