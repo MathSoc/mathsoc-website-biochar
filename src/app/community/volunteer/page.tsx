@@ -1,19 +1,19 @@
-import { MarkdownSection } from "../components/markdown-section/markdown-section";
-import { Page } from "../components/page/page-component";
+import { MarkdownSection } from "../../components/markdown-section/markdown-section";
+import { Page } from "../../components/page/page-component";
 
 export default async function VolunteerPage() {
   return (
     <Page>
-      <MarkdownSection markdownFilePath="src/app/volunteer/overview.md" />
+      <MarkdownSection markdownFilePath="src/app/community/volunteer/overview.md" />
 
       <PositionSection title="Office">
         <Position
           name="Office worker"
-          descriptionPath="src/app/volunteer/positions/office-worker.md"
+          descriptionPath="src/app/community/volunteer/positions/office-worker.md"
         />
         <Position
           name="Office manager"
-          descriptionPath="src/app/volunteer/positions/office-manager.md"
+          descriptionPath="src/app/community/volunteer/positions/office-manager.md"
         />
       </PositionSection>
     </Page>

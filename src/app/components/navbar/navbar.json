@@ -4,15 +4,15 @@
     "children": [
       {
         "title": "Volunteer at MathSoc",
-        "ref": "/get-involved/volunteer"
+        "ref": "/community/volunteer"
       },
       {
         "title": "Math community",
-        "ref": "/get-involved/community"
+        "ref": "/community/community"
       },
       {
         "title": "MathSoc council",
-        "ref": "/get-involved/council"
+        "ref": "/community/governance"
       }
     ]
   },
