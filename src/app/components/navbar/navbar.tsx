@@ -6,7 +6,7 @@ import navItems from "./navbar.json";
 export function Navbar() {
   return (
     <>
-      <a className="skip-to-main-content" href="#body">
+      <a className="skip-to-main-content" href="#main-content">
         Skip to main content
       </a>
 

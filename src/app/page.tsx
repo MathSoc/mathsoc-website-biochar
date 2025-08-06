@@ -3,31 +3,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiscord, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import { Banner } from "./components/banner/banner";
 
 export default function Home() {
   return (
-    <div id="home-container">
-      <div id="banner-container">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/banners/mathsoc-wall.jpeg" alt="" id="banner" />
-        <div id="banner-gradient"></div>
-      </div>
-      <div id="home-content">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/logos/horizontal-logo-white.svg"
-          alt="Mathsoc Logo"
-          id="logo"
-          // fill
-        />
-        <div className="homepage-buttons">
-          <a className="homepage-button" href="/get-involved/volunteer">
-            Get Involved
-          </a>
-          <a className="homepage-button" href="/resources/exam-bank">
-            Exam Bank
-          </a>
+    <div id="homepage">
+      <Banner imgPath="/banners/mathsoc-wall.jpeg" variant="pink" size="large">
+        <div className="home-content">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logos/horizontal-logo-white.svg"
+            alt="Mathsoc Logo"
+            id="logo"
+            // fill
+          />
+          <div className="homepage-buttons">
+            <a className="homepage-button" href="/get-involved/volunteer">
+              Get Involved
+            </a>
+            <a className="homepage-button" href="/resources/exam-bank">
+              Exam Bank
+            </a>
+          </div>
         </div>
+      </Banner>
+
+      <div className="home-content">
         <h1 className="section-head">Hear about our upcoming events!</h1>
         <div className="social-buttons">
           <SocialButton

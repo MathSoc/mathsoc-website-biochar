@@ -5,6 +5,16 @@ body {
   font-family: var(--primary-font);
   color: var(--text-color);
   margin: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+  min-height: 100vh;
+}
+
+#main-content {
+  flex-grow: 1;
 }
 
 h1,
@@ -73,11 +83,6 @@ textarea {
 
 section:last-child {
   padding-bottom: 30px;
-}
-
-#body {
-  position: relative;
-  min-height: 70vh;
 }
 
 .highlight {
