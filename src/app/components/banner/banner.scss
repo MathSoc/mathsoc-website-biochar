@@ -1,7 +1,14 @@
 .banner {
-  $height: 400px;
-  &.height-900 {
-    $height: calc(100vh - var(--navbar-height));
+  .banner-placeholder,
+  .banner-container {
+    height: 400px;
+  }
+
+  &.height-full {
+    .banner-placeholder,
+    .banner-container {
+      height: calc(100vh - var(--navbar-height));
+    }
   }
 
   .banner-container {
@@ -10,12 +17,7 @@
     justify-content: center;
     align-items: center;
     width: 100vw;
-    height: $height;
     left: 0;
-  }
-
-  .banner-placeholder {
-    height: $height;
   }
 
   .banner-image {
@@ -36,5 +38,24 @@
     .banner-contents {
       background: linear-gradient(0deg, var(--mathsoc-pink), #c6007891);
     }
+  }
+}
+
+.banner-titles {
+  color: white;
+  text-align: center;
+
+  h1 {
+    color: white;
+  }
+
+  .banner-subtitle {
+    font-size: 0.8em;
+  }
+
+  .banner-title {
+    font-size: 3em;
+    margin-top: 0;
+    text-transform: uppercase;
   }
 }
