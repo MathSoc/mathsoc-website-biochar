@@ -1,5 +1,21 @@
 .page {
-  max-width: var(--content-width);
   margin: auto;
   padding-bottom: 48px;
+
+  .page-inner {
+    margin: auto;
+    max-width: var(--content-width);
+  }
+
+  &.pink {
+    background-color: var(--mathsoc-pink);
+
+    color: white;
+    p,
+    h1,
+    h2,
+    h3 {
+      color: white;
+    }
+  }
 }

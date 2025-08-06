@@ -5,6 +5,11 @@
   min-height: 175px;
   padding: 0px 150px;
 
+  #inner-footer {
+    max-width: var(--content-width);
+    margin: auto;
+  }
+
   @media (max-width: 768px) {
     flex-direction: column;
     padding: 0px 50px;

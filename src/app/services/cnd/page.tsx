@@ -5,7 +5,7 @@ import "./cnd.scss";
 
 export default async function CndPage() {
   return (
-    <Page id="cnd-page">
+    <Page id="cnd-page" variant="pink">
       {/* @todo update this to a photo of cnd */}
       <Banner imgPath="/banners/board-games.jpeg" variant="pink" size="large">
         <div id="daily-special">

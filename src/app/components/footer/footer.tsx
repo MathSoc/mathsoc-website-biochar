@@ -6,34 +6,36 @@ export default function Footer() {
 
   return (
     <footer id="footer">
-      <div className="section">
-        <b>© {currentYear} Mathsoc</b>
-      </div>
-      <hr />
-      <div className="section">
-        <div className="link-section">
-          <Link href="/">Home</Link>
-          <Link href="/contact-us">Contact</Link>
+      <div id="inner-footer">
+        <div className="section">
+          <b>© {currentYear} Mathsoc</b>
         </div>
-        <div className="social-section">
-          <div className="socials">
-            {/* @todo replace these (broken) images with fontawesome links */}
-            <SocialLink
-              href="/resources/discord-access"
-              imageSrc="/social/discord.svg"
-              alt="Discord Icon"
-            />
-            <SocialLink
-              href="https://www.instagram.com/uwmathsoc/"
-              imageSrc="/social/instagram.svg"
-              alt="Instagram Icon"
-            />
-            <SocialLink
-              href="mailto:info@mathsoc.uwaterloo.ca"
-              imageSrc="/social/mail.svg"
-              alt="Mail Icon"
-              className="mail-icon"
-            />
+        <hr />
+        <div className="section">
+          <div className="link-section">
+            <Link href="/">Home</Link>
+            <Link href="/contact-us">Contact</Link>
+          </div>
+          <div className="social-section">
+            <div className="socials">
+              {/* @todo replace these (broken) images with fontawesome links */}
+              <SocialLink
+                href="/resources/discord-access"
+                imageSrc="/social/discord.svg"
+                alt="Discord Icon"
+              />
+              <SocialLink
+                href="https://www.instagram.com/uwmathsoc/"
+                imageSrc="/social/instagram.svg"
+                alt="Instagram Icon"
+              />
+              <SocialLink
+                href="mailto:info@mathsoc.uwaterloo.ca"
+                imageSrc="/social/mail.svg"
+                alt="Mail Icon"
+                className="mail-icon"
+              />
+            </div>
           </div>
         </div>
       </div>
