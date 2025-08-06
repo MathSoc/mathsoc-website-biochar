@@ -13,20 +13,21 @@ export function Navbar() {
       <nav id="navbar">
         <div id="inner-navbar">
           <Link href="/" className="nav-logo-container">
-            <Image
-              fill
-              src="/logos/horizontal-logo.svg"
-              className="nav-logo"
-              id="pink-logo"
-              alt="MathSoc Logo. Click to return to homepage"
-            />
-            <Image
-              fill
-              src="/logos/horizontal-logo-white.svg"
-              className="nav-logo"
-              id="white-logo"
-              alt="MathSoc Logo. Click to return to homepage"
-            />
+            <div className="nav-logo">
+              <Image
+                fill
+                src="/logos/horizontal-logo.svg"
+                className="nav-logo"
+                id="pink-logo"
+                alt="MathSoc Logo. Click to return to homepage"
+              />
+              {/* <Image
+                fill
+                src="/logos/horizontal-logo-white.svg"
+                id="white-logo"
+                alt="MathSoc Logo. Click to return to homepage"
+              /> */}
+            </div>
           </Link>
 
           <ul className="items">

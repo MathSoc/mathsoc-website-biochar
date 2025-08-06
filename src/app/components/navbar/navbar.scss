@@ -9,7 +9,7 @@
   height: 72px;
 
   #inner-navbar {
-    max-width: calc(var(--content-width));
+    max-width: calc(100% - 100px);
     position: relative;
     margin: auto;
   }
@@ -17,6 +17,7 @@
   .nav-logo {
     height: 75px;
     width: 200px;
+    position: relative;
 
     &#white-logo {
       display: none;

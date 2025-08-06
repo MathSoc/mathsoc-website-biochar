@@ -8,7 +8,7 @@ export default async function CndPage() {
       <Banner imgPath="/banners/board-games.jpeg" variant="pink">
         <h1>Today's Special: Chili</h1>
       </Banner>
-      <MarkdownSection markdownFilePath="src/app/community/volunteer/overview.md" />
+      <MarkdownSection markdownFilePath="src/app/services/cnd/cnd.md" />
     </Page>
   );
 }
