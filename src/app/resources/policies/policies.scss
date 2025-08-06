@@ -4,10 +4,12 @@
     flex-direction: row;
     margin-top: 48px;
     gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 
-  .rules-card {
-    width: 200px;
+  .document-card {
+    width: 180px;
     display: flex;
     flex-direction: column;
     text-transform: uppercase;
@@ -20,7 +22,7 @@
     font-family: var(--title-font);
     font-weight: 300;
 
-    .rules-icon {
+    .document-icon {
       $size: 80px;
       width: $size;
       height: $size;

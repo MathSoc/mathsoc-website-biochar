@@ -4,6 +4,7 @@ import Link from "next/link";
 import { faNewspaper, IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./policies.scss";
+import { faEye } from "@fortawesome/free-solid-svg-icons/faEye";
 
 export default async function PoliciesPage() {
   return (
@@ -12,42 +13,51 @@ export default async function PoliciesPage() {
         <BannerTitles title="Policies and Bylaws" />
       </Banner>
       <div className="cards">
-        <RulesCard
+        <DocumentsCard
           icon={faNewspaper}
           name="Policies"
           description="council, clubs"
-          path="/documents/policies.pdf"
+          path="/documents/policies-public.pdf"
           lastUpdated={new Date("2024-08-03")}
         />
-        <RulesCard
+        <DocumentsCard
           icon={faNewspaper}
           name="Board procedures"
           description="long-term governance"
-          path="/documents/board-procedures.pdf"
+          path="/documents/board-procedures-public.pdf"
           lastUpdated={new Date("2024-11-29")}
         />
-        <RulesCard
+        <DocumentsCard
           icon={faNewspaper}
           name="Bylaws"
           description="the Society at large"
-          path="/documents/bylaws.pdf"
+          path="/documents/bylaws-public.pdf"
           lastUpdated={new Date("2024-11-29")}
+        />
+      </div>
+      <h1>Reports</h1>
+      <div className="cards">
+        <DocumentsCard
+          icon={faEye}
+          name="On Proctoring Software"
+          path="/resources/policies/proctoring"
+          lastUpdated={new Date("2022-04-20")}
         />
       </div>
     </Page>
   );
 }
 
-const RulesCard: React.FC<{
+const DocumentsCard: React.FC<{
   name: string;
   icon: IconDefinition;
-  description: string;
+  description?: string;
   path: string;
   lastUpdated: Date;
 }> = ({ name, icon, description, path, lastUpdated }) => {
   return (
-    <Link href={path} className="rules-card">
-      <FontAwesomeIcon icon={icon} className="rules-icon" />
+    <Link href={path} className="document-card">
+      <FontAwesomeIcon icon={icon} className="document-icon" />
       <div className="gap"></div>
       <span className="name">{name}</span>
       <span className="description">{description}</span>
