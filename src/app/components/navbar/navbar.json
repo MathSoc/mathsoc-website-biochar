@@ -38,7 +38,7 @@
     "children": [
       {
         "title": "Exam bank",
-        "ref": "/resources/exam-bank"
+        "ref": "https://services.mathsoc.uwaterloo.ca/resources/exam-bank"
       },
       {
         "title": "Forms",
