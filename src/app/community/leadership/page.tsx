@@ -5,7 +5,7 @@ import { Headshot } from "@/app/components/headshot/headshot";
 
 export default async function CouncilPage() {
   return (
-    <Page>
+    <Page id="council-page">
       <Council />
       <Board />
       <Executives />

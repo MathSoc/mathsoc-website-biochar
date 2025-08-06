@@ -1,5 +1,8 @@
 .banner {
   $height: 400px;
+  &.height-900 {
+    $height: calc(100vh - var(--navbar-height));
+  }
 
   .banner-container {
     display: flex;
@@ -31,7 +34,7 @@
 
   &.pink {
     .banner-contents {
-      background-color: #c6007891;
+      background: linear-gradient(0deg, var(--mathsoc-pink), #c6007891);
     }
   }
 }

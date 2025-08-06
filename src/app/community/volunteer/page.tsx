@@ -3,7 +3,7 @@ import { Page } from "../../components/page/page-component";
 
 export default async function VolunteerPage() {
   return (
-    <Page>
+    <Page id="volunteer-page">
       <MarkdownSection markdownFilePath="src/app/community/volunteer/overview.md" />
 
       <PositionSection title="Office">

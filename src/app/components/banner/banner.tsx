@@ -5,10 +5,13 @@ export const Banner: React.FC<{
   imgPath: string;
   children: React.ReactNode;
   variant?: "pink";
-}> = ({ imgPath, children, variant }) => {
+  size?: "normal" | "large";
+}> = ({ imgPath, children, variant, size }) => {
   return (
     <div className={`banner ${variant}`}>
-      <div className="banner-container">
+      <div
+        className={`banner-container ${size === "large" ? "height-900" : ""}`}
+      >
         <Image
           src={imgPath}
           alt=""

@@ -6,7 +6,7 @@
   font-size: 14px;
   position: relative;
   font-weight: 300;
-  height: 72px;
+  height: var(--navbar-height);
 
   #inner-navbar {
     max-width: calc(100% - 100px);
@@ -15,7 +15,7 @@
   }
 
   .nav-logo {
-    height: 75px;
+    height: var(--navbar-height);
     width: 200px;
     position: relative;
 
