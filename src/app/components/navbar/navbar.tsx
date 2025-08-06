@@ -54,7 +54,12 @@ export function Navbar() {
           </ul>
 
           <button id="mobile-menu-button">
-            <Image fill src="/logos/single-downvote.svg" alt="Mobile menu" />
+            <Image
+              width={30}
+              height={30}
+              src="/logos/single-downvote.svg"
+              alt="Mobile menu"
+            />
           </button>
         </div>
       </nav>
