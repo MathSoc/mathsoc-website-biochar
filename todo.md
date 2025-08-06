@@ -3,3 +3,5 @@
 - resolve all @todos
 - populate meetings lists
 - populate councillor lists
+- populate policies & bylaws
+- populate budgets

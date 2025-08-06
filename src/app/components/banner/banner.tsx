@@ -28,7 +28,7 @@ export const Banner: React.FC<{
   );
 };
 
-export const BannerTitles: React.FC<{ title: string; subtitle: string }> = ({
+export const BannerTitles: React.FC<{ title: string; subtitle?: string }> = ({
   title,
   subtitle,
 }) => {
