@@ -1,0 +1,3 @@
+- use gpt to make all emails mailto links
+- fix footer
+- resolve all @todos
