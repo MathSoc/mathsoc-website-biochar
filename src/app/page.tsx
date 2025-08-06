@@ -4,6 +4,7 @@ import { faDiscord, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { Banner } from "./components/banner/banner";
+import { Button } from "./components/button/button";
 
 export default function Home() {
   return (
@@ -18,12 +19,8 @@ export default function Home() {
             // fill
           />
           <div className="homepage-buttons">
-            <a className="homepage-button" href="/get-involved/volunteer">
-              Get Involved
-            </a>
-            <a className="homepage-button" href="/resources/exam-bank">
-              Exam Bank
-            </a>
+            <Button href="/get-involved/volunteer">Get Involved</Button>
+            <Button href="/resources/exam-bank">Exam Bank</Button>
           </div>
         </div>
       </Banner>

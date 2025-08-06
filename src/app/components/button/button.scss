@@ -1,0 +1,20 @@
+.button {
+  padding: 16px 60px;
+  color: var(--inverted-text-color);
+  border: 1px solid var(--inverted-text-color);
+  text-decoration: none;
+  transition: 0.15s linear;
+  margin: 16px;
+  display: block;
+
+  //   @todo find a way to centralize this - SASS @include should have something maybe?
+  font-family: var(--title-font);
+  text-transform: uppercase;
+  font-weight: 300;
+
+  &:hover,
+  &:focus {
+    background-color: white;
+    color: var(--mathsoc-pink);
+  }
+}
