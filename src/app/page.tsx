@@ -8,11 +8,7 @@ import { Banner } from "./components/banner/banner";
 export default function Home() {
   return (
     <div id="homepage">
-      <Banner
-        imgPath="/img/banners/mathsoc-wall.jpeg"
-        variant="pink"
-        size="large"
-      >
+      <Banner src="/img/banners/mathsoc-wall.jpeg" variant="pink" size="large">
         <div className="home-content">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

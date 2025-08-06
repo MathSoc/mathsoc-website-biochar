@@ -9,7 +9,7 @@ import { faEye } from "@fortawesome/free-solid-svg-icons/faEye";
 export default async function PoliciesPage() {
   return (
     <Page id="policies-page">
-      <Banner imgPath="/img/banners/mathsoc-wall.jpeg" variant="pink">
+      <Banner src="/img/banners/mathsoc-wall.jpeg" variant="pink">
         <BannerTitles title="Policies and Bylaws" />
       </Banner>
       <div className="cards">

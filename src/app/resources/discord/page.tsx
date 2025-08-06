@@ -6,7 +6,7 @@ import "./discord.scss";
 export default async function DiscordPage() {
   return (
     <Page id="discord-page">
-      <Banner imgPath="/img/banners/mathsoc-wall.jpeg" variant="pink">
+      <Banner src="/img/banners/mathsoc-wall.jpeg" variant="pink">
         <BannerTitles
           title="The MathSoc Discord server"
           subtitle="Steps to access"

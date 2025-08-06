@@ -2,11 +2,11 @@ import Image from "next/image";
 import "./banner.scss";
 
 export const Banner: React.FC<{
-  imgPath: string;
+  src: string;
   children: React.ReactNode;
   variant: "pink";
   size?: "normal" | "large";
-}> = ({ imgPath, children, variant, size }) => {
+}> = ({ src: imgPath, children, variant, size }) => {
   return (
     <div
       className={`banner ${variant} ${size === "large" ? "height-full" : ""}`}
