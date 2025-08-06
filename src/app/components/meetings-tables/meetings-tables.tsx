@@ -23,7 +23,7 @@ export const MeetingsTables: React.FC<{ meetings: Meeting[] }> = ({
             new Date(yearB).getFullYear() - new Date(yearA).getFullYear(),
         )
         .map(([year, meetings]) => (
-          <table key={year} className="meetings-table">
+          <table key={year} className="meetings-table table">
             <thead>
               <tr>
                 <th colSpan={3}>{year}</th>
