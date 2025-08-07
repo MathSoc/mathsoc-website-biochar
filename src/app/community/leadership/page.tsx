@@ -78,13 +78,42 @@ const Executives: React.FC = () => {
       <h1>Executives</h1>
       <MarkdownSection src="src/app/community/leadership/executives.md" />
       <h2>Your executives</h2>
-      <HeadshotGrid>
-        <Headshot
-          name="Arnav Gupta"
-          position="President"
-          email="president@mathsoc.uwaterloo.ca"
-        />
-      </HeadshotGrid>
+      <ExecutiveGrid />
     </div>
   );
 };
+
+export const ExecutiveGrid: React.FC = () => (
+  <HeadshotGrid>
+    <Headshot
+      name="Alex Lavalee"
+      position="President"
+      email="president@mathsoc.uwaterloo.ca"
+    />
+    <Headshot
+      name="Patrik Buhring"
+      position="Vice-President, Academic"
+      email="vpa@mathsoc.uwaterloo.ca"
+    />
+    <Headshot
+      name="Lydia Li"
+      position="Vice-President, Finance"
+      email="vpf@mathsoc.uwaterloo.ca"
+    />
+    <Headshot
+      name="Ivana Tanasijevic"
+      position="Vice-President, Internal"
+      email="vpi@mathsoc.uwaterloo.ca"
+    />
+    <Headshot
+      name="Danny Liu"
+      position="Vice-President, Operations"
+      email="vpo@mathsoc.uwaterloo.ca"
+    />
+    <Headshot
+      name="Sarah Philippon"
+      position="Vice-President, Communications"
+      email="vpc@mathsoc.uwaterloo.ca"
+    />
+  </HeadshotGrid>
+);

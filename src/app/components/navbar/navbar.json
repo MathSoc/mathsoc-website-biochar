@@ -13,6 +13,10 @@
       {
         "title": "Community",
         "ref": "/community/community"
+      },
+      {
+        "title": "Contact us",
+        "ref": "/community/contact-us"
       }
     ]
   },
@@ -69,9 +73,5 @@
   {
     "title": "Inventory",
     "ref": "/inventory"
-  },
-  {
-    "title": "Contact us",
-    "ref": "/contact-us"
   }
 ]

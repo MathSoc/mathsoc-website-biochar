@@ -1,3 +1,4 @@
+// Feel free to add new subcategories! The page will auto-adjust
 export type NoveltiesSubcategory =
   | "Shirts and sweaters"
   | "Stickers"

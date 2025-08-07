@@ -14,7 +14,7 @@ export default function Footer() {
         <div className="section">
           <div className="link-section">
             <Link href="/">Home</Link>
-            <Link href="/contact-us">Contact</Link>
+            <Link href="/community/contact-us">Contact</Link>
           </div>
           <div className="social-section">
             <div className="socials">
