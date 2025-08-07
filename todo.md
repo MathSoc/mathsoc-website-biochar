@@ -3,3 +3,4 @@
 - populate councillor lists
 - populate budgets
 - link to club websites instead of using given descriptions
+- fix mobile menu

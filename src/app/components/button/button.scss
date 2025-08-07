@@ -1,13 +1,15 @@
 @use "../../sass-mixins" as *;
 
-.button {
+.button,
+a.button,
+a.button:visited {
   padding: 16px 60px;
   color: white;
   &:visited {
     color: white;
   }
   border: 1px solid white;
-  text-decoration: none;
+  text-decoration: none !important;
   transition: 0.15s linear;
   margin: 16px;
   display: block;
@@ -18,5 +20,10 @@
   &:focus {
     background-color: white;
     color: var(--mathsoc-pink);
+
+    a,
+    a:visited {
+      color: var(--mathsoc-pink);
+    }
   }
 }
