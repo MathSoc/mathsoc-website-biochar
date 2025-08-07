@@ -18,21 +18,21 @@ export default async function PoliciesPage() {
           name="Policies"
           description="council, clubs"
           path="/documents/policies-public.pdf"
-          lastUpdated={new Date("2024-08-03")}
+          lastUpdated={new Date("2024-08-03 EST")}
         />
         <DocumentsCard
           icon={faNewspaper}
           name="Board procedures"
           description="long-term governance"
           path="/documents/board-procedures-public.pdf"
-          lastUpdated={new Date("2024-11-29")}
+          lastUpdated={new Date("2024-11-29 EST")}
         />
         <DocumentsCard
           icon={faNewspaper}
           name="Bylaws"
           description="the Society at large"
           path="/documents/bylaws-public.pdf"
-          lastUpdated={new Date("2024-11-29")}
+          lastUpdated={new Date("2024-11-29 EST")}
         />
       </div>
       <h1>Reports</h1>
@@ -41,13 +41,19 @@ export default async function PoliciesPage() {
           icon={faEye}
           name="On Proctoring Software"
           path="/resources/policies/proctoring"
-          lastUpdated={new Date("2022-04-20")}
+          lastUpdated={new Date("2022-04-20 EST")}
         />
       </div>
     </Page>
   );
 }
 
+/**
+ * Note: if lastUpdated is not provided with a timezone, you'll see an off-by-one
+ * error due to timezone issues.
+ *
+ * The ideal way to pass in a date is `new Date("YYYY/MM/DD EST")`
+ */
 const DocumentsCard: React.FC<{
   name: string;
   icon: IconDefinition;
@@ -64,7 +70,6 @@ const DocumentsCard: React.FC<{
       <span className="last-updated">
         Last updated:
         <br />
-        {/* @todo fix the off-by-one timezone-related date errors here(??) */}
         {lastUpdated.toLocaleDateString("en-CA", {
           month: "long",
           year: "numeric",

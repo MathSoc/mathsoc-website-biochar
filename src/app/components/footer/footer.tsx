@@ -22,7 +22,6 @@ export default function Footer() {
           </div>
           <div className="social-section">
             <div className="socials">
-              {/* @todo replace these (broken) images with fontawesome links */}
               <SocialLink href="/resources/discord" icon={faDiscord} />
               <SocialLink
                 href="https://www.instagram.com/uwmathsoc/"

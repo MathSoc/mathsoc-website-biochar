@@ -1,7 +1,5 @@
-- fix footer
 - resolve all @todos
 - populate meetings lists
 - populate councillor lists
 - populate budgets
-- consider switching meetings, budgets to just use markdown tables instead
 - link to club websites instead of using given descriptions
