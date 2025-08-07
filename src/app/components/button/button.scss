@@ -5,9 +5,6 @@ a.button,
 a.button:visited {
   padding: 16px 60px;
   color: white;
-  &:visited {
-    color: white;
-  }
   border: 1px solid white;
   text-decoration: none !important;
   transition: 0.15s linear;
@@ -15,6 +12,10 @@ a.button:visited {
   display: block;
 
   @include title-font;
+
+  &:visited {
+    color: white;
+  }
 
   &:hover,
   &:focus {
