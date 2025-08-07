@@ -70,31 +70,15 @@
   }
 
   .socials {
-    margin-left: auto;
+    display: flex;
+    gap: 16px;
+    padding-top: 8px;
 
-    @media (max-width: 768px) {
-      margin-left: 0;
-    }
-
-    @media (max-width: 420px) {
-      display: flex;
-      flex-direction: column;
-      margin-left: 0;
-    }
-
-    img {
-      width: 65px;
-      padding-left: 20px;
-      filter: invert(100%) sepia(73%) saturate(2048%) hue-rotate(216deg)
-        brightness(102%) contrast(106%); // Pinkish color
-
-      @media (max-width: 768px) {
-        width: 50px;
-        padding: 20px;
-      }
-      @media (max-width: 487px) {
-        padding: 0;
-      }
+    .social-icon {
+      $size: 32px;
+      width: $size;
+      height: $size;
+      color: white;
     }
   }
 

@@ -1,5 +1,9 @@
 import Link from "next/link";
 import "./footer.scss";
+import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDiscord, faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -19,21 +23,14 @@ export default function Footer() {
           <div className="social-section">
             <div className="socials">
               {/* @todo replace these (broken) images with fontawesome links */}
-              <SocialLink
-                href="/resources/discord"
-                imageSrc="/social/discord.svg"
-                alt="Discord Icon"
-              />
+              <SocialLink href="/resources/discord" icon={faDiscord} />
               <SocialLink
                 href="https://www.instagram.com/uwmathsoc/"
-                imageSrc="/social/instagram.svg"
-                alt="Instagram Icon"
+                icon={faInstagram}
               />
               <SocialLink
                 href="mailto:info@mathsoc.uwaterloo.ca"
-                imageSrc="/social/mail.svg"
-                alt="Mail Icon"
-                className="mail-icon"
+                icon={faEnvelope}
               />
             </div>
           </div>
@@ -43,17 +40,11 @@ export default function Footer() {
   );
 }
 
-function SocialLink({
-  href,
-  imageSrc,
-  alt,
-  className,
-}: {
+const SocialLink: React.FC<{
   href: string;
-  imageSrc: string;
-  alt: string;
+  icon: IconDefinition;
   className?: string;
-}) {
+}> = ({ href, icon, className }) => {
   return (
     <Link
       href={href}
@@ -61,8 +52,7 @@ function SocialLink({
       rel="noopener noreferrer"
       className={className}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={imageSrc} alt={alt} />
+      <FontAwesomeIcon icon={icon} size="1x" className="social-icon" />
     </Link>
   );
-}
+};

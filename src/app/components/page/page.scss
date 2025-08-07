@@ -1,7 +1,9 @@
 .page {
+  $side-padding: 48px;
   margin: auto;
-  padding-bottom: 48px;
-  width: 100%;
+  padding: 0 48px;
+  padding-bottom: $side-padding;
+  width: calc(100% - 2 * $side-padding);
 
   .page-inner {
     margin: auto;

@@ -5,6 +5,7 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { Banner } from "./components/banner/banner";
 import { Button } from "./components/button/button";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -61,9 +62,9 @@ function SocialButton({
   label: string;
 }) {
   return (
-    <a className="social-button" href={href}>
+    <Link className="social-button" href={href}>
       <FontAwesomeIcon icon={icon} className="social-icon" size="3x" />
       <span>{label}</span>
-    </a>
+    </Link>
   );
 }
