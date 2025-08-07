@@ -50,7 +50,7 @@ All MathSoc events and MathSoc club events need to be registered through WUSA. C
 
 ### How long should the process take?
 
-It’s hard to give an exact estimate on how long the process should take but to ensure that the process is as efficient as possible please review the common mistakes in the question below. Feel free to reach out to us at vpf@mathsoc.uwaterloo.ca.
+It’s hard to give an exact estimate on how long the process should take but to ensure that the process is as efficient as possible please review the common mistakes in the question below. Feel free to reach out to us at [vpf@mathsoc.uwaterloo.ca](mailto:vpf@mathsoc.uwaterloo.ca).
 
 ### What happens if my request is denied?
 
@@ -58,7 +58,7 @@ We will reach out to you if we require more information about your cheque reques
 
 ### What if this is not for a club reimbursement?
 
-Please see the other MathSoc cheque request form that is used for all non-club events on the website. For any additional questions please email vpf@mathsoc.uwaterloo.ca.
+Please see the other MathSoc cheque request form that is used for all non-club events on the website. For any additional questions please email [vpf@mathsoc.uwaterloo.ca](mailto:vpf@mathsoc.uwaterloo.ca).
 
 ### How should tips be entered?
 

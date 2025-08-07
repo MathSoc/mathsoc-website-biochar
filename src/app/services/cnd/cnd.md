@@ -12,7 +12,7 @@ Math CnD is owned and operated by the Math Society and located on the 3rd floor 
 
 CnD Feedback Form – we’d love to hear about your experience at CnD!
 
-The Store Manager Rose Penner can be reached at: 519-888-4567 ext. 36373 or at r2penner@uwaterloo.ca. The CnD can be reached directly at 519-888-4567 ext. 36521.
+The Store Manager Rose Penner can be reached at: 519-888-4567 ext. 36373 or at [r2penner@uwaterloo.ca](mailto:r2penner@uwaterloo.ca). The CnD can be reached directly at 519-888-4567 ext. 36521.
 
 ## Hours
 
