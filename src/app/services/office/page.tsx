@@ -9,7 +9,7 @@ export default async function CndPage() {
       <Banner src="/img/banners/board-games.jpeg" variant="pink">
         <BannerTitles subtitle="The MathSoc Office" title="MC 3038" />
       </Banner>
-      <MarkdownSection markdownFilePath="src/app/services/office/office.md" />
+      <MarkdownSection src="src/app/services/office/office.md" />
     </Page>
   );
 }

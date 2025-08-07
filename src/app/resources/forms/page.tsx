@@ -5,7 +5,7 @@ import "./forms.scss";
 export default async function FormsPage() {
   return (
     <Page id="forms-page">
-      <MarkdownSection markdownFilePath="src/app/resources/forms/forms.md" />
+      <MarkdownSection src="src/app/resources/forms/forms.md" />
     </Page>
   );
 }

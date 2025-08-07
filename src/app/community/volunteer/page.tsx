@@ -4,7 +4,7 @@ import { Page } from "../../components/page/page-component";
 export default async function VolunteerPage() {
   return (
     <Page id="volunteer-page">
-      <MarkdownSection markdownFilePath="src/app/community/volunteer/overview.md" />
+      <MarkdownSection src="src/app/community/volunteer/overview.md" />
 
       <PositionSection title="Office">
         <Position
@@ -40,7 +40,7 @@ const Position: React.FC<{ name: string; descriptionPath: string }> = ({
   return (
     <div className="position">
       <h3 className="position-name">{name}</h3>
-      <MarkdownSection markdownFilePath={descriptionPath} />
+      <MarkdownSection src={descriptionPath} />
     </div>
   );
 };

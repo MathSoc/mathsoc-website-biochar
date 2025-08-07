@@ -4,7 +4,7 @@ import { Page } from "@/app/components/page/page-component";
 export default async function LockersPage() {
   return (
     <Page id="lockers-page">
-      <MarkdownSection markdownFilePath="src/app/services/lockers/lockers.md" />
+      <MarkdownSection src="src/app/services/lockers/lockers.md" />
     </Page>
   );
 }

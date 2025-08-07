@@ -3,10 +3,8 @@ import path from "path";
 import ReactMarkdown from "react-markdown";
 import "./markdown-section.scss";
 
-export const MarkdownSection: React.FC<{ markdownFilePath: string }> = async ({
-  markdownFilePath,
-}) => {
-  const contents = await readFile(path.join(process.cwd(), markdownFilePath));
+export const MarkdownSection: React.FC<{ src: string }> = async ({ src }) => {
+  const contents = await readFile(path.join(process.cwd(), src));
 
   return (
     <div className="markdown-section">

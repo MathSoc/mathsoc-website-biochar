@@ -12,7 +12,7 @@ export default async function DiscordPage() {
           subtitle="Steps to access"
         />
       </Banner>
-      <MarkdownSection markdownFilePath="src/app/resources/discord/discord.md" />
+      <MarkdownSection src="src/app/resources/discord/discord.md" />
     </Page>
   );
 }

@@ -17,7 +17,7 @@ const Council: React.FC = () => {
   return (
     <div className="council-section">
       <h1>Council</h1>
-      <MarkdownSection markdownFilePath="src/app/community/leadership/council.md" />
+      <MarkdownSection src="src/app/community/leadership/council.md" />
       <h2>Councillors</h2>
       <HeadshotGrid>
         <Headshot
@@ -59,7 +59,7 @@ const Board: React.FC = () => {
   return (
     <div className="board-section">
       <h1>Board</h1>
-      <MarkdownSection markdownFilePath="src/app/community/leadership/board.md" />
+      <MarkdownSection src="src/app/community/leadership/board.md" />
       <h2>Directors</h2>
       <HeadshotGrid>
         <Headshot
@@ -76,7 +76,7 @@ const Executives: React.FC = () => {
   return (
     <div className="executive-section">
       <h1>Executives</h1>
-      <MarkdownSection markdownFilePath="src/app/community/leadership/executives.md" />
+      <MarkdownSection src="src/app/community/leadership/executives.md" />
       <h2>Your executives</h2>
       <HeadshotGrid>
         <Headshot
