@@ -3,3 +3,9 @@
     @content;
   }
 }
+
+@mixin title-font() {
+  font-family: var(--title-font);
+  text-transform: uppercase;
+  font-weight: 300;
+}

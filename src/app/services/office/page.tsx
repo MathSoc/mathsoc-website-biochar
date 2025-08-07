@@ -7,7 +7,7 @@ export default async function CndPage() {
   return (
     <Page id="cnd-page">
       <Banner src="/img/banners/board-games.jpeg" variant="pink">
-        <BannerTitles subtitle="The MathSoc Office" title="MC 3038" />
+        <BannerTitles pretitle="The MathSoc Office" title="MC 3038" />
       </Banner>
       <MarkdownSection src="src/app/services/office/office.md" />
     </Page>

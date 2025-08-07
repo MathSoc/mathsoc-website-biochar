@@ -9,7 +9,7 @@ export default async function DiscordPage() {
       <Banner src="/img/banners/mathsoc-wall.jpeg" variant="pink">
         <BannerTitles
           title="The MathSoc Discord server"
-          subtitle="Steps to access"
+          pretitle="Steps to access"
         />
       </Banner>
       <MarkdownSection src="src/app/resources/discord/discord.md" />

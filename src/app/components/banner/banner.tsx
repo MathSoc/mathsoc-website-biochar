@@ -28,14 +28,16 @@ export const Banner: React.FC<{
   );
 };
 
-export const BannerTitles: React.FC<{ title: string; subtitle?: string }> = ({
-  title,
-  subtitle,
-}) => {
+export const BannerTitles: React.FC<{
+  title: string;
+  pretitle?: string;
+  subtitle?: string;
+}> = ({ title, pretitle, subtitle }) => {
   return (
     <div className="banner-titles">
       <h1 className="banner-subtitle">{subtitle}</h1>
       <h1 className="banner-title">{title}</h1>
+      <h1 className="banner-pretitle">{pretitle}</h1>
     </div>
   );
 };

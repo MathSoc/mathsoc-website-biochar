@@ -1,0 +1,39 @@
+@use "../sass-mixins" as *;
+
+#inventory-page {
+  .item-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: left;
+    gap: 24px;
+    width: 100%;
+  }
+
+  .inventory-item {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    min-height: 160px;
+    width: 120px;
+    margin: auto;
+
+    .item-image {
+      margin: auto;
+      padding: 20px 0;
+    }
+
+    .gap {
+      flex-grow: 1;
+    }
+    .item-name {
+      display: block;
+      @include title-font;
+    }
+
+    .item-price {
+      display: block;
+      font-size: 0.8em;
+    }
+  }
+}
