@@ -1,3 +1,5 @@
+@use "../../sass-mixins" as *;
+
 #policies-page {
   .cards {
     display: flex;
@@ -12,7 +14,6 @@
     width: 180px;
     display: flex;
     flex-direction: column;
-    text-transform: uppercase;
     text-align: center;
     background-color: var(--mathsoc-pink);
     color: white;
@@ -20,7 +21,8 @@
     height: 250px;
     transition: var(--transition);
     font-family: var(--title-font);
-    font-weight: 300;
+
+    @include title-font;
 
     .document-icon {
       $size: 80px;

@@ -1,4 +1,5 @@
-@use "variables";
+@use "variables" as *;
+@use "sass-mixins" as *;
 
 body {
   background-color: var(--background-colour);
@@ -20,9 +21,7 @@ body {
 h1,
 h2,
 h3 {
-  font-family: var(--title-font);
-  font-weight: 300;
-  text-transform: uppercase;
+  @include title-font;
   color: var(--mathsoc-pink);
 }
 
