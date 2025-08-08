@@ -2,6 +2,9 @@ import { Banner, BannerTitles } from "@/app/components/banner/banner";
 import { MarkdownSection } from "../../components/markdown-section/markdown-section";
 import { Page } from "../../components/page/page-component";
 import "./office.scss";
+import { Metadata } from "next";
+
+export const metadata: Metadata = { title: "Office" };
 
 export default async function CndPage() {
   return (

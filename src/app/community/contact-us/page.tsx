@@ -3,6 +3,9 @@ import { MarkdownSection } from "../../components/markdown-section/markdown-sect
 import { Page } from "../../components/page/page-component";
 import { ExecutiveGrid } from "../leadership/page";
 import { Headshot } from "@/app/components/headshot/headshot";
+import { Metadata } from "next";
+
+export const metadata: Metadata = { title: "Contact us" };
 
 export default async function ContactPage() {
   return (

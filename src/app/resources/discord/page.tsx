@@ -2,6 +2,9 @@ import { Banner, BannerTitles } from "@/app/components/banner/banner";
 import { MarkdownSection } from "../../components/markdown-section/markdown-section";
 import { Page } from "../../components/page/page-component";
 import "./discord.scss";
+import { Metadata } from "next";
+
+export const metadata: Metadata = { title: "Discord" };
 
 export default async function DiscordPage() {
   return (

@@ -12,7 +12,10 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "MATHSOC",
+  title: {
+    template: "MATHSOC | %s",
+    default: "MATHSOC",
+  },
   description:
     "Official website of the Undergraduate Mathematics Society of the University of Waterloo",
 };

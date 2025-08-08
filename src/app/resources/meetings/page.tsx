@@ -4,6 +4,9 @@ import "./meetings.scss";
 import { generalMeetings } from "./general-meetings";
 import { councilMeetings } from "./council-meetings";
 import { boardMeetings } from "./board-meetings";
+import { Metadata } from "next";
+
+export const metadata: Metadata = { title: "Meetings" };
 
 export default async function MeetingsPage() {
   return (

@@ -3,6 +3,9 @@ import { Banner, BannerTitles } from "../components/banner/banner";
 import { inventory, InventoryItem } from "./inventory";
 import Image from "next/image";
 import "./inventory.scss";
+import { Metadata } from "next";
+
+export const metadata: Metadata = { title: "Inventory" };
 
 export default async function InventoryPage() {
   const novelties = inventory.filter((item) => item.category == "Novelties");

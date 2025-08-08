@@ -5,6 +5,9 @@ import { faNewspaper, IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./policies.scss";
 import { faEye } from "@fortawesome/free-solid-svg-icons/faEye";
+import { Metadata } from "next";
+
+export const metadata: Metadata = { title: "Policies" };
 
 export default async function PoliciesPage() {
   return (

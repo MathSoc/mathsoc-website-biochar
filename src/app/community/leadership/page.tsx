@@ -2,6 +2,9 @@ import { HeadshotGrid } from "@/app/components/headshot-grid/headshot-grid";
 import { MarkdownSection } from "../../components/markdown-section/markdown-section";
 import { Page } from "../../components/page/page-component";
 import { Headshot } from "@/app/components/headshot/headshot";
+import { Metadata } from "next";
+
+export const metadata: Metadata = { title: "Leadership" };
 
 export default async function CouncilPage() {
   return (
