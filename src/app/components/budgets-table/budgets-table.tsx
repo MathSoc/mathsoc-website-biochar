@@ -23,21 +23,17 @@ export const BudgetsTable: React.FC<{ budgets: Budget[] }> = ({ budgets }) => {
             return (
               <tr key={year}>
                 <td className="budget-year">{year}</td>
-                {[winter, spring, fall].map((budget) => {
-                  if (!budget) {
-                    return null;
-                  }
-
-                  return (
-                    <td className="budget-cell" key={budget.path}>
+                {[winter, spring, fall].map((budget, index) => (
+                  <td className="budget-cell" key={index}>
+                    {budget ? (
                       <Link href={budget.path}>
                         <div className="budget">
                           {budget.term} {year}
                         </div>
                       </Link>
-                    </td>
-                  );
-                })}
+                    ) : null}
+                  </td>
+                ))}
               </tr>
             );
           })}
