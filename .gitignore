@@ -40,6 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# vscode??
+ChatGPT_Files
+
 # custom
 mathsoc-website
 package-lock.json
