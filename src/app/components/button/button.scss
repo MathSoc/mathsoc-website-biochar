@@ -22,8 +22,7 @@ a.button:visited {
     background-color: white;
     color: var(--mathsoc-pink);
 
-    a,
-    a:visited {
+    &:visited {
       color: var(--mathsoc-pink);
     }
   }

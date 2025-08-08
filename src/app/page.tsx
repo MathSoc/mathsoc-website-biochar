@@ -6,10 +6,11 @@ import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { Banner } from "./components/banner/banner";
 import { Button } from "./components/button/button";
 import Link from "next/link";
+import { Page } from "./components/page/page-component";
 
 export default function Home() {
   return (
-    <div id="homepage">
+    <Page id="homepage" variant="pink">
       <Banner src="/img/banners/mathsoc-wall.jpeg" variant="pink" size="large">
         <div className="home-content">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -48,23 +49,19 @@ export default function Home() {
           />
         </div>
       </div>
-    </div>
+    </Page>
   );
 }
 
-function SocialButton({
-  href,
-  icon,
-  label,
-}: {
+const SocialButton: React.FC<{
   href: string;
   icon: IconDefinition;
   label: string;
-}) {
+}> = ({ href, icon, label }) => {
   return (
     <Link className="social-button" href={href}>
       <FontAwesomeIcon icon={icon} className="social-icon" size="3x" />
       <span>{label}</span>
     </Link>
   );
-}
+};

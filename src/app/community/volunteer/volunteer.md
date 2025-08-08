@@ -323,8 +323,6 @@ The Secretary has the following duties:
 
 Refer to (Bylaw 8.11) for more information.
 
-Apply Here
-
 ## Board At-Large Director
 
 The Board of Directors is comprised of up to 14 voting members and is responsible for the management of the legal, financial, and human resource concerns of the organization as well as long-term planning (Bylaw 6.1). If interested in this position we recommend checking out Bylaw 6 to learn more about the Board of Directors.

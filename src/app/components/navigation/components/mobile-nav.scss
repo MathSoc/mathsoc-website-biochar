@@ -1,0 +1,118 @@
+@use "../../../sass-mixins" as *;
+
+#mobile-nav {
+  transition: 0.5s ease;
+  overflow: hidden;
+  height: 100%;
+  background-color: white;
+
+  position: fixed;
+  right: 0;
+  z-index: 5;
+  width: 0;
+
+  .nav-logo {
+    height: var(--navbar-height);
+    width: 200px;
+    position: relative;
+  }
+}
+
+@include tablet-down {
+  #mobile-nav {
+    display: block;
+    @include title-font;
+
+    .items {
+      background-color: var(--background);
+
+      margin: 0;
+      padding-left: 0;
+      list-style: none;
+
+      .dropdown {
+        background-color: var(--background);
+        color: var(--mathsoc-pink);
+
+        &:focus {
+          background-color: var(--background-hover);
+        }
+
+        a,
+        a:link,
+        a:visited {
+          color: var(--mathsoc-pink);
+          text-decoration: none;
+        }
+
+        .dropdown-button {
+          padding: 1em;
+          transition: 0.15s;
+          cursor: pointer;
+
+          @include title-font;
+
+          width: 100%;
+          text-align: left;
+
+          &:focus-visible,
+          &:hover {
+            background-color: var(--background-hover);
+          }
+        }
+
+        .dropdown-content {
+          margin: 0;
+          max-height: 0;
+          color: var(--mathsoc-pink);
+          transition: var(--transition);
+          overflow: hidden;
+
+          list-style-type: none;
+          padding-left: 0;
+
+          &.active {
+            max-height: 100%;
+          }
+
+          .sub-button {
+            display: flex;
+            padding: 0;
+
+            a {
+              padding: 1em;
+              padding-left: 3em;
+              width: calc(100% - 2em);
+
+              &:focus {
+                background-color: var(--background-hover);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.active {
+      width: 100%;
+
+      .items {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.skip-to-main-content {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: white;
+  padding: 8px;
+  z-index: 100;
+  transition: top 0.3s ease;
+
+  &:focus {
+    top: 0;
+  }
+}

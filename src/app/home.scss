@@ -45,7 +45,6 @@
 
   .social-buttons {
     display: flex;
-    height: 100px;
 
     .social-button {
       color: var(--inverted-text-color);
@@ -62,32 +61,4 @@
       }
     }
   }
-}
-
-#navbar {
-  position: absolute;
-  z-index: 5;
-
-  #inner-navbar {
-    .nav-logo-container {
-      display: none;
-    }
-
-    .dropdown-button {
-      color: var(--inverted-text-color);
-
-      &:hover,
-      &:focus-visible {
-        color: var(--mathsoc-pink);
-      }
-    }
-  }
-}
-
-body {
-  background-color: var(--mathsoc-pink);
-}
-
-#footer {
-  background-image: none;
 }
