@@ -26,29 +26,44 @@ const Council: React.FC = () => {
           email="s5nayar@uwaterloo.ca"
         />
         <Headshot
-          name="Sara Nayar"
-          position="PMAMC&O Representative"
-          email="s5nayar@uwaterloo.ca"
+          name="Amol Venkataraman"
+          position="Computer Science Representative"
+          email="avenkataraman@uwaterloo.ca"
         />
         <Headshot
-          name="Sara Nayar"
-          position="PMAMC&O Representative"
-          email="s5nayar@uwaterloo.ca"
+          name="Cristian Moretto"
+          position="Computer Science Representative"
+          email="cmoretto@uwaterloo.ca"
         />
         <Headshot
-          name="Sara Nayar"
-          position="PMAMC&O Representative"
-          email="s5nayar@uwaterloo.ca"
+          name="Grace Feng"
+          position="Computer Science Representative"
+          email="g27feng@uwaterloo.ca"
         />
         <Headshot
-          name="Sara Nayar"
-          position="PMAMC&O Representative"
-          email="s5nayar@uwaterloo.ca"
+          name="Faraan Hadi"
+          position="Computer Science Representative"
+          email="faraan.hadi@uwaterloo.ca"
         />
         <Headshot
-          name="Sara Nayar"
-          position="PMAMC&O Representative"
-          email="s5nayar@uwaterloo.ca"
+          name="Saivenkat Jilla"
+          position="Computer Science Representative"
+          email="sljilla@uwaterloo.ca"
+        />
+        <Headshot
+          name="Alex Lavallee"
+          position="At-Large Representative"
+          email="a2lavallee@uwaterloo.ca"
+        />
+        <Headshot
+          name="Alina Hu"
+          position="At-Large Representative"
+          email="alina.hu@uwaterloo.ca"
+        />
+        <Headshot
+          name="River Stanley"
+          position="At-Large Representative"
+          email="river.stanley@uwaterloo.ca"
         />
       </HeadshotGrid>
     </div>
@@ -66,6 +81,16 @@ const Board: React.FC = () => {
           name="Awab Qureshi"
           position="Chair, At-Large Director"
           email="chair@mathsoc.uwaterloo.ca"
+        />
+        <Headshot
+          name="Grace Feng"
+          position="At-Large Director"
+          email="g27feng@uwaterloo.ca"
+        />
+        <Headshot
+          name="Jack Whittick"
+          position="At-Large Director"
+          email="jbwhitti@uwaterloo.ca"
         />
       </HeadshotGrid>
     </div>

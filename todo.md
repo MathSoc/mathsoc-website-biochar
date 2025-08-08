@@ -1,8 +1,7 @@
 - resolve all @todos
 - populate meetings lists
-- populate councillor lists
 - populate budgets
-- link to club websites instead of using given descriptions
 - document infrastructure
 - document words of the wise(?) and old
-- clean up mobile nav
+
+- link to club websites instead of using given descriptions
