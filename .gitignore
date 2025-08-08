@@ -42,3 +42,4 @@ next-env.d.ts
 
 # custom
 mathsoc-website
+package-lock.json
