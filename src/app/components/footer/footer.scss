@@ -1,3 +1,5 @@
+@use "../../sass-mixins" as *;
+
 #footer {
   background-color: var(--mathsoc-pink);
   color: white;
@@ -10,7 +12,7 @@
     margin: auto;
   }
 
-  @media (max-width: 768px) {
+  @include tablet-down {
     flex-direction: column;
     padding: 0px 50px;
   }
@@ -20,7 +22,7 @@
     padding-bottom: 20px;
     font-weight: 600;
 
-    @media (max-width: 768px) {
+    @include tablet-down {
       padding-top: 20px;
       padding-bottom: 15px;
     }
@@ -37,19 +39,27 @@
     flex-direction: row;
     justify-content: space-between;
 
-    @media (max-width: 768px) {
-      flex-direction: column;
-      padding: 10px 50px;
+    @include tablet-down {
+      text-align: center;
+      width: 100%;
+      flex-grow: 1;
+      justify-content: center;
     }
-    @media (max-width: 487px) {
-      padding: 5px 40px;
+  }
+
+  .bottom {
+    @include tablet-down {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
     }
   }
 
   .link-section,
   .social-section {
-    @media (max-width: 768px) {
+    @include tablet-down {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       padding: 10px 0;
     }
@@ -59,8 +69,10 @@
     display: flex;
     align-items: center;
     gap: 50px;
-    @media (max-width: 768px) {
+
+    @include tablet-down {
       flex-grow: 1;
+      gap: 24px;
     }
   }
 
@@ -73,6 +85,10 @@
     display: flex;
     gap: 16px;
     padding-top: 8px;
+
+    @include tablet-down {
+      flex-direction: column;
+    }
 
     .social-icon {
       $size: 32px;

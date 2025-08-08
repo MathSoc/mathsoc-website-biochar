@@ -15,7 +15,7 @@ export default function Footer() {
           <b>© {currentYear} Mathsoc</b>
         </div>
         <hr />
-        <div className="section">
+        <div className="section bottom">
           <div className="link-section">
             <Link href="/">Home</Link>
             <Link href="/community/contact-us">Contact</Link>
