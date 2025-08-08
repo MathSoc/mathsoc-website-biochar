@@ -2,7 +2,7 @@ import { Banner, BannerTitles } from "@/app/components/banner/banner";
 import { Page } from "../../components/page/page-component";
 import "./elections.scss";
 import { Button } from "@/app/components/button/button";
-import { Row } from "@/app/components/layout/layout";
+import { Row } from "@/app/components/layout/layout-components";
 
 export default async function ElectionsPage() {
   return (

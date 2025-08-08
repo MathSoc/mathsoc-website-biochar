@@ -4,3 +4,5 @@
 - populate budgets
 - link to club websites instead of using given descriptions
 - fix mobile menu
+- document infrastructure
+- document words of the wise(?) and old

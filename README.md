@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
 ## Getting Started
 
-First, run the development server:
+### For experienced developers
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+1. `npm install`
+2. `npm run dev`
+
+### For absolute newcomers
+
+Welcome! You'll need a few things to start development.
+
+First, you need to get this code copied to your computer. We do so using `git`, a program you were or will be taught about in CS 136L. If you're unfamiliar with it, ask any upper-year CS student for help.
+
+With `git` installed, we need to first install NodeJS. You can do so either
+
+- From the NodeJS website [here](https://nodejs.org/en)
+- Or, by downloading the most recent edition through Node Version Manager (nvm), [found here](https://github.com/nvm-sh/nvm)
+
+Once that's done, open your terminal / console / command prompt, and type `node -v`. You should see it produce something like the following:
+
+```sh
+$ v22.16.0
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Don't worry if it's not exactly like that; the important part is that the command is recognized at all.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Next, you'll need to install the packages we need for this project. Type the following into your terminal (ensure you are connected to Wifi while doing so):
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```sh
+npm install
+```
 
-## Learn More
+This will run for a little while, creating and populating a `node_modules` folder within your local codebase.
 
-To learn more about Next.js, take a look at the following resources:
+Finally, to run the website, enter
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```sh
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+You should see something like the below appear in your terminal:
 
-## Deploy on Vercel
+```sh
+> mathsoc-website@0.1.0 dev
+> next dev --turbopack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ▲ Next.js 15.4.5 (Turbopack)
+   - Local:        http://localhost:3000
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+
+Follow the link it gives you (likely http://localhost:3000) to see the website.
