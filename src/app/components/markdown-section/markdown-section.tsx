@@ -10,10 +10,9 @@ export const MarkdownSection: React.FC<{ src: string }> = async ({ src }) => {
   return (
     <div className="markdown-section">
       <div className="inner-contents">
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          children={contents.toString()}
-        />
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {contents.toString()}
+        </ReactMarkdown>
       </div>
     </div>
   );
