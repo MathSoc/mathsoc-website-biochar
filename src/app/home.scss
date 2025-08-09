@@ -23,12 +23,14 @@
     .section-head {
       font-size: 2.5em;
     }
+  }
 
-    #logo {
-      display: block;
-      text-align: center;
-      width: 80vw;
-    }
+  #logo {
+    display: block;
+    text-align: center;
+    width: 80vw;
+    height: 300px;
+    position: relative;
   }
 
   .homepage-buttons,
@@ -37,7 +39,7 @@
     gap: 60px;
     text-decoration: none;
 
-    @include tablet-down {
+    @include phone-down {
       flex-direction: column;
       gap: 10px;
     }

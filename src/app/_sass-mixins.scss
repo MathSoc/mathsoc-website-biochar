@@ -4,6 +4,12 @@
   }
 }
 
+@mixin phone-down() {
+  @media only screen and (max-width: 500px) {
+    @content;
+  }
+}
+
 @mixin title-font() {
   font-family: var(--title-font);
   text-transform: uppercase;

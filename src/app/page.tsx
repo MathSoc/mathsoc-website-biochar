@@ -7,19 +7,20 @@ import { Banner } from "./components/banner/banner";
 import { Button } from "./components/button/button";
 import Link from "next/link";
 import { Page } from "./components/page/page-component";
+import Image from "next/image";
 
 export default function Home() {
   return (
     <Page id="homepage" variant="pink">
       <Banner src="/img/banners/mathsoc-wall.jpeg" variant="pink" size="large">
-        <div className="home-content">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+        <div id="logo">
+          <Image
             src="/img/logos/horizontal-logo-white.svg"
             alt="Mathsoc Logo"
-            id="logo"
-            // fill
+            fill
           />
+        </div>
+        <div className="home-content">
           <div className="homepage-buttons">
             <Button href="/community/volunteer">Get Involved</Button>
             <Button href="https://services.mathsoc.uwaterloo.ca/resources/exam-bank">
