@@ -13,11 +13,13 @@ export default async function ElectionsPage() {
       <Banner src="/img/banners/pinktie-mc.jpeg" variant="pink" size="large">
         <BannerTitles title="Elections" />
         <Row>
-          <Button href="/resources/elections/candidates">
+          <Button href="/resources/elections/candidates" variant="white">
             Current candidates
           </Button>
 
-          <Button href="/resources/elections/results">Election results</Button>
+          <Button href="/resources/elections/results" variant="white">
+            Election results
+          </Button>
         </Row>
       </Banner>
     </Page>

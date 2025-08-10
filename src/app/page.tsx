@@ -22,8 +22,13 @@ export default function Home() {
         </div>
         <div className="home-content">
           <div className="homepage-buttons">
-            <Button href="/community/volunteer">Get Involved</Button>
-            <Button href="https://services.mathsoc.uwaterloo.ca/resources/exam-bank">
+            <Button href="/community/volunteer" variant="white">
+              Get Involved
+            </Button>
+            <Button
+              href="https://services.mathsoc.uwaterloo.ca/resources/exam-bank"
+              variant="white"
+            >
               Exam Bank
             </Button>
           </div>
