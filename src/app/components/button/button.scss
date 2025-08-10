@@ -4,17 +4,38 @@
 a.button,
 a.button:visited {
   padding: 16px 60px;
-  color: white;
   border: 1px solid white;
   text-decoration: none !important;
   transition: 0.15s linear;
   margin: 16px;
   display: block;
-
+  width: 120px;
+  text-align: center;
   @include title-font;
 
-  &:visited {
+  &.pink {
+    color: var(--mathsoc-pink);
+    border-color: var(--mathsoc-pink);
+    &:visited {
+      color: var(--mathsoc-pink);
+    }
+
+    &:hover,
+    &:focus {
+      background-color: var(--mathsoc-pink);
+      color: white !important;
+
+      &:visited {
+        color: white !important;
+      }
+    }
+  }
+
+  &.white {
     color: white;
+    &:visited {
+      color: white;
+    }
   }
 
   &:hover,

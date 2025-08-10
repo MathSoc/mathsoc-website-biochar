@@ -15,8 +15,13 @@
     flex-direction: column;
     text-align: center;
     min-height: 160px;
-    width: 120px;
+    width: 160px;
     margin: auto;
+
+    .image-container {
+      min-height: 160px;
+      position: relative;
+    }
 
     .item-image {
       margin: auto;
@@ -35,5 +40,13 @@
       display: block;
       font-size: 0.8em;
     }
+  }
+
+  .board-games-list {
+    width: 100%;
+  }
+
+  .button {
+    margin: 16px auto;
   }
 }

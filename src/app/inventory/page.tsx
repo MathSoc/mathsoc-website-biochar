@@ -4,8 +4,12 @@ import { inventory, InventoryItem } from "./inventory";
 import Image from "next/image";
 import "./inventory.scss";
 import { Metadata } from "next";
+import { Button } from "../components/button/button";
 
 export const metadata: Metadata = { title: "Inventory" };
+
+const BOARD_GAMES_LINK =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQNCB57mU5TYuwKd5gbiqUGVa7DI8_KsCg_QYdUzZsgXHSIrnZR8QIfARNM0gc7PjkdvaPwwYZhlYTw/pubhtml?widget=true&amp;headers=false";
 
 export default async function InventoryPage() {
   const novelties = inventory.filter((item) => item.category == "Novelties");
@@ -23,6 +27,10 @@ export default async function InventoryPage() {
       <h1>Novelties</h1>
       <InventorySection items={novelties} />
       <h1>Board games</h1>
+      <BoardGameSheet />
+      <Button href={BOARD_GAMES_LINK} variant="pink">
+        Fullscreen
+      </Button>
       <h1>Stationary</h1>
       <InventorySection items={stationary} />
     </Page>
@@ -59,15 +67,26 @@ const priceFormatter = new Intl.NumberFormat("en-CA", {
 
 const InventoryItemCard: React.FC<{ item: InventoryItem }> = ({ item }) => (
   <div className="inventory-item">
-    <Image
-      className="item-image"
-      src={item.image ?? "/img/logos/tie-icon.svg"}
-      alt=""
-      width={80}
-      height={80}
-    />
+    <div className="image-container">
+      <Image
+        className="item-image"
+        src={item.image ?? "/img/logos/tie-icon.svg"}
+        alt=""
+        fill
+        objectFit="contain"
+      />
+    </div>
     <div className="gap"></div>
     <span className="item-name">{item.name}</span>
     <span className="item-price">{priceFormatter.format(item.price)}</span>
   </div>
+);
+
+const BoardGameSheet = () => (
+  <iframe
+    src={BOARD_GAMES_LINK}
+    width="1000"
+    height="600"
+    className="board-games-list"
+  />
 );
