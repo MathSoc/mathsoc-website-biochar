@@ -9,14 +9,18 @@ export const metadata: Metadata = { title: "CnD" };
 export default async function CndPage() {
   return (
     <Page id="cnd-page" variant="pink">
-      {/* @todo update this to a photo of cnd */}
-      <Banner src="/img/banners/board-games.jpeg" variant="pink" size="large">
-        <BannerTitles title={getDailySpecial()} pretitle="Today's Special" />
+      <Banner src="/img/banners/cnd.jpg" variant="pink" size="large">
+        <BannerTitles
+          title={getDailySpecial()}
+          pretitle={isOpen() ? "Today's Special" : undefined}
+        />
       </Banner>
       <MarkdownSection src="src/app/services/cnd/cnd.md" />
     </Page>
   );
 }
+
+const isOpen = () => new Date().getDay() !== 0 && new Date().getDay() !== 6;
 
 const getDailySpecial = () => {
   const today = new Date().getDay();
@@ -25,7 +29,7 @@ const getDailySpecial = () => {
     case 0:
     case 6:
     default: {
-      return "closed :(";
+      return "closed today :(";
     }
     case 1: {
       return "Mac 'n cheese";
