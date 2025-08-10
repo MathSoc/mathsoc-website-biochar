@@ -27,6 +27,7 @@ const Council: React.FC = () => {
           name="Sara Nayar"
           position="PMAMC&O Representative"
           email="s5nayar@uwaterloo.ca"
+          image="/img/councillor-images/snayar.jpg"
         />
         <Headshot
           name="Amol Venkataraman"
@@ -42,6 +43,7 @@ const Council: React.FC = () => {
           name="Grace Feng"
           position="Computer Science Representative"
           email="g27feng@uwaterloo.ca"
+          image="/img/councillor-images/gfeng.jpg"
         />
         <Headshot
           name="Faraan Hadi"
@@ -52,6 +54,7 @@ const Council: React.FC = () => {
           name="Saivenkat Jilla"
           position="Computer Science Representative"
           email="sljilla@uwaterloo.ca"
+          image="/img/councillor-images/sjilla.jpg"
         />
         <Headshot
           name="Alex Lavallee"
@@ -84,16 +87,30 @@ const Board: React.FC = () => {
           name="Awab Qureshi"
           position="Chair, At-Large Director"
           email="chair@mathsoc.uwaterloo.ca"
+          image="/img/councillor-images/aqureshi.webp"
         />
         <Headshot
           name="Grace Feng"
           position="At-Large Director"
           email="g27feng@uwaterloo.ca"
+          image="/img/councillor-images/gfeng.jpg"
         />
         <Headshot
           name="Jack Whittick"
           position="At-Large Director"
           email="jbwhitti@uwaterloo.ca"
+          image="/img/councillor-images/jwhittick.jpg"
+        />
+        <Headshot
+          name="Danya Matlin"
+          position="Community Representative"
+          email="dmatlin@uwaterloo.ca"
+        />
+        <Headshot
+          name="John Hunte"
+          position="Community Representative"
+          email="jphunte@uwaterloo.ca"
+          image="/img/councillor-images/jhunte.jpg"
         />
       </HeadshotGrid>
     </div>

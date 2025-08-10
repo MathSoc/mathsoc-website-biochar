@@ -6,6 +6,13 @@
   align-items: center;
   width: 200px;
 
+  .headshot-container {
+    width: 150px;
+    height: 150px;
+    margin: 20px;
+    position: relative;
+  }
+
   .headshot-name {
     text-transform: uppercase;
     font-size: 1.2em;
