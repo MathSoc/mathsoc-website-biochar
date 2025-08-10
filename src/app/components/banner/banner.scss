@@ -1,4 +1,6 @@
 .banner {
+  overflow: hidden;
+
   .banner-placeholder,
   .banner-container {
     height: 400px;
@@ -16,7 +18,7 @@
     position: absolute;
     justify-content: center;
     align-items: center;
-    width: 100vw;
+    width: 100%;
     left: 0;
   }
 
