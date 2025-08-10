@@ -20,10 +20,10 @@ a.button:visited {
   &:hover,
   &:focus {
     background-color: white;
-    color: var(--mathsoc-pink);
+    color: var(--mathsoc-pink) !important;
 
     &:visited {
-      color: var(--mathsoc-pink);
+      color: var(--mathsoc-pink) !important;
     }
   }
 }
