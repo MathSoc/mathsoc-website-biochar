@@ -1,9 +1,9 @@
 import { HeadshotGrid } from "@/app/components/headshot-grid/headshot-grid";
 import { MarkdownSection } from "../../components/markdown-section/markdown-section";
 import { Page } from "../../components/page/page-component";
-import { ExecutiveGrid } from "../leadership/page";
 import { Headshot } from "@/app/components/headshot/headshot";
 import { Metadata } from "next";
+import { ExecutiveGrid } from "../leadership/components/executive-grid";
 
 export const metadata: Metadata = { title: "Contact us" };
 
