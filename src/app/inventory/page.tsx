@@ -73,7 +73,6 @@ const InventoryItemCard: React.FC<{ item: InventoryItem }> = ({ item }) => (
         src={item.image ?? "/img/logos/tie-icon.svg"}
         alt=""
         fill
-        objectFit="contain"
       />
     </div>
     <div className="gap"></div>

@@ -18,7 +18,7 @@ export const Banner: React.FC<{
           fill
           className="banner-image"
           objectFit="cover"
-        ></Image>
+        />
         <div className="banner-contents">
           <div className="centerer">{children}</div>
         </div>

@@ -21,6 +21,10 @@
     .image-container {
       min-height: 160px;
       position: relative;
+
+      img {
+        object-fit: contain;
+      }
     }
 
     .item-image {
