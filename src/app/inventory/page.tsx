@@ -72,6 +72,7 @@ const InventoryItemCard: React.FC<{ item: InventoryItem }> = ({ item }) => (
         className="item-image"
         src={item.image ?? "/img/logos/tie-icon.svg"}
         alt=""
+        sizes="(max-width: 400px) 100vw"
         fill
       />
     </div>

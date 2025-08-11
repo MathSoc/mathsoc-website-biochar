@@ -12,13 +12,7 @@ export const Banner: React.FC<{
       className={`banner ${variant} ${size === "large" ? "height-full" : ""}`}
     >
       <div className={`banner-container`}>
-        <Image
-          src={imgPath}
-          alt=""
-          fill
-          className="banner-image"
-          objectFit="cover"
-        />
+        <Image src={imgPath} alt="" fill className="banner-image" />
         <div className="banner-contents">
           <div className="centerer">{children}</div>
         </div>
