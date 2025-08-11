@@ -8,3 +8,4 @@
 # postlaunch
 
 - link to club websites instead of using given descriptions
+- dockerize server configuration
