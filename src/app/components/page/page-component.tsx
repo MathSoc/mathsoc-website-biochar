@@ -1,6 +1,7 @@
 import React from "react";
-import "./page.scss";
 import Head from "next/head";
+import { MinimalPage } from "./minimal-page";
+import "./page.scss";
 
 export const Page: React.FC<{
   children: React.ReactNode;
@@ -12,9 +13,9 @@ export const Page: React.FC<{
       <Head>
         <title>{id}</title>
       </Head>
-      <div className={`page ${variant}`} id={id}>
-        <div className="page-inner">{children}</div>
-      </div>
+      <MinimalPage id={id} variant={variant}>
+        {children}
+      </MinimalPage>
     </>
   );
 };

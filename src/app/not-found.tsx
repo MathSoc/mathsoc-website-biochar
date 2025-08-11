@@ -1,14 +1,17 @@
+import { MinimalPage } from "./components/page/minimal-page";
 import "./components/page/page.scss";
 
-// somehow, importing any react component into this file
-// breaks all subsequent imports of that component across the site.
-// i cannot fathom why. beware.
+/**
+ * BEWARE: importing any file into this component, where the imported file
+ * itself imports a stylesheet, will cause that stylesheet to break
+ * literally everywhere else on the site. for some reason.
+ */
 export default function NotFound() {
   return (
-    <div className="page">
+    <MinimalPage id="not-found-page">
       <div className="page-inner">
-        <h2>Page not found :(</h2>
+        <h2>Page not found</h2>
       </div>
-    </div>
+    </MinimalPage>
   );
 }
