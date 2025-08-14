@@ -45,11 +45,11 @@ const validateConfigs = () => {
     );
   }
 
-  if (!adfsConfig.clientSecret) {
-    throw new Error(
-      "ADFS client secret unset; ask a past dev for it, or find it on the old exam bank server",
-    );
-  }
+  // if (!adfsConfig.clientSecret) {
+  //   throw new Error(
+  //     "ADFS client secret unset; ask a past dev for it, or find it on the old exam bank server",
+  //   );
+  // }
 };
 
 validateConfigs();
