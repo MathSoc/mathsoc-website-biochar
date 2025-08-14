@@ -11,7 +11,7 @@ export default async function ProtectedPage() {
       <form
         action={async () => {
           "use server";
-          signIn();
+          await signIn();
         }}
       >
         <button type="submit">Signin with Google</button>
@@ -20,7 +20,7 @@ export default async function ProtectedPage() {
       <form
         action={async () => {
           "use server";
-          signOut();
+          await signOut();
         }}
       >
         <button type="submit">Sign out</button>
