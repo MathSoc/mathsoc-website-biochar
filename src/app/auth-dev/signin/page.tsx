@@ -8,7 +8,7 @@ export default async function ProtectedPage() {
   return (
     <Page id="test-page-2">
       <form
-        action={() => {
+        action={async () => {
           "use server";
           signIn();
         }}
@@ -17,7 +17,7 @@ export default async function ProtectedPage() {
       </form>
 
       <form
-        action={() => {
+        action={async () => {
           "use server";
           signOut();
         }}
