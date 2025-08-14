@@ -11,10 +11,19 @@ export default async function ProtectedPage() {
       <form
         action={async () => {
           "use server";
-          await signIn();
+          await signIn("google");
         }}
       >
-        <button type="submit">Signin with Google</button>
+        <button type="submit">Sign in with Google</button>
+      </form>
+
+      <form
+        action={async () => {
+          "use server";
+          await signIn("azure-ad");
+        }}
+      >
+        <button type="submit">Sign in with ADFS</button>
       </form>
 
       <form
