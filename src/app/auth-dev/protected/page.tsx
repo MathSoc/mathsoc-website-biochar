@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { auth } from "../../../../auth";
 import { Page } from "../../components/page/page-component";
 
@@ -7,6 +8,9 @@ export const metadata: Metadata = { title: "auth test" };
 
 export default async function ProtectedPage() {
   const session = await auth();
+  if (!session) {
+    redirect("/auth-dev/signin");
+  }
 
   return (
     <Page id="council-page">
