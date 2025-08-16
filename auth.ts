@@ -56,7 +56,7 @@ validateConfigs();
 export const { auth, signIn, signOut, handlers } = NextAuth({
   ...authConfig,
   providers: [
-    Google(googleConfig),
+    // Google(googleConfig),
     {
       id: "uw-adfs", // signIn(<id>)
       name: "University of Waterloo ADFS", // optional
