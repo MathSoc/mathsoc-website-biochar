@@ -20,7 +20,7 @@ export default async function ProtectedPage() {
       <form
         action={async () => {
           "use server";
-          await signIn("azure-ad");
+          await signIn("uw-adfs");
         }}
       >
         <button type="submit">Sign in with ADFS</button>
