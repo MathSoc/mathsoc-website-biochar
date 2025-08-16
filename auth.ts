@@ -61,7 +61,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
       id: "uw-adfs", // signIn(<id>)
       name: "University of Waterloo ADFS", // optional
       type: "oidc",
-      issuer: "https://adfs.uwaterloo.ca/adfs/",
+      issuer: "https://adfs.uwaterloo.ca/adfs",
       clientId: microsoftConfig.clientId,
     },
   ],
