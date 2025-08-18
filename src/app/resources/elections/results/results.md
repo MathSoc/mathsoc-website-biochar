@@ -167,7 +167,7 @@ Note: This constituency was originally competitive. However, within 24 hours of 
 - Dundee Zhang
 - Melody Ge
 
-The raw ballot data can be found at this link, and the output log of the Single Transferable Vote (STV) vote count can be found at this link. The vote count was run using STV-rs, an open-source STV system which uses Meek’s Method, a detail which ensured all seats were filled with candidates.Ties were broken with the use of a tiebreaker ballot provided ahead of the voting period, as defined and required by MathSoc Policy 1.5.5.
+The raw ballot data can be found at [this link](https://drive.google.com/file/d/1ahGVIdeyXPmWW8YwUWd97Wlqzk3Ri_zF/view), and the output log of the Single Transferable Vote (STV) vote count can be found at [this link](https://drive.google.com/file/d/1zWP0s4uoVGwnjrtL-JpWVPhNvvSs83t0/view). The vote count was run using STV-rs, an open-source STV system which uses Meek’s Method, a detail which ensured all seats were filled with candidates. Ties were broken with the use of a tiebreaker ballot provided ahead of the voting period, as defined and required by MathSoc Policy 1.5.5.
 
 ## At-Large Representatives (acclaimed)
 
@@ -273,7 +273,7 @@ Note: This constituency was originally competitive. However, partway through the
 
 Note: One candidate was disqualified because they did not submit an expense report. They were marked as “withdrawn” in the input for the program (and this can be seen in the output log), effectively removing them from the count. For this reason, the Computer Science Representative election had 75 ballots, but the output log indicates there were just 62. The program removed 13 ballots which included only the withdrawn candidate in their rankings.
 
-The raw ballot data for the Computer Science constituency can be found at this link, and the output log of the Single Transferrable Vote (STV) vote count can be found at this link. The vote count was run using STV-rs, an open-source STV system which uses Meek’s Method, a detail which ensured all seats were filled with candidates. Ties were broken with the use of a tiebreaker ballot provided ahead of the voting period, as defined and required by MathSoc Policy 1.5.5.
+The raw ballot data for the Computer Science constituency can be found at [this link](https://drive.google.com/file/d/1uaJW96WKZpvd7P3UMd_aaBy1LoSrk81M/view?usp=sharing), and the output log of the Single Transferrable Vote (STV) vote count can be found at [this link](https://drive.google.com/file/d/1uY2Ogf0zeYnVgxVnvvqHpQzyDF_7SoW_/view?usp=sharing). The vote count was run using STV-rs, an open-source STV system which uses Meek’s Method, a detail which ensured all seats were filled with candidates. Ties were broken with the use of a tiebreaker ballot provided ahead of the voting period, as defined and required by MathSoc Policy 1.5.5.
 
 ## Business Representatives (acclaimed)
 
@@ -287,7 +287,7 @@ The raw ballot data for the Computer Science constituency can be found at this l
 - Sara Nayar
 - Vincent Chen
 
-The raw ballot data for the At-Large constituency can be found at this link, and the output log of the Single Transferable Vote (STV) vote count can be found at this link. The vote count was run using STV-rs, an open-source STV system which uses Meek’s Method, a detail which ensured all seats were filled with candidates. Ties were broken with the use of a tiebreaker ballot provided ahead of the voting period, as defined and required by MathSoc Policy 1.5.5.
+The raw ballot data for the At-Large constituency can be found at [this link](https://drive.google.com/file/d/1ECOspQS_fNfrZ4l5k7KdVEg4afhJQvBw/view?usp=drive_link), and the output log of the Single Transferable Vote (STV) vote count can be found at [this link](https://drive.google.com/file/d/1_igQaA06ynICZ_UAUHZjW2N1_xLdy0_e/view?usp=sharing). The vote count was run using STV-rs, an open-source STV system which uses Meek’s Method, a detail which ensured all seats were filled with candidates. Ties were broken with the use of a tiebreaker ballot provided ahead of the voting period, as defined and required by MathSoc Policy 1.5.5.
 
 Note: E-Therng Lee was originally elected as an At-Large Representative, and forfeited that seat to fill the seat of Vice-President, Academic after the special by-election, as per MathSoc’s Bylaw 9.5.
 
@@ -356,7 +356,7 @@ For our First-Year representative seat, we had 203 voters (casting 196 ballots a
 - Fahmi Omer
 - Vincent Chen
 
-The raw ballot data can be found at this link, and the output log of the Single Transferable Vote (STV) vote count can be found at this link. The vote count was run using STV-rs, an open-source STV system which uses Meek’s Method, a detail which ensured all seats were filled with candidates. Ties were broken with the use of a tiebreaker ballot provided ahead of the voting period, as defined and required by MathSoc Policy 1.5.5.
+The raw ballot data can be found at [this link](https://drive.google.com/file/d/1kl3UJNff4hYHxt19lL2-MmV3S-Ef3Yeh/view), and the output log of the Single Transferable Vote (STV) vote count can be found at [this link](https://drive.google.com/file/d/14Llhb3Uf4xTmiLQoPlKJSAIBZmODh728/view). The vote count was run using STV-rs, an open-source STV system which uses Meek’s Method, a detail which ensured all seats were filled with candidates. Ties were broken with the use of a tiebreaker ballot provided ahead of the voting period, as defined and required by MathSoc Policy 1.5.5.
 
 Note: Several candidates were disqualified because they did not submit an expense report. They were marked as “withdrawn” in the input for the program (and this can be seen in the output log), effectively removing them from the count. For this reason, while there were 196 ballots, the output log indicates there were just 192, since the program removed 4 ballots which included only those candidates in their rankings.
 
