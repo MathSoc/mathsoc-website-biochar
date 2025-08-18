@@ -1,21 +1,35 @@
-.exams-table {
-  text-transform: uppercase;
-  font-size: 0.8rem;
+.exams-table-container {
+  margin-top: 32px;
 
-  th {
-    font-weight: 300;
-    text-align: left;
-  }
-
-  .exam-name,
-  .exam-term,
-  .exam-type {
-    white-space: nowrap;
-  }
-
-  .button {
-    margin: 4px;
-
+  .exams-query {
     width: 100%;
+    font-size: 1rem;
+    text-align: center;
+
+    &::placeholder {
+      color: #aaaaaa; // to fit with the exam season vibe
+    }
+  }
+
+  .exams-table {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+
+    th {
+      font-weight: 300;
+      text-align: left;
+    }
+
+    .exam-name,
+    .exam-term,
+    .exam-type {
+      white-space: nowrap;
+    }
+
+    .button {
+      margin: 4px;
+
+      width: 100%;
+    }
   }
 }
