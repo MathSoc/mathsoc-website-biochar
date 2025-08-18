@@ -1,4 +1,4 @@
-import { MeetingsTables } from "@/app/components/meetings-tables/meetings-tables";
+import { MeetingsTables } from "@/app/components/tables/meetings-tables/meetings-tables";
 import { Page } from "../../components/page/page-component";
 import "./meetings.scss";
 import { generalMeetings } from "./general-meetings";

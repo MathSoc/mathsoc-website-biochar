@@ -1,4 +1,4 @@
-import { Meeting } from "@/app/components/meetings-tables/meetings-tables";
+import { Meeting } from "@/app/components/tables/meetings-tables/meetings-tables";
 
 export const councilMeetings: Meeting[] = [
   {
