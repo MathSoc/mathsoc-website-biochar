@@ -48,6 +48,10 @@ p {
   overflow-wrap: break-word;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 a,
 a:hover,
 a:visited {
