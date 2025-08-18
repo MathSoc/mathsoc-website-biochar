@@ -85,6 +85,10 @@ textarea {
   color: var(--text-color);
 
   font-family: var(--primary-font);
+
+  &::placeholder {
+    color: #aaaaaa;
+  }
 }
 
 section:last-child {
@@ -110,6 +114,13 @@ table {
   width: 100%;
   margin: 24px 0;
   border-collapse: collapse;
+  font-size: 0.8rem;
+
+  th {
+    text-transform: uppercase;
+    font-weight: 300;
+    text-align: left;
+  }
 
   td,
   th {

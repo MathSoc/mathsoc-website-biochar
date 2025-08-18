@@ -1,0 +1,16 @@
+.exam-uploads {
+  #exam-file-input {
+    width: 100%;
+    text-transform: uppercase;
+  }
+
+  .file-uploads-table {
+    input {
+      width: 100px;
+    }
+
+    .file-name {
+      white-space: nowrap;
+    }
+  }
+}
