@@ -12,12 +12,12 @@ export default async function MeetingsPage() {
   return (
     <Page id="meetings-page">
       <h1>Meetings</h1>
-      <h2>Council</h2>
-      <MeetingsTables meetings={councilMeetings} divideBy="term" />
-      <h2>Board</h2>
-      <MeetingsTables meetings={boardMeetings} divideBy="term" />
       <h2>General meetings</h2>
       <MeetingsTables meetings={generalMeetings} divideBy="year" />
+      <h2>Board</h2>
+      <MeetingsTables meetings={boardMeetings} divideBy="term" />
+      <h2>Council</h2>
+      <MeetingsTables meetings={councilMeetings} divideBy="term" />
     </Page>
   );
 }
