@@ -8,6 +8,8 @@ import {
   head,
   HeadBlobResult,
 } from "@vercel/blob";
+
+// @todo clean this up
 import mockExamsList from "@/app/resources/exam-bank/mock-exams-list.json";
 
 const EXAM_LIST_NAME = "exams-list.json";
