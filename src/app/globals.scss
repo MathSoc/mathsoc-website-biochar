@@ -64,6 +64,8 @@ button {
   font-size: inherit;
   font-family: var(--primary-font);
   color: var(--text-color);
+  box-sizing: border-box;
+  cursor: pointer;
 }
 
 $input-padding: 8px;
@@ -118,6 +120,10 @@ table {
   }
 
   tbody {
+    tr:nth-child(odd) {
+      background-color: var(--background);
+    }
+
     tr:nth-child(even) {
       background-color: var(--background-2);
     }

@@ -1,5 +1,5 @@
 // e.g. 1219 => Fall 2021
-export const TermNumberToString = (term: number) => {
+export const termNumberToString = (term: number) => {
   const yearsSince1900 = Math.floor(term / 10);
   const month = term % 10;
 

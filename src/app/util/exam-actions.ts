@@ -10,7 +10,7 @@ import {
 } from "@vercel/blob";
 
 // @todo clean this up
-import mockExamsList from "@/app/resources/exam-bank/mock-exams-list.json";
+import mockExamsList from "./mock-exams-list.json";
 
 const EXAM_LIST_NAME = "exams-list.json";
 
@@ -27,6 +27,8 @@ export type Exam = {
   examUrl?: string;
   solutionUrl?: string;
 };
+
+export const voidAction = async () => {};
 
 export const listExamsAction = async (): Promise<Exam[]> => {
   if (process.env.NODE_ENV == "development") {

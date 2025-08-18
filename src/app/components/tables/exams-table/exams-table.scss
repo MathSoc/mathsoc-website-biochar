@@ -1,0 +1,21 @@
+.exams-table {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+
+  th {
+    font-weight: 300;
+    text-align: left;
+  }
+
+  .exam-name,
+  .exam-term,
+  .exam-type {
+    white-space: nowrap;
+  }
+
+  .button {
+    margin: 4px;
+
+    width: 100%;
+  }
+}
