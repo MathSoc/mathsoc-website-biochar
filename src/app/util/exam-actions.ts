@@ -1,21 +1,12 @@
 "use server";
 
-import {
-  put,
-  list,
-  ListBlobResult,
-  ListBlobResultBlob,
-  head,
-  HeadBlobResult,
-} from "@vercel/blob";
-
-// @todo clean this up
+import { EXAMS_BUCKET_NAME } from "./exam-config";
 import mockExamsList from "./mock-exams-list.json";
+import { Storage } from "@google-cloud/storage";
 
 const EXAM_LIST_NAME = "exams-list.json";
 
 export type ExamFile = {
-  url: string;
   name: string;
   uploadedAt: string;
 };
@@ -24,26 +15,27 @@ export type Exam = {
   name: string;
   uploadedAt: string;
 
-  examUrl?: string;
-  solutionUrl?: string;
+  examFile?: string;
+  solutionFile?: string;
 };
 
 export const voidAction = async () => {};
+
+const storage = new Storage();
 
 export const listExamsAction = async (): Promise<Exam[]> => {
   if (process.env.NODE_ENV == "development") {
     return mockExamsList as Exam[];
   }
 
-  console.warn(`Querying Vercel for exams list!`);
+  console.warn(`Querying Google for exams list!`);
+  const examList = await storage
+    .bucket(EXAMS_BUCKET_NAME)
+    .file(EXAM_LIST_NAME)
+    .download()
+    .then((res) => res.toString());
 
-  const examListMetadata: HeadBlobResult = await head(EXAM_LIST_NAME);
-
-  const exams: Exam[] = await fetch(examListMetadata.url).then((res) =>
-    res.json(),
-  );
-
-  return exams;
+  return JSON.parse(examList);
 };
 
 // @todo protect this with authentication
@@ -53,16 +45,13 @@ export const regenerateExamsListAction = async (): Promise<Exam[]> => {
     throw new Error(`Do not regenerate the exam list on development!`);
   }
 
-  const blobs = await fetchAllFiles();
-
   // get all individual exam files
-  const unmatchedExams: ExamFile[] = blobs
-    .filter((b) => b.pathname !== EXAM_LIST_NAME)
-    .map((b) => ({
-      url: b.url,
-      name: b.pathname,
-      uploadedAt: b.uploadedAt.toISOString(),
-    }));
+  const [examFiles] = await storage.bucket(EXAMS_BUCKET_NAME).getFiles();
+
+  const unmatchedExams: ExamFile[] = examFiles.map((file) => ({
+    name: file.name,
+    uploadedAt: file.metadata.timeCreated!,
+  }));
 
   // group by most of the exam name, minus whether they are solutions or not
   const fileGroups = Object.groupBy(unmatchedExams, (exam) =>
@@ -82,33 +71,14 @@ export const regenerateExamsListAction = async (): Promise<Exam[]> => {
     return mergeExamAndSolution(examName, exam, solution);
   });
 
-  // write to Vercel
-  put(EXAM_LIST_NAME, JSON.stringify(exams), {
-    access: "public",
-    allowOverwrite: true,
-  });
+  // write to Google
+  await storage
+    .bucket(EXAMS_BUCKET_NAME)
+    .file(EXAM_LIST_NAME)
+    .save(JSON.stringify(exams));
 
   console.info(`${exams.length} exams entered into ${EXAM_LIST_NAME}`);
   return exams;
-};
-
-const LIST_PAGINATION_LIMIT = 10; // arbitrarily chosen upper limit to prevent accidental infinite loops
-const fetchAllFiles = async () => {
-  let blobs: ListBlobResultBlob[] = [];
-  let cursor: string | undefined = undefined;
-
-  for (let i = 0; i < LIST_PAGINATION_LIMIT; i++) {
-    const nextFileList: ListBlobResult = await list({ cursor });
-    blobs = blobs.concat(nextFileList.blobs);
-
-    if (!nextFileList.hasMore) {
-      break;
-    }
-
-    cursor = nextFileList.cursor;
-  }
-
-  return blobs;
 };
 
 const mergeExamAndSolution = (
@@ -127,7 +97,7 @@ const mergeExamAndSolution = (
     name,
     uploadedAt,
 
-    examUrl: exam?.url,
-    solutionUrl: solution?.url,
+    examUrl: exam?.name,
+    solutionUrl: solution?.name,
   };
 };
