@@ -64,8 +64,6 @@ const ExamRow: React.FC<{ exam: Exam; isAdmin: boolean }> = ({
   const name = `${department} ${coursecode}`;
   const type = typeParts.join(" ").split(".")[0];
 
-  console.log(exam);
-
   return (
     <tr key={`${exam.examFile}{exam.solutionUrl}`}>
       <td className="exam-name">{name}</td>
@@ -79,7 +77,7 @@ const ExamRow: React.FC<{ exam: Exam; isAdmin: boolean }> = ({
               variant="pink"
               size="small"
             >
-              Exam
+              {isAdmin ? "See exam" : "Exam"}
             </Button>
 
             {isAdmin ? (
@@ -99,7 +97,7 @@ const ExamRow: React.FC<{ exam: Exam; isAdmin: boolean }> = ({
         {exam.solutionFile ? (
           <>
             <Button href={exam.solutionFile} variant="pink" size="small">
-              Solution
+              {isAdmin ? "See solution" : "Solution"}
             </Button>
 
             {isAdmin ? (
