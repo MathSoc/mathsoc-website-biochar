@@ -64,15 +64,21 @@ const ExamRow: React.FC<{ exam: Exam; isAdmin: boolean }> = ({
   const name = `${department} ${coursecode}`;
   const type = typeParts.join(" ").split(".")[0];
 
+  console.log(exam);
+
   return (
-    <tr key={`${exam.examUrl}{exam.solutionUrl}`}>
+    <tr key={`${exam.examFile}{exam.solutionUrl}`}>
       <td className="exam-name">{name}</td>
       <td className="exam-term">{termNumberToString(parseInt(term))}</td>
       <td className="exam-type">{type}</td>
       <td className="exam-url">
-        {exam.examUrl ? (
+        {exam.examFile ? (
           <>
-            <Button href={exam.examUrl} variant="pink" size="small">
+            <Button
+              href={`/api/exams/${exam.examFile}`}
+              variant="pink"
+              size="small"
+            >
               Exam
             </Button>
 
@@ -90,9 +96,9 @@ const ExamRow: React.FC<{ exam: Exam; isAdmin: boolean }> = ({
         ) : null}
       </td>
       <td className="exam-sol">
-        {exam.solutionUrl ? (
+        {exam.solutionFile ? (
           <>
-            <Button href={exam.solutionUrl} variant="pink" size="small">
+            <Button href={exam.solutionFile} variant="pink" size="small">
               Solution
             </Button>
 
