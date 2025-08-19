@@ -21,21 +21,21 @@ export default async function PoliciesPage() {
           name="Policies"
           description="council, clubs"
           path="/documents/policies-public.pdf"
-          lastUpdated={new Date("2024-08-03 EST")}
+          lastUpdated={new Date("2025-08-18 EST")}
         />
         <DocumentsCard
           icon={faNewspaper}
           name="Board procedures"
           description="long-term governance"
           path="/documents/board-procedures-public.pdf"
-          lastUpdated={new Date("2024-11-29 EST")}
+          lastUpdated={new Date("2025-08-18 EST")}
         />
         <DocumentsCard
           icon={faNewspaper}
           name="Bylaws"
           description="the Society at large"
           path="/documents/bylaws-public.pdf"
-          lastUpdated={new Date("2024-11-29 EST")}
+          lastUpdated={new Date("2025-08-18 EST")}
         />
       </div>
       <h1>Reports</h1>
