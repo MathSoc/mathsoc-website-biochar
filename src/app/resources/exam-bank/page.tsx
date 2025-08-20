@@ -3,7 +3,7 @@ import { Page } from "@/app/components/page/page-component";
 import { Metadata } from "next";
 import React from "react";
 import "./exam-bank.scss";
-import { ExamsTable } from "@/app/components/tables/exams-table/exams-table";
+import { ExamsTable } from "@/app/admin/components/exams-table/exams-table";
 
 export const metadata: Metadata = { title: "Exam Bank" };
 

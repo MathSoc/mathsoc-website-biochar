@@ -1,4 +1,4 @@
-import { Budget } from "@/app/components/tables/budgets-table/budgets-table";
+import { Budget } from "@/app/resources/budgets/components/budgets-table/budgets-table";
 
 export const budgets: Budget[] = [
   {

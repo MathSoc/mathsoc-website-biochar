@@ -1,15 +1,15 @@
 "use client";
 
 import { termNumberToString } from "@/app/resources/exam-bank/util";
-import { Button } from "../../button/button";
-import { Button as ClientButton } from "../../button/button.client";
+import { Button } from "../../../components/button/button";
+import { Button as ClientButton } from "../../../components/button/button.client";
 import "./exams-table.scss";
 import {
   deleteExamAction,
   Exam,
   regenerateExamsListAction,
 } from "@/app/util/exam-actions";
-import { Column } from "../../layout/layout-components";
+import { Column } from "../../../components/layout/layout-components";
 import { useCallback, useState } from "react";
 import { toast } from "react-toastify";
 
