@@ -2,16 +2,22 @@
 
 import { termNumberToString } from "@/app/resources/exam-bank/util";
 import { Button } from "../../button/button";
+import { Button as ClientButton } from "../../button/button.client";
 import "./exams-table.scss";
-import { Exam, voidAction } from "@/app/util/exam-actions";
+import {
+  deleteExamAction,
+  Exam,
+  regenerateExamsListAction,
+} from "@/app/util/exam-actions";
 import { Column } from "../../layout/layout-components";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export const ExamsTableClient: React.FC<{
   isAdmin?: boolean;
   exams: Exam[];
-}> = ({ isAdmin = false, exams }) => {
+}> = ({ isAdmin = false, exams: initialExams }) => {
   const [query, setQuery] = useState<string>("");
+  const [exams, setExams] = useState<Exam[]>(initialExams);
 
   const examMatchesQuery = (exam: Exam) => {
     return (
@@ -47,7 +53,37 @@ export const ExamsTableClient: React.FC<{
               return null;
             }
 
-            return <ExamRow exam={exam} key={exam.name} isAdmin={isAdmin} />;
+            const onDeleteExam = () => {
+              const newExam: Exam = { ...exam, examFile: undefined };
+              const otherExams = exams.filter((e) => e !== exam);
+
+              if (exam.solutionFile) {
+                setExams([...otherExams, newExam]);
+              } else {
+                setExams(otherExams);
+              }
+            };
+
+            const onDeleteSolution = () => {
+              const newExam: Exam = { ...exam, solutionFile: undefined };
+              const otherExams = exams.filter((e) => e !== exam);
+
+              if (exam.examFile) {
+                setExams([...otherExams, newExam]);
+              } else {
+                setExams(otherExams);
+              }
+            };
+
+            return (
+              <ExamRow
+                exam={exam}
+                key={exam.name}
+                isAdmin={isAdmin}
+                onDeleteExam={onDeleteExam}
+                onDeleteSolution={onDeleteSolution}
+              />
+            );
           })}
         </tbody>
       </table>
@@ -55,14 +91,40 @@ export const ExamsTableClient: React.FC<{
   );
 };
 
-const ExamRow: React.FC<{ exam: Exam; isAdmin: boolean }> = ({
-  exam,
-  isAdmin,
-}) => {
+const ExamRow: React.FC<{
+  exam: Exam;
+  isAdmin: boolean;
+  onDeleteExam: () => void;
+  onDeleteSolution: () => void;
+}> = ({ exam, isAdmin, onDeleteExam, onDeleteSolution }) => {
   const [department, coursecode, term, ...typeParts] = exam.name.split("-");
 
   const name = `${department} ${coursecode}`;
   const type = typeParts.join(" ").split(".")[0];
+
+  console.log(exam);
+
+  const onDelete = useCallback(
+    (file: string) => {
+      const confirmation = confirm(`Are you sure you want to delete ${file}?`);
+
+      if (!confirmation) {
+        return;
+      }
+
+      deleteExamAction(file);
+      regenerateExamsListAction();
+
+      if (file.includes("-sol")) {
+        onDeleteSolution();
+      } else {
+        onDeleteExam();
+      }
+
+      // toast
+    },
+    [onDeleteExam, onDeleteSolution],
+  );
 
   return (
     <tr key={`${exam.examFile}{exam.solutionUrl}`}>
@@ -81,14 +143,13 @@ const ExamRow: React.FC<{ exam: Exam; isAdmin: boolean }> = ({
             </Button>
 
             {isAdmin ? (
-              <>
-                <Button action={voidAction} variant="pink" size="small">
-                  Hide exam
-                </Button>
-                <Button action={voidAction} variant="pink" size="small">
-                  Delete exam
-                </Button>
-              </>
+              <ClientButton
+                onClick={() => onDelete(exam.examFile!)}
+                variant="pink"
+                size="small"
+              >
+                Delete exam
+              </ClientButton>
             ) : null}
           </>
         ) : null}
@@ -101,14 +162,13 @@ const ExamRow: React.FC<{ exam: Exam; isAdmin: boolean }> = ({
             </Button>
 
             {isAdmin ? (
-              <>
-                <Button action={voidAction} variant="pink" size="small">
-                  Hide solution
-                </Button>
-                <Button action={voidAction} variant="pink" size="small">
-                  Delete solution
-                </Button>
-              </>
+              <ClientButton
+                onClick={() => onDelete(exam.solutionFile!)}
+                variant="pink"
+                size="small"
+              >
+                Delete solution
+              </ClientButton>
             ) : null}
           </>
         ) : null}

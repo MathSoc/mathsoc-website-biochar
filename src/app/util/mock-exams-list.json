@@ -1,13 +1,12 @@
 [
   {
     "name": "actsc-221-1025-midterm.pdf",
-    "uploadedAt": "2025-08-19T04:34:24.409Z",
-    "examFile": "actsc-221-1025-midterm.pdf",
-    "solutionFile": "actsc-221-1025-midterm-sol.pdf"
+    "uploadedAt": "2025-08-19T04:34:24.211Z",
+    "solutionUrl": "actsc-221-1025-midterm-sol.pdf"
   },
   {
     "name": "cs-341-1219-exam.pdf",
     "uploadedAt": "2025-08-19T04:34:23.210Z",
-    "examFile": "cs-341-1219-exam.pdf"
+    "examUrl": "cs-341-1219-exam.pdf"
   }
 ]
