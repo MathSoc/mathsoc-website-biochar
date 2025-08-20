@@ -5,6 +5,15 @@ import mockExamsList from "./mock-exams-list.json";
 import { Storage } from "@google-cloud/storage";
 
 const EXAM_LIST_NAME = "exams-list.json";
+const USE_MOCK_DATA_ON_DEV = true; // alter this only if you know what you are doing!
+
+const shouldUseMockData = () => {
+  if (process.env.NODE_ENV === "production") {
+    return false;
+  }
+
+  return USE_MOCK_DATA_ON_DEV;
+};
 
 export type ExamFile = {
   name: string;
@@ -24,7 +33,7 @@ export const voidAction = async () => {};
 const storage = new Storage();
 
 export const listExamsAction = async (): Promise<Exam[]> => {
-  if (process.env.NODE_ENV == "development") {
+  if (shouldUseMockData()) {
     return mockExamsList as Exam[];
   }
 
@@ -38,20 +47,34 @@ export const listExamsAction = async (): Promise<Exam[]> => {
   return JSON.parse(examList);
 };
 
+// @todo protect with authentication
+export const deleteExamAction = async (file: string) => {
+  if (shouldUseMockData()) {
+    throw new Error(
+      `Do not meddle with exams unless you know what you are doing!`,
+    );
+  }
+
+  console.log(`Deleting ${file}...`);
+  await storage.bucket(EXAMS_BUCKET_NAME).file(file).delete();
+};
+
 // @todo protect this with authentication
 // use sparingly; this is an advanced action and we get less of them for free.
 export const regenerateExamsListAction = async (): Promise<Exam[]> => {
-  if (process.env.NODE_ENV == "development") {
+  if (shouldUseMockData()) {
     throw new Error(`Do not regenerate the exam list on development!`);
   }
 
   // get all individual exam files
   const [examFiles] = await storage.bucket(EXAMS_BUCKET_NAME).getFiles();
 
-  const unmatchedExams: ExamFile[] = examFiles.map((file) => ({
-    name: file.name,
-    uploadedAt: file.metadata.timeCreated!,
-  }));
+  const unmatchedExams: ExamFile[] = examFiles
+    .filter((file) => file.name !== EXAM_LIST_NAME)
+    .map((file) => ({
+      name: file.name,
+      uploadedAt: file.metadata.timeCreated!,
+    }));
 
   // group by most of the exam name, minus whether they are solutions or not
   const fileGroups = Object.groupBy(unmatchedExams, (exam) =>
@@ -85,7 +108,7 @@ const mergeExamAndSolution = (
   name: string,
   exam?: ExamFile,
   solution?: ExamFile,
-) => {
+): Exam => {
   const uploadedAt = [exam, solution]!
     .filter((f) => !!f)
     .map((f) => f.uploadedAt)
@@ -97,7 +120,7 @@ const mergeExamAndSolution = (
     name,
     uploadedAt,
 
-    examUrl: exam?.name,
-    solutionUrl: solution?.name,
+    examFile: exam?.name,
+    solutionFile: solution?.name,
   };
 };
