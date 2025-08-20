@@ -5,7 +5,7 @@ import mockExamsList from "./components/util/mock-exams-list.json";
 import { Storage } from "@google-cloud/storage";
 
 const EXAM_LIST_NAME = "exams-list.json";
-const USE_MOCK_DATA_ON_DEV = true; // alter this only if you know what you are doing!
+const USE_MOCK_DATA_ON_DEV = false; // alter this only if you know what you are doing!
 
 const shouldUseMockData = () => {
   if (process.env.NODE_ENV === "production") {

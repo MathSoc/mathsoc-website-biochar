@@ -8,7 +8,7 @@ export const Button: React.FC<
     action?: () => void;
   }
 > = (props) => {
-  const { children, href, action } = props;
+  const { children, href, action, disabled } = props;
 
   if (!href && !action) {
     throw new Error(`Button requires href or action`);
@@ -23,7 +23,9 @@ export const Button: React.FC<
   if (action) {
     return (
       <form action={action}>
-        <button className={className}>{children}</button>
+        <button disabled={disabled} className={className}>
+          {children}
+        </button>
       </form>
     );
   }

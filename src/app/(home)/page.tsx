@@ -4,7 +4,7 @@ import { faDiscord, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { Banner } from "../components/banner/banner";
-import { Button } from "../components/button/button";
+import { Button } from "../components/button/button.server";
 import Link from "next/link";
 import { Page } from "../components/page/page-component";
 import Image from "next/image";
