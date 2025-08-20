@@ -50,4 +50,15 @@ a.button:visited {
       color: var(--mathsoc-pink) !important;
     }
   }
+
+  &:disabled {
+    color: var(--mathsoc-grey-2);
+    border-color: var(--mathsoc-grey-2);
+    cursor: unset;
+
+    &:hover {
+      color: var(--mathsoc-grey-2) !important;
+      background-color: var(--background-color);
+    }
+  }
 }

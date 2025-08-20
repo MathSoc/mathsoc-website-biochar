@@ -26,4 +26,10 @@
       text-decoration: underline;
     }
   }
+
+  &.large {
+    .page-inner {
+      max-width: 1000px;
+    }
+  }
 }

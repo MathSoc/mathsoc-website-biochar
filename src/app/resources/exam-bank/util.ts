@@ -25,7 +25,7 @@ export const currentTerm = () => {
   const yearsSince1900 = new Date().getFullYear() - 1900;
   const month = new Date().getMonth() + 1; // UW indexes by 1
 
-  const term = Math.floor(month / 4) + 1;
+  const term = Math.floor(month / 4) * 4 + 1;
 
   return yearsSince1900 * 10 + term;
 };

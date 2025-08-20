@@ -6,9 +6,13 @@ export const Button: React.FC<
     onClick: () => void;
   }
 > = (props) => {
-  const { onClick, children } = props;
+  const { onClick, children, disabled } = props;
   return (
-    <button onClick={onClick} className={constructButtonClassName(props)}>
+    <button
+      className={constructButtonClassName(props)}
+      disabled={disabled}
+      onClick={onClick}
+    >
       {children}
     </button>
   );

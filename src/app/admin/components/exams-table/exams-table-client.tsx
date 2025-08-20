@@ -1,7 +1,7 @@
 "use client";
 
 import { termNumberToString } from "@/app/resources/exam-bank/util";
-import { Button } from "../../../components/button/button";
+import { Button } from "../../../components/button/button.server";
 import { Button as ClientButton } from "../../../components/button/button.client";
 import "./exams-table.scss";
 import {

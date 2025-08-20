@@ -6,6 +6,8 @@ const storage = new Storage();
 
 /**
  * Returns an exam found at the provided route
+ *
+ * @todo add auth to this
  */
 export async function GET(
   _: Request,
