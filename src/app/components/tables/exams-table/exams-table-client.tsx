@@ -11,6 +11,7 @@ import {
 } from "@/app/util/exam-actions";
 import { Column } from "../../layout/layout-components";
 import { useCallback, useState } from "react";
+import { toast } from "react-toastify";
 
 export const ExamsTableClient: React.FC<{
   isAdmin?: boolean;
@@ -62,6 +63,8 @@ export const ExamsTableClient: React.FC<{
               } else {
                 setExams(otherExams);
               }
+
+              toast(`Exam ${exam.examFile} deleted!`);
             };
 
             const onDeleteSolution = () => {
@@ -73,6 +76,8 @@ export const ExamsTableClient: React.FC<{
               } else {
                 setExams(otherExams);
               }
+
+              toast(`Solution ${exam.solutionFile} deleted!`);
             };
 
             return (
@@ -102,8 +107,6 @@ const ExamRow: React.FC<{
   const name = `${department} ${coursecode}`;
   const type = typeParts.join(" ").split(".")[0];
 
-  console.log(exam);
-
   const onDelete = useCallback(
     (file: string) => {
       const confirmation = confirm(`Are you sure you want to delete ${file}?`);
@@ -120,8 +123,6 @@ const ExamRow: React.FC<{
       } else {
         onDeleteExam();
       }
-
-      // toast
     },
     [onDeleteExam, onDeleteSolution],
   );
