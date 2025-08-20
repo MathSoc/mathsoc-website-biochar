@@ -8,7 +8,7 @@ import {
   deleteExamAction,
   Exam,
   regenerateExamsListAction,
-} from "@/app/util/exam-actions";
+} from "@/app/admin/actions";
 import { Column } from "../../../components/layout/layout-components";
 import { useCallback, useState } from "react";
 import { toast } from "react-toastify";

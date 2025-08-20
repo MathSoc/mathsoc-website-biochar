@@ -1,5 +1,5 @@
 import "./exams-table.scss";
-import { listExamsAction } from "@/app/util/exam-actions";
+import { listExamsAction } from "@/app/admin/actions";
 import { ExamsTableClient } from "./exams-table-client";
 
 export const ExamsTable: React.FC<{ isAdmin?: boolean }> = async ({

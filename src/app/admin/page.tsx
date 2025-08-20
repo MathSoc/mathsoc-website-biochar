@@ -1,7 +1,7 @@
 import "./admin.scss";
 import { Page } from "../components/page/page-component";
 import { Button } from "../components/button/button";
-import { regenerateExamsListAction } from "../util/exam-actions";
+import { regenerateExamsListAction } from "./actions";
 import { ExamsTable } from "./components/exams-table/exams-table";
 import { ExamUploads } from "./components/exam-uploads/exam-uploads";
 import { Centered } from "../components/layout/layout-components";

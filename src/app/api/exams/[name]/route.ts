@@ -1,4 +1,4 @@
-import { EXAMS_BUCKET_NAME } from "@/app/util/exam-config";
+import { EXAMS_BUCKET_NAME } from "@/app/admin/components/util/exam-config";
 import { Storage } from "@google-cloud/storage";
 import { NextResponse } from "next/server";
 

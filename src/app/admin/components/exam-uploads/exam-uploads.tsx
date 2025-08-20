@@ -5,7 +5,7 @@ import React, { useRef, useState } from "react";
 import "./exam-uploads.scss";
 import { Button as ClientButton } from "@/app/components/button/button.client";
 import { Button as ServerButton } from "@/app/components/button/button";
-import { voidAction } from "@/app/util/exam-actions";
+import { voidAction } from "@/app/admin/actions";
 import { Centered } from "@/app/components/layout/layout-components";
 
 export const ExamUploads: React.FC = () => {
