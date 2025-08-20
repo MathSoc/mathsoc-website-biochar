@@ -6,12 +6,12 @@ import { Button as ClientButton } from "../../../components/button/button.client
 import "./exams-table.scss";
 import {
   deleteExamAction,
-  Exam,
   regenerateExamsListAction,
 } from "@/app/admin/actions";
 import { Column } from "../../../components/layout/layout-components";
 import { useCallback, useState } from "react";
 import { toast } from "react-toastify";
+import { Exam } from "../../types";
 
 export const ExamsTableClient: React.FC<{
   isAdmin?: boolean;
