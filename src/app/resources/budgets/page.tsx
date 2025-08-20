@@ -1,6 +1,6 @@
 import { Page } from "../../components/page/page-component";
 import "./budgets.scss";
-import { BudgetsTable } from "@/app/components/tables/budgets-table/budgets-table";
+import { BudgetsTable } from "@/app/resources/budgets/components/budgets-table/budgets-table";
 import { budgets } from "./budgets";
 import { Metadata } from "next";
 
