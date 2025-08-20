@@ -1,7 +1,7 @@
 "use server";
 
-import { EXAMS_BUCKET_NAME } from "./exam-config";
-import mockExamsList from "./mock-exams-list.json";
+import { EXAMS_BUCKET_NAME } from "./components/util/exam-config";
+import mockExamsList from "./components/util/mock-exams-list.json";
 import { Storage } from "@google-cloud/storage";
 
 const EXAM_LIST_NAME = "exams-list.json";
