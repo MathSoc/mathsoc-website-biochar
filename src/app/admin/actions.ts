@@ -3,32 +3,17 @@
 import { EXAMS_BUCKET_NAME } from "./components/util/exam-config";
 import mockExamsList from "./components/util/mock-exams-list.json";
 import { Storage } from "@google-cloud/storage";
+import { Exam, ExamFile } from "./types";
 
 const EXAM_LIST_NAME = "exams-list.json";
-const USE_MOCK_DATA_ON_DEV = false; // alter this only if you know what you are doing!
 
 const shouldUseMockData = () => {
   if (process.env.NODE_ENV === "production") {
     return false;
   }
 
-  return USE_MOCK_DATA_ON_DEV;
+  return process.env.USE_LIVE_DATA_ON_DEV === "true";
 };
-
-export type ExamFile = {
-  name: string;
-  uploadedAt: string;
-};
-
-export type Exam = {
-  name: string;
-  uploadedAt: string;
-
-  examFile?: string;
-  solutionFile?: string;
-};
-
-export const voidAction = async () => {};
 
 const storage = new Storage();
 

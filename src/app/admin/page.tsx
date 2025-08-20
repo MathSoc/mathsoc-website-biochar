@@ -1,10 +1,7 @@
 import "./admin.scss";
 import { Page } from "../components/page/page-component";
-import { Button } from "../components/button/button.server";
-import { regenerateExamsListAction } from "./actions";
 import { ExamsTable } from "./components/exams-table/exams-table";
 import { ExamUploads } from "./components/exam-uploads/exam-uploads";
-import { Centered } from "../components/layout/layout-components";
 
 // @todo protect this page
 export default function Home() {
@@ -15,12 +12,6 @@ export default function Home() {
       <ExamUploads />
       <h2>Manage exam bank</h2>
       <ExamsTable isAdmin />
-      <Centered>
-        {/* @todo remove this and make it automatic */}
-        <Button action={regenerateExamsListAction} variant="pink">
-          Regenerate exams list (danger!)
-        </Button>
-      </Centered>
     </Page>
   );
 }
