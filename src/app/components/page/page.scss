@@ -2,7 +2,6 @@
   $side-padding: 48px;
   margin: auto;
   padding: 0 48px;
-  padding-bottom: $side-padding;
   width: calc(100% - 2 * $side-padding);
 
   .page-inner {
@@ -25,6 +24,12 @@
 
     a {
       text-decoration: underline;
+    }
+  }
+
+  &.large {
+    .page-inner {
+      max-width: 1000px;
     }
   }
 }

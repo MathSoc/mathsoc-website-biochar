@@ -7,13 +7,14 @@ export const Page: React.FC<{
   children: React.ReactNode;
   id: string;
   variant?: "pink";
-}> = ({ children, id, variant }) => {
+  size?: "large";
+}> = ({ children, id, variant, size }) => {
   return (
     <>
       <Head>
         <title>{id}</title>
       </Head>
-      <MinimalPage id={id} variant={variant}>
+      <MinimalPage id={id} variant={variant} size={size}>
         {children}
       </MinimalPage>
     </>

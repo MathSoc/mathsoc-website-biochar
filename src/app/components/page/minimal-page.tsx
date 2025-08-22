@@ -12,8 +12,9 @@ export const MinimalPage: React.FC<{
   children: React.ReactNode;
   id: string;
   variant?: "pink";
-}> = ({ children, id, variant }) => (
-  <div className={`page ${variant}`} id={id}>
+  size?: "large";
+}> = ({ children, id, variant, size }) => (
+  <div className={`page ${variant} ${size}`} id={id}>
     <div className="page-inner">{children}</div>
   </div>
 );

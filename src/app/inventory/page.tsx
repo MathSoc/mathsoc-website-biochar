@@ -4,7 +4,7 @@ import { inventory, InventoryItem } from "./inventory";
 import Image from "next/image";
 import "./inventory.scss";
 import { Metadata } from "next";
-import { Button } from "../components/button/button";
+import { Button } from "../components/button/button.server";
 
 export const metadata: Metadata = { title: "Inventory" };
 
