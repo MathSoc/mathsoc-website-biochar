@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         destination: "/api/auth/callback/azure-ad",
         permanent: true,
       },
+      {
+        source: "/wp-content/uploads/:path*",
+        destination: "/documents/:path*",
+        permanent: true,
+      },
     ];
   },
 };
