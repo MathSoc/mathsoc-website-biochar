@@ -45,25 +45,38 @@ export default async function CartoonsPage() {
       <div id="cartoons-list">
         {coursesByDepartment.map(([department, courses]) => {
           return (
-            <section className="department-section" key={department}>
-              <h2>{department}</h2>
-              <Row className="button-section">
-                {courses!
-                  .sort((a, b) => (a < b ? -1 : 1))
-                  .map((course) => (
-                    <Button
-                      variant="pink"
-                      href={`/resources/cartoons/${course}`}
-                      key={course}
-                    >
-                      {course}
-                    </Button>
-                  ))}
-              </Row>
-            </section>
+            <DepartmentCourseCartoonsList
+              key={department}
+              department={department}
+              courses={courses!}
+            />
           );
         })}
       </div>
     </Page>
   );
 }
+
+const DepartmentCourseCartoonsList: React.FC<{
+  department: string;
+  courses: string[];
+}> = ({ department, courses }) => {
+  return (
+    <section className="department-section" key={department}>
+      <h2>{department}</h2>
+      <Row className="button-section">
+        {courses
+          .sort((a, b) => (a < b ? -1 : 1))
+          .map((course) => (
+            <Button
+              variant="pink"
+              href={`/resources/cartoons/${course}`}
+              key={course}
+            >
+              {course}
+            </Button>
+          ))}
+      </Row>
+    </section>
+  );
+};
