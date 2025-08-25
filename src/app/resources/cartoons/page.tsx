@@ -3,7 +3,7 @@ import { Page } from "../../components/page/page-component";
 import "./cartoons.scss";
 import { Metadata } from "next";
 import { Banner, BannerTitles } from "@/app/components/banner/banner";
-import { Column, Row } from "@/app/components/layout/layout-components";
+import { Row } from "@/app/components/layout/layout-components";
 import { Button } from "@/app/components/button/button";
 
 export const metadata: Metadata = { title: "Cartoons" };
@@ -51,7 +51,11 @@ export default async function CartoonsPage() {
                 {courses!
                   .sort((a, b) => (a < b ? -1 : 1))
                   .map((course) => (
-                    <Button variant="pink" href="/" key={course}>
+                    <Button
+                      variant="pink"
+                      href={`/resources/cartoons/${course}`}
+                      key={course}
+                    >
                       {course}
                     </Button>
                   ))}
