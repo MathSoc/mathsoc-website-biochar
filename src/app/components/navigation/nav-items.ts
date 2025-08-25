@@ -66,6 +66,10 @@ export const navItems: NavItem[] = [
         title: "Elections",
         ref: "/resources/elections",
       },
+      {
+        title: "Cartoons",
+        ref: "/resources/cartoons",
+      },
     ],
   },
   {
