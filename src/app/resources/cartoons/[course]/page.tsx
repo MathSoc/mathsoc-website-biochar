@@ -4,20 +4,20 @@ import { Metadata } from "next";
 import { Page } from "@/app/components/page/page-component";
 
 type URLParams = {
-  params: { course: string };
+  params: Promise<{ course: string }>;
 };
 
 export async function generateMetadata({
   params,
 }: URLParams): Promise<Metadata> {
-  const course = params.course;
+  const course = (await params).course;
   return {
     title: `Cartoons | ${course.toUpperCase()}`,
   };
 }
 
 export default async function CartoonsCoursePage({ params }: URLParams) {
-  const course = params.course;
+  const course = (await params).course;
 
   return (
     <Page id="cartoons-course-page">
