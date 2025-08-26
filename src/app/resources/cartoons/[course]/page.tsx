@@ -23,7 +23,7 @@ export default async function CartoonsCoursePage({ params }: URLParams) {
     <Page id="cartoons-course-page">
       <h1>{course}</h1>
       <MarkdownSection
-        src={`src/app/resources/cartoons/[course]/course-pages/math137.md`}
+        src={`src/app/resources/cartoons/course-pages/math137.md`}
       />
     </Page>
   );
