@@ -15,6 +15,9 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  outputFileTracingIncludes: {
+    "/resources/cartoons": ["./src/app/resources/cartoons/**/*.md"],
+  },
 };
 
 export default nextConfig;
