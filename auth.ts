@@ -22,26 +22,6 @@ const UWConfig = {
   clientSecret: process.env.UW_OIDC_CLIENT_SECRET,
 };
 
-const validateConfigs = () => {
-  if (!authEnabled) {
-    return;
-  }
-
-  if (!googleConfig.clientId) {
-    throw new Error(
-      "Google client ID unset; see.env.example for details on how to get it",
-    );
-  }
-
-  if (!googleConfig.clientSecret) {
-    throw new Error(
-      "Google client secret unset; see.env.example for details on how to get it",
-    );
-  }
-};
-
-validateConfigs();
-
 export const { auth, signIn, signOut, handlers } = NextAuth({
   ...authConfig,
   providers: [
