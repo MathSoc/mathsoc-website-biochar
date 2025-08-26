@@ -4,11 +4,14 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: "/oauth2/callback",
-        destination: "/api/auth/callback/azure-ad",
+        source: "/wp-content/uploads/:path*",
+        destination: "/documents/:path*",
         permanent: true,
       },
     ];
+  },
+  outputFileTracingIncludes: {
+    "/resources/cartoons": ["./src/app/resources/cartoons/**/*.md"],
   },
 };
 
