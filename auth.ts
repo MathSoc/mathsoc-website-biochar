@@ -1,9 +1,8 @@
 import NextAuth from "next-auth";
 import { authConfig } from "./auth.config";
 import { OAuthUserConfig } from "next-auth/providers";
-import Google, { GoogleProfile } from "next-auth/providers/google";
+import { GoogleProfile } from "next-auth/providers/google";
 import c from "ansi-colors";
-import { MicrosoftEntraIDProfile } from "next-auth/providers/microsoft-entra-id";
 
 const authEnabled = process.env.AUTH_ENABLED;
 console.info(
@@ -17,8 +16,10 @@ const googleConfig: Partial<OAuthUserConfig<GoogleProfile>> = {
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 };
 
-const microsoftConfig: Partial<OAuthUserConfig<MicrosoftEntraIDProfile>> = {
-  clientId: process.env.ADFS_CLIENT_ID,
+const UWConfig = {
+  issuer: process.env.UW_OIDC_ISSUER,
+  clientId: process.env.UW_OIDC_CLIENT_ID,
+  clientSecret: process.env.UW_OIDC_CLIENT_SECRET,
 };
 
 const validateConfigs = () => {
@@ -28,27 +29,15 @@ const validateConfigs = () => {
 
   if (!googleConfig.clientId) {
     throw new Error(
-      "Google client id unset; ask a past dev for it, or find it in the Google Cloud Console",
+      "Google client ID unset; see.env.example for details on how to get it",
     );
   }
 
   if (!googleConfig.clientSecret) {
     throw new Error(
-      "Google client secret unset; ask a past dev for it, or find it in the Google Cloud Console",
+      "Google client secret unset; see.env.example for details on how to get it",
     );
   }
-
-  if (!microsoftConfig.clientId) {
-    throw new Error(
-      "ADFS client id unset; ask a past dev for it, or find it on the old exam bank server",
-    );
-  }
-
-  // if (!adfsConfig.clientSecret) {
-  //   throw new Error(
-  //     "ADFS client secret unset; ask a past dev for it, or find it on the old exam bank server",
-  //   );
-  // }
 };
 
 validateConfigs();
@@ -61,8 +50,9 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
       id: "uw-adfs", // signIn(<id>)
       name: "University of Waterloo ADFS", // optional
       type: "oidc",
-      issuer: "https://adfs.uwaterloo.ca/adfs",
-      clientId: microsoftConfig.clientId,
+      issuer: UWConfig.issuer,
+      clientId: UWConfig.clientId,
+      clientSecret: UWConfig.clientSecret,
     },
   ],
 });
