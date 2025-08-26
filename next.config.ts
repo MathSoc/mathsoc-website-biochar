@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
     ];
   },
   outputFileTracingIncludes: {
-    "/src/app/resources/cartoons": ["./**/*.md"],
+    "/resources/cartoons": ["./src/app/resources/cartoons/**/*.md"],
   },
 };
 
