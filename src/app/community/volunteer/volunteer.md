@@ -8,25 +8,25 @@ Volunteering with MathSoc is a great way to meet other people in your faculty. W
 
 Office Workers work in the MathSoc Office (MC 3038) to help students sign-out rental items, sell novelties and supplies, and aid students looking for help within the office. Office shifts are flexible and are low in required time commitment, and are supervised by an office manager. You are free to work on personal tasks when there is no one looking for assistance, and will get access to our stash of office worker snacks. We ask for a minimum time commitment of 2 hours a week. Please note this is an **in-person position**.
 
-**Applications are currently closed.**
+[Apply here for Fall 2025!](https://forms.gle/kHx2DUMnrwrb6gPP6)
 
 ## Office Manager
 
 Office Managers work in the MathSoc Office (MC 3038) to supervise office workers and keep the office open during the day. Responsibilities include opening/closing the office, helping with locker issues, and answering any questions staff and customers may have. Managers also have access to the snack stash. We ask for a minimum time commitment of 2 hours a week. Please note this is an **in-person position**.
 
-**Applications are currently closed.**
+[Apply here for Fall 2025!](https://forms.gle/kHx2DUMnrwrb6gPP6)
 
 ## Novelties Director
 
 The Novelties Director will have the opportunity to design Math novelties. In the past, directors have designed shirts, socks, hats, hoodies, and pins among other things. If you would like to flex your creativity and create new Math related things, please apply! Some tasks of this role may require in-person capabilities.
 
-**Applications are currently closed.**
+[Apply here for Fall 2025!](https://forms.gle/kHx2DUMnrwrb6gPP6)
 
 ## Board Games Director
 
 The Board Games Director is responsible for maintaining the board game collection by buying new games for our collection, and maintaining a full games inventory. Please note this is an **in-person position**.
 
-**Applications are currently closed.**
+[Apply here for Fall 2025!](https://forms.gle/kHx2DUMnrwrb6gPP6)
 
 # Finance
 
@@ -53,7 +53,7 @@ The Senior Finance Officer is a senior leadership role designed to work closely 
 
 - Approximately 5–10 hours per week, with flexibility depending on workload during peak financial periods and MathSoc events.
 
-**Applications are currently closed.**
+[Apply here for Fall 2025!](https://forms.gle/efTFq7YQUEcxtydXA)
 
 ## Finance Director
 
@@ -75,7 +75,7 @@ The Finance Director is a supportive operational role designed to assist with th
 
 - Approximately 3–7 hours per week, with flexibility depending on workload during peak financial periods and MathSoc events.
 
-**Applications are currently closed.**
+[Apply here for Fall 2025!](https://forms.gle/efTFq7YQUEcxtydXA)
 
 # Events
 
@@ -83,19 +83,19 @@ The Finance Director is a supportive operational role designed to assist with th
 
 As a Games Night Director, you will be in charge of planning the weekly games night as well as the Party with Profs event alongside the VP Internal. You will be responsible for running the weekly events and supplying food, snacks, or beverages to your discretion. Please note that this is an **in-person position**.
 
-[Apply here for the Spring 2025 term!](https://docs.google.com/forms/d/e/1FAIpQLSdzv4EhjBe3hGzg7Gbw6J1zc95md0Ag5jOInAkw-CQbd9LmRQ/viewform)
+[Apply here for Fall 2025!](https://forms.gle/3CNYuDDkNQxA3tFFA)
 
 ## Event Coordinator
 
 Event Coordinators work alongside the VP Internal to plan faculty-wide events such as Pi Day, Valentine’s Day, Halloween, Destress Events, and more to come! You will gain event management Please note that this is an **in-person position**.
 
-[Apply here for the Spring 2025 term!](https://docs.google.com/forms/d/e/1FAIpQLSdzv4EhjBe3hGzg7Gbw6J1zc95md0Ag5jOInAkw-CQbd9LmRQ/viewform)
+[Apply here for Fall 2025!](https://forms.gle/3CNYuDDkNQxA3tFFA)
 
 ## Event Volunteers
 
 Event Volunteers work with the VP Internal help out and set-up events during the day. Volunteers will be needed on an on-call basis, and will be notified one week before the event to indicate your time shift. Please note that this is an **in-person position**.
 
-[Apply here for the Spring 2025 term!](https://docs.google.com/forms/d/e/1FAIpQLSdzv4EhjBe3hGzg7Gbw6J1zc95md0Ag5jOInAkw-CQbd9LmRQ/viewform)
+[Apply here for Fall 2025!](https://forms.gle/3CNYuDDkNQxA3tFFA)
 
 ## Math Grad Committee
 
@@ -117,43 +117,39 @@ Graduating students preferred.
 
 Marketing Directors are responsible for creating digital graphics for our Social Media pages, or physical poster designs for the society-managed posting boards. Prior experience with visual software, such as Canva, would be considered an asset but is not required. This position can be done remotely.
 
-**Applications are currently closed.**
+[Apply here for Fall 2025!](https://forms.gle/7cH5troFTmVVaio69)
 
 ## Content Creator
 
 Content Creators are responsible for creating and editing together short videos for the MathSoc Instagram account in the form of reels, stories, and video posts. Prior video editing experience would be considered an asset but is not required. This position can be done remotely, but in-person applicants are preferred.
 
-[Apply here for the Spring 2025 term!](https://docs.google.com/forms/d/e/1FAIpQLScZH-5ZYCd98WoWoE8ob4-TJppKbtJP_CtcVyZyhKqVHUFLbA/viewform)
+[Apply here for Fall 2025!](https://forms.gle/7cH5troFTmVVaio69)
 
 ## Postings Director
 
 Posting Directors are responsible for regularly organizing and updating the MathSoc postings boards. Please note that this is an **in-person position**.
 
-**Applications are currently closed.**
+[Apply here for Fall 2025!](https://forms.gle/7cH5troFTmVVaio69)
 
 ## Photographer
 
 Photographers help out with taking pictures of MathSoc events, our clubs or volunteers, and the student body as a whole! Prior photography experience or the possession of a camera would be considered an asset but is not required. Please note that this is an **in-person position**.
 
-[Apply here for the Spring 2025 term!](https://docs.google.com/forms/d/e/1FAIpQLScZH-5ZYCd98WoWoE8ob4-TJppKbtJP_CtcVyZyhKqVHUFLbA/viewform)
+[Apply here for Fall 2025!](https://forms.gle/7cH5troFTmVVaio69)
 
-## Website Manager
+## Web developer / designer
 
-Website Managers are responsible for the upkeep of the current MathSoc website, making updates and changes when needed. Prior experience with WordPress or HTML is an asset, but not mandatory. This position can be done remotely.
+Web Developers are responsible for developing elements of the new upcoming MathSoc website. We’re looking with people with any level of familiarity with web development - from literally none to upper-year students.
 
-**Applications are currently closed.**
+**Responsibilities may include:**
 
-## Web Developer
+- Helping the VP, Communications with content changes to the website
+- Designing and building new static pages to support MathSoc's needs
+- Adding new infrastructure or improving existing infrastructure
 
-Web Developers are responsible for developing elements of the new upcoming MathSoc website. We’re looking with people who have social/leadership skills, basic familiarity with web development, along with a solid understanding on website infrastructure (e.g. how to operate the server).
+Our technologies include React (JavaScript/TypeScript, NextJS), SASS, Git / GitHub, and of course, HTML/CSS. If you don't know everything, don't worry - this can be a good opportunity to learn!
 
-**Applications are currently closed.**
-
-## Web Designer
-
-Web Designers help with the design of the new MathSoc website! We are looking for someone with graphic design and/or web development experience for this position. This position can be done remotely.
-
-**Applications are currently closed.**
+[Apply here for Fall 2025!](https://forms.gle/7cH5troFTmVVaio69)
 
 # Academic
 
@@ -176,7 +172,7 @@ The Deputy Vice President, Academic will assist the Vice President, Academic and
 
 - About 1–5 hours per week, with opportunities to take on additional work if desired.
 
-[Apply here for the Spring 2025 term!](https://docs.google.com/forms/d/e/1FAIpQLSfBaSKrJHP8lJwThc-Xp6iv-jb4FEIGWwtIWZ7ZcASwL8bVQw/viewform)
+[Apply here for Fall 2025!](https://forms.gle/zAukgpXpDZcj1utH9)
 
 ## Academic Events Coordinator
 
@@ -200,7 +196,7 @@ The Academic Events Coordinator will work with the Vice President, Academic, and
 - About 5-10 hours per week during the preparation of academic events.
 - Little to no work after events are run.
 
-[Apply here for the Spring 2025 term!](https://docs.google.com/forms/d/e/1FAIpQLSfBaSKrJHP8lJwThc-Xp6iv-jb4FEIGWwtIWZ7ZcASwL8bVQw/viewform)
+[Apply here for Fall 2025!](https://forms.gle/zAukgpXpDZcj1utH9)
 
 ## Exam Bank Librarian
 
@@ -222,7 +218,7 @@ The Exam Bank Librarian will work with the Vice President, Academic and is respo
 
 - 0–2 hours per week.
 
-[Apply here for the Spring 2025 term!](https://docs.google.com/forms/d/e/1FAIpQLSfBaSKrJHP8lJwThc-Xp6iv-jb4FEIGWwtIWZ7ZcASwL8bVQw/viewform)
+[Apply here for Fall 2025!](https://forms.gle/zAukgpXpDZcj1utH9)
 
 ## Textbook Librarian
 
@@ -241,7 +237,7 @@ The Textbook Librarian will work with the Vice President, Academic and is respon
 
 - 0–2 hours per week.
 
-[Apply here for the Spring 2025 term!](https://docs.google.com/forms/d/e/1FAIpQLSfBaSKrJHP8lJwThc-Xp6iv-jb4FEIGWwtIWZ7ZcASwL8bVQw/viewform)
+[Apply here for Fall 2025!](https://forms.gle/zAukgpXpDZcj1utH9)
 
 # Administrative
 
@@ -249,31 +245,31 @@ The Textbook Librarian will work with the Vice President, Academic and is respon
 
 The Presidential Assistant will work closely with the president and understand what the day-to-day of the President looks like. They will also assist and suggest solutions to Society’s ongoing or previous problems and issues. We are looking for an undergraduate student with excellent writing and communication skills. We believe this position can offer the volunteer training, support, and immense experience. Preference will be given to those who can work in-person.
 
-[Apply here for the Spring 2025 term!](https://docs.google.com/forms/d/e/1FAIpQLSdMwE7e07gWpYV9s0tTQIfJZIwnrSev_uKPPCNhDAxp1Zj70Q/viewform)
+[Apply here for Fall 2025!](https://forms.gle/nYEYnbPR5orqCtLSA)
 
 ## Director of First Year Affairs
 
 The Director of First Year Affairs is responsible for chairing the Committee of First Year Affairs (CFYA). The CFYA is to encourage greater participation by first year students in the Society, to ensure that the concerns of first year students are adequately represented within the Society and the Faculty, and to provide a structure promoting greater communication between first-year and upper-year students. The Director reports to and is responsible to the President; have the power to appoint committee members to administer the various aspects of the Committee. More information about this role can be found in Policy 17.
 
-[Apply here for the Spring 2025 term!](https://docs.google.com/forms/d/e/1FAIpQLSdMwE7e07gWpYV9s0tTQIfJZIwnrSev_uKPPCNhDAxp1Zj70Q/viewform)
+[Apply here for Fall 2025!](https://forms.gle/nYEYnbPR5orqCtLSA)
 
 ## Mental Health Director
 
 The Mental Health Director(s) will primarily work on the mental health blog, creating posts and gathering posts from students who submit blogs. They will ensure MathSoc Office is stocked with proper campus wellness and mental health resources. The Mental Health Director(s) will also organize and implement the delivery of care packages for the fall term as well as ensuring campus resources regarding mental health and wellness are communicated to all Math students.
 
-[Apply here for the Spring 2025 term!](https://docs.google.com/forms/d/e/1FAIpQLSdMwE7e07gWpYV9s0tTQIfJZIwnrSev_uKPPCNhDAxp1Zj70Q/viewform)
+[Apply here for Fall 2025!](https://forms.gle/nYEYnbPR5orqCtLSA)
 
 ## Archivist
 
 The Archivist(s) will work to catalogue MathSoc’s history, including documentation of past meetings and minutes. Preference will be given to those in-person.
 
-[Apply here for the Spring 2025 term!](https://docs.google.com/forms/d/e/1FAIpQLSdMwE7e07gWpYV9s0tTQIfJZIwnrSev_uKPPCNhDAxp1Zj70Q/viewform)
+[Apply here for Fall 2025!](https://forms.gle/nYEYnbPR5orqCtLSA)
 
 ## Clubs’ Director
 
 The Club’s Director(s) will be working closely with the president to deal with club affairs. That would include providing support, answering questions regarding MathSoc policies and being the general point of contact for clubs with MathSoc.
 
-[Apply here for the Spring 2025 term!](https://docs.google.com/forms/d/e/1FAIpQLSdMwE7e07gWpYV9s0tTQIfJZIwnrSev_uKPPCNhDAxp1Zj70Q/viewform)
+[Apply here for Fall 2025!](https://forms.gle/nYEYnbPR5orqCtLSA)
 
 # Governance
 
