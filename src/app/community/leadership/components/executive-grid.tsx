@@ -4,32 +4,32 @@ import { Headshot } from "@/app/components/headshot/headshot";
 export const ExecutiveGrid: React.FC = () => (
   <HeadshotGrid>
     <Headshot
-      name="Alex Lavalee"
+      name="Alex Lavallee"
       position="President"
       email="president@mathsoc.uwaterloo.ca"
     />
     <Headshot
-      name="Patrik Buhring"
+      name="Valery Lai"
       position="Vice-President, Academic"
       email="vpa@mathsoc.uwaterloo.ca"
     />
     <Headshot
-      name="Lydia Li"
+      name="Jinki Onabolu"
       position="Vice-President, Finance"
       email="vpf@mathsoc.uwaterloo.ca"
     />
     <Headshot
-      name="Ivana Tanasijevic"
+      name="Nazra Adam"
       position="Vice-President, Internal"
       email="vpi@mathsoc.uwaterloo.ca"
     />
     <Headshot
-      name="Danny Liu"
+      name="Luna Wu"
       position="Vice-President, Operations"
       email="vpo@mathsoc.uwaterloo.ca"
     />
     <Headshot
-      name="Sarah Philippon"
+      name="Lorena Guo"
       position="Vice-President, Communications"
       email="vpc@mathsoc.uwaterloo.ca"
     />
