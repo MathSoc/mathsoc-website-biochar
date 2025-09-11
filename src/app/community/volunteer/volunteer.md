@@ -99,9 +99,11 @@ Event Volunteers work with the VP Internal help out and set-up events during the
 
 ## Math Grad Committee
 
-The Math Grad Committee plans and organizes the Math Grad Ball and other events for the graduating class. You’ll gain event management experience while planning a memorable night for over 300 attendees. Apply for Finance, Logistics, Event, Operations and Sponsorship positions below!
+The Math Grad Committee plans and organizes the Math Grad Ball and other events for the graduating class. You’ll gain event management experience while planning a memorable night for over 300 attendees. Apply for Finance, Event, Operations, Marketing and At-Large positions below!
 
-**Applications are currently closed.**
+[Apply here for Grad Ball 2026!](https://docs.google.com/forms/d/e/1FAIpQLSfvH1IH6OQ1tapW-g6gPMoYLhJoZyMcDwXOjQ7NDDS12F1sQg/viewform)
+
+Applications are due **September 19th, 2025.**
 
 ## Math Grad Committee Chair
 
