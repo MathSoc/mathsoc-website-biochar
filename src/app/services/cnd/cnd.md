@@ -16,8 +16,10 @@ The Store Manager Rose Penner can be reached at: 519-888-4567 ext. 36373 or at [
 
 ## Hours
 
-Mon – Thurs: 8AM – 5:30PM  
-Fri: 8AM – 4PM
+Mon – Thurs: 8AM – 7PM  
+Fri: 8AM – 4:30PM
+
+Closed during reading week and reduced hours during the final exam period.
 
 ## Location
 
