@@ -37,3 +37,5 @@ Starting university is a big step for all of us, and I know how important it is 
 ### Catherine Chen
 
 ### Joseph Chan
+
+### Utkarsh Goel
