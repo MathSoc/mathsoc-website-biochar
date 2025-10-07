@@ -2,6 +2,35 @@ import { Meeting } from "@/app/components/meetings-tables/meetings-tables";
 
 export const councilMeetings: Meeting[] = [
   {
+    date: "October 2 2025",
+    agenda:
+      "https://docs.google.com/document/d/12inLxeHo1TnbD5McPK8xET5B1AG7Q6iPonLwuRdYgdA/edit?usp=sharing",
+    minutes:
+      "https://docs.google.com/document/d/1WMcS1fPVKqe7Y4GunGSAgUl3G5RGB8_GcIbEXsIrdn0/edit?usp=sharing",
+  },
+  {
+    date: "September 25 2025",
+    type: "Budget",
+    agenda:
+      "https://docs.google.com/document/d/1GjY0DzxQ15-3ZOjv7T4iDBA6x8oGdz2n2BhBUdvMjSk/edit?usp=sharing",
+    minutes:
+      "https://docs.google.com/document/d/1-glGTY6P3fCR4RdGrampSEKtq2MfHmFCXUwuLo-Q6ns/edit?usp=sharing",
+  },
+  {
+    date: "September 16 2025",
+    agenda:
+      "https://docs.google.com/document/d/1ln2-yxyOEpz_dGe2QcZ0owiGAu3VXNciTT9R2bk-5FM/edit?usp=sharing",
+    minutes:
+      "https://docs.google.com/document/d/1AViX_IcPPFKBCheaGC20BQmHM6yCCy3mx6CYa_PpqXo/edit?usp=sharing",
+  },
+  {
+    date: "September 11 2025",
+    agenda:
+      "https://docs.google.com/document/d/1SpQs8QJFS34c9-MFyj7gdaZl9apF4DLjpUG8Exz3Nyg/edit?usp=sharing",
+    minutes:
+      "https://docs.google.com/document/d/1ZQbe5t4jqkywJyEZDBVFotah4Y0XYP8xHkpe6vDkvVc/edit?usp=sharing",
+  },
+  {
     date: "May 8 2025",
     agenda:
       "https://docs.google.com/document/d/1TjS5Ju9pj5SMjWQ1tPqRhtv2Ot3otIMxFNqJaHKOaH4/edit?usp=drive_link",
