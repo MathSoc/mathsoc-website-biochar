@@ -20,9 +20,16 @@ First year can be tough, but choosing your first-year rep isn't! As your rep, I 
 
 ### Utkarsh Goel
 
-I’m running for Council to amplify student voices, streamline campus services, and host inclusive events. I’ll champion clear communication, transparency, and practical, affordable improvements that save time for everyone. If elected, I’ll listen first, act fairly, and collaborate with you to build a more connected campus. Learn more and vote at vote.wusa.ca
+Hey everyone! I’m Utkarsh, and I’m running to be your MathSoc First Year Representative. I believe our voices deserve to shape how MathSoc supports us — through improved academic resources, enhanced mentorship, and increased opportunities to connect and collaborate. My goal is to make MathSoc more transparent, inclusive, and responsive to what first-years truly need. Together, we can make our first year more engaging, empowering, and impactful. Vote 01 – Utkarsh Goel for practical goals and real results!
 
 ### Aeshaan Kumar
+
+Hey! My name is Aeshaan Kumar, and the only thing I really aim for is to connect us all better. That's why I will be organizing group study sessions where we can discuss course notes' questions, and prepare for quizzes together. I will also initiate monthly surveys to ensure maximum communication between everyone.  I'd also love to have fun little quizzes that have nothing to do with coursework, but rather test our problem-solving skills. And who knows, maybe you'll get a chocolate if you win :) My goal is to ensure maximum connection, whether inside or outside the classroom.
+
+### Ashni Danstan
+
+ Hey everyone! I'm Ashni Danstan, running for first year MathSoc representative. I am committed to creating a vibrant and inclusive math community, where every student feels valued and supported. By organizing engaging social events and promoting academic success, I aim to foster an environment where everyone can thrive, connect, and contribute. I am committed to making our math community stronger. 
+Vote Ashni Danstan for your first year MathSoc representative!
 
 ### Inioluwa Aina
 
@@ -31,8 +38,6 @@ I’m running for Council to amplify student voices, streamline campus services,
 ### Yiwen Fu
 
 ### Jay Mehta
-
-### Ashni Danstan
 
 ### Flora Wang 
 
