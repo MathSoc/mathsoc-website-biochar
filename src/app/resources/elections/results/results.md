@@ -1,3 +1,24 @@
+# Fall 2025 By-Election
+
+## First-Year Representatives
+
+- Aeshaan Kumar
+- Angela Li
+- Catherine Chen
+- Ryan Qiao
+
+The raw ballot data can be found at [this link](https://drive.google.com/file/d/1nFfqx-QBROUGd8PxfUFuf3wnUvR4VQ7U/view?usp=sharing), and the output log of the Single Transferable Vote (STV) vote count can be found at [this link](https://drive.google.com/file/d/133QcCueMERE6V5YDEZjvablCNcL6u3hb/view?usp=sharing). The vote count was run using STV-rs, an open-source STV system which uses Meek’s Method, a detail which ensured all seats were filled with candidates. Ties were broken with the use of a tiebreaker ballot provided ahead of the voting period, as defined and required by MathSoc Policy 1.5.5. 
+
+## At-Large Representatives (acclaimed)
+
+- E-Therng Lee
+- Samantha Pater
+- Shalev Manor
+- Samir Sharma
+- Wendy Yang
+- Shayan Jizan
+- Nicholas Rebello
+
 # Fall 2025 General Election
 
 ## President
