@@ -28,7 +28,7 @@ export default async function PoliciesPage() {
           name="Board procedures"
           description="long-term governance"
           path="/documents/board-procedures-public.pdf"
-          lastUpdated={new Date("2025-08-18 EST")}
+          lastUpdated={new Date("2025-10-22 EST")}
         />
         <DocumentsCard
           icon={faNewspaper}
