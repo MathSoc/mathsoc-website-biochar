@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { MarkdownSection } from "../../components/markdown-section/markdown-section";
+import { MarkdownSection } from "../../components/markdown-section/markdown-section.server";
 import { Page } from "../../components/page/page-component";
 
 export const metadata: Metadata = { title: "Volunteer" };

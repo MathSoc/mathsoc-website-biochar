@@ -2,7 +2,7 @@ import { MeetingsTables } from "@/app/components/meetings-tables/meetings-tables
 import { Page } from "../../components/page/page-component";
 import "./meetings.scss";
 import { generalMeetings } from "./general-meetings";
-import { MarkdownSection } from "@/app/components/markdown-section/markdown-section";
+import { MarkdownSection } from "@/app/components/markdown-section/markdown-section.server";
 import { councilMeetings } from "./council-meetings";
 import { boardMeetings } from "./board-meetings";
 import { Metadata } from "next";

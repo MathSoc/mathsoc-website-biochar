@@ -1,5 +1,5 @@
 import { Banner } from "@/app/components/banner/banner";
-import { MarkdownSection } from "../../components/markdown-section/markdown-section";
+import { MarkdownSection } from "../../components/markdown-section/markdown-section.server";
 import { Page } from "../../components/page/page-component";
 import "./cnd.scss";
 import { Metadata } from "next";

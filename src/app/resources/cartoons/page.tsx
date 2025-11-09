@@ -1,4 +1,4 @@
-import { MarkdownSection } from "@/app/components/markdown-section/markdown-section";
+import { MarkdownSection } from "@/app/components/markdown-section/markdown-section.server";
 import { Page } from "../../components/page/page-component";
 import "./cartoons.scss";
 import { Metadata } from "next";
