@@ -4,7 +4,7 @@ import "./cartoons.scss";
 import { Metadata } from "next";
 import { Banner, BannerTitles } from "@/app/components/banner/banner";
 import { Row } from "@/app/components/layout/layout-components";
-import { Button } from "@/app/components/button/button";
+import { Button } from "@/app/components/button/button.server";
 
 export const metadata: Metadata = { title: "Cartoons" };
 
