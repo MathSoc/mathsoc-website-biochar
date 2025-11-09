@@ -2,17 +2,6 @@ import NextAuth, { Profile } from "next-auth";
 import { authConfig } from "./auth.config";
 import { OAuthUserConfig, OIDCConfig } from "next-auth/providers";
 import Google, { GoogleProfile } from "next-auth/providers/google";
-import c from "ansi-colors";
-
-export const isAuthDisabled = (): boolean => {
-  return process.env.AUTH_DISABLED === "true";
-};
-
-console.info(
-  isAuthDisabled()
-    ? c.yellow(" ! MathSoc authentication DISABLED")
-    : c.green(" ✓ MathSoc authentication enabled"),
-);
 
 const googleConfig: Partial<OAuthUserConfig<GoogleProfile>> = {
   clientId: process.env.GOOGLE_CLIENT_ID,
