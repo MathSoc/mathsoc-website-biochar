@@ -1,13 +1,10 @@
 import { Metadata } from "next";
-import { auth, signIn } from "../../../../auth";
+import { protectToStudents } from "../../auth.actions";
 
-export const metadata: Metadata = { title: "auth test" };
+export const metadata: Metadata = { title: "Protected page" };
 
 export default async function ProtectedPage() {
-  const session = await auth();
-  if (!session) {
-    signIn("uw-adfs");
-  }
+  await protectToStudents();
 
-  return "this page requires UW auth";
+  return "this page requires a minimum of UW auth";
 }

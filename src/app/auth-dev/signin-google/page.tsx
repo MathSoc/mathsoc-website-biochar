@@ -1,13 +1,10 @@
 import { Metadata } from "next";
-import { auth, signIn } from "../../../../auth";
+import { protectToAdmins } from "../../auth.actions";
 
-export const metadata: Metadata = { title: "auth test" };
+export const metadata: Metadata = { title: "Admin page" };
 
 export default async function ProtectedPage() {
-  const session = await auth();
-  if (!session) {
-    signIn("google");
-  }
+  await protectToAdmins();
 
-  return "this page requires google auth";
+  return "this page requires a minimum of google auth";
 }

@@ -4,10 +4,13 @@ import { Metadata } from "next";
 import React from "react";
 import "./exam-bank.scss";
 import { ExamsTable } from "@/app/admin/components/exams-table/exams-table";
+import { protectToStudents } from "../../auth.actions";
 
 export const metadata: Metadata = { title: "Exam Bank" };
 
 export default async function ExamBankPage() {
+  await protectToStudents();
+
   return (
     <Page id="exam-bank-page">
       <Banner src="/img/banners/pinktie-mc.jpeg" variant="pink">
