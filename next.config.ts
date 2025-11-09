@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  outputFileTracingExcludes: {
+    "/*": ["public/img/cartoons**/*"],
+  },
 };
 
 export default nextConfig;
