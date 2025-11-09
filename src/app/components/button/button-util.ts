@@ -6,5 +6,5 @@ export type ButtonProps = {
 };
 
 export const constructButtonClassName = (props: ButtonProps): string => {
-  return `button ${props.variant} ${props.size}`;
+  return `button ${props.variant} ${props.size ?? ""}`;
 };

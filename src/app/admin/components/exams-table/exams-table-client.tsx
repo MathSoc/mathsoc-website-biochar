@@ -128,7 +128,7 @@ const ExamRow: React.FC<{
   );
 
   return (
-    <tr key={`${exam.examFile}{exam.solutionUrl}`}>
+    <tr key={`${exam.examFile}{exam.solutionFile}`}>
       <td className="exam-name">{name}</td>
       <td className="exam-term">{termNumberToString(parseInt(term))}</td>
       <td className="exam-type">{type}</td>

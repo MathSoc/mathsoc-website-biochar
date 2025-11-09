@@ -44,7 +44,7 @@ export async function protectToAdmins(): Promise<Session> {
     redirect("/api/auth/signin/google");
   }
 
-  if (!isAdmin(session)) {
+  if (!(await isAdmin(session))) {
     redirect("/api/auth/signout");
   }
 
