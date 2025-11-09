@@ -1,13 +1,17 @@
 "use server";
 
 import { Session } from "next-auth";
-import { auth, signIn, signOut } from "../../auth";
+import { auth, isAuthDisabled, signIn, signOut } from "../../auth";
 
 export const isAdmin = async (session: Session | null) => {
   return session?.user?.email?.includes?.("mathsoc.uwaterloo.ca");
 };
 
 export const protectToStudents = async (): Promise<Session> => {
+  if (isAuthDisabled()) {
+    console.warn("⚠️ Skipping UW authentication");
+  }
+
   const session = await auth();
   if (!session) {
     await signIn("uw-adfs");
@@ -18,6 +22,10 @@ export const protectToStudents = async (): Promise<Session> => {
 };
 
 export const protectToAdmins = async (): Promise<Session> => {
+  if (isAuthDisabled()) {
+    console.warn("⚠️ Skipping admin authentication");
+  }
+
   const session = await auth();
   if (!session) {
     await signIn("google");
