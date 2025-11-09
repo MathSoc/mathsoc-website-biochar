@@ -9,12 +9,13 @@ const storage = new Storage();
  *
  * @todo add auth to this
  */
-export async function GET(
-  _: Request,
-  { params }: { params: { name: string } },
-) {
+export async function GET(_: Request, context: { params: { name: string } }) {
+  const {
+    params: { name },
+  } = context;
+
   try {
-    const file = storage.bucket(EXAMS_BUCKET_NAME!).file((await params).name);
+    const file = storage.bucket(EXAMS_BUCKET_NAME!).file(name);
 
     const [contents] = await file.download();
 
