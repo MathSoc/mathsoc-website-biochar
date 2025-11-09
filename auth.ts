@@ -1,10 +1,10 @@
 import NextAuth from "next-auth";
 import { authConfig } from "./auth.config";
 import { OAuthUserConfig } from "next-auth/providers";
-import { GoogleProfile } from "next-auth/providers/google";
+import Google, { GoogleProfile } from "next-auth/providers/google";
 import c from "ansi-colors";
 
-const authEnabled = process.env.AUTH_ENABLED;
+const authEnabled = process.env.AUTH_DISABLED !== "false";
 console.info(
   authEnabled
     ? c.green(" ✓ MathSoc authentication enabled")
