@@ -1,5 +1,5 @@
 import { HeadshotGrid } from "@/app/components/headshot-grid/headshot-grid";
-import { MarkdownSection } from "../../components/markdown-section/markdown-section";
+import { MarkdownSection } from "../../components/markdown-section/markdown-section.server";
 import { Page } from "../../components/page/page-component";
 import { Headshot } from "@/app/components/headshot/headshot";
 import { Metadata } from "next";

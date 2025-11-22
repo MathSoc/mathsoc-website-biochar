@@ -1,5 +1,5 @@
 import { Page } from "@/app/components/page/page-component";
-import { MarkdownSection } from "../../components/markdown-section/markdown-section";
+import { MarkdownSection } from "../../components/markdown-section/markdown-section.server";
 import { Metadata } from "next";
 
 export const metadata: Metadata = { title: "Community" };

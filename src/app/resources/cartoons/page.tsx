@@ -1,10 +1,10 @@
-import { MarkdownSection } from "@/app/components/markdown-section/markdown-section";
+import { MarkdownSection } from "@/app/components/markdown-section/markdown-section.server";
 import { Page } from "../../components/page/page-component";
 import "./cartoons.scss";
 import { Metadata } from "next";
 import { Banner, BannerTitles } from "@/app/components/banner/banner";
 import { Row } from "@/app/components/layout/layout-components";
-import { Button } from "@/app/components/button/button";
+import { Button } from "@/app/components/button/button.server";
 
 export const metadata: Metadata = { title: "Cartoons" };
 

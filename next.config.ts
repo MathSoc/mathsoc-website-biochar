@@ -10,8 +10,8 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  outputFileTracingIncludes: {
-    "/resources/cartoons": ["./src/app/resources/cartoons/**/*.md"],
+  outputFileTracingExcludes: {
+    "/*": ["public/img/cartoons**/*"],
   },
 };
 

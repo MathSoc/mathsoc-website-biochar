@@ -9,7 +9,6 @@ a.button:visited {
   transition: 0.15s linear;
   margin: 16px;
   display: block;
-  width: 120px;
   text-align: center;
   @include title-font;
 
@@ -38,6 +37,10 @@ a.button:visited {
     }
   }
 
+  &.small {
+    padding: 4px;
+  }
+
   &:hover,
   &:focus {
     background-color: white;
@@ -45,6 +48,17 @@ a.button:visited {
 
     &:visited {
       color: var(--mathsoc-pink) !important;
+    }
+  }
+
+  &:disabled {
+    color: var(--mathsoc-grey-2);
+    border-color: var(--mathsoc-grey-2);
+    cursor: unset;
+
+    &:hover {
+      color: var(--mathsoc-grey-2) !important;
+      background-color: var(--background-color);
     }
   }
 }

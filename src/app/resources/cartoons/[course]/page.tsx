@@ -1,4 +1,4 @@
-import { MarkdownSection } from "@/app/components/markdown-section/markdown-section";
+import { MarkdownSection } from "@/app/components/markdown-section/markdown-section.client";
 import "./cartoons-course.scss";
 import { Metadata } from "next";
 import { Page } from "@/app/components/page/page-component";
@@ -22,9 +22,7 @@ export default async function CartoonsCoursePage({ params }: URLParams) {
   return (
     <Page id="cartoons-course-page">
       <h1>{course}</h1>
-      <MarkdownSection
-        src={`src/app/resources/cartoons/[course]/course-pages/${course}.md`}
-      />
+      <MarkdownSection src={`/cartoons-course-pages/${course}.md`} />
     </Page>
   );
 }

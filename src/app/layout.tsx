@@ -3,6 +3,8 @@ import { Open_Sans } from "next/font/google";
 import "./globals.scss";
 import { Navbar } from "./components/navigation/navbar";
 import Footer from "./components/footer/footer";
+import { ToastContainer } from "react-toastify";
+import { Analytics } from "@vercel/analytics/next";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -31,6 +33,8 @@ export default function RootLayout({
         <Navbar />
         <main id="main-content">{children}</main>
         <Footer />
+        <ToastContainer theme="light" />
+        <Analytics />
       </body>
     </html>
   );

@@ -1,14 +1,36 @@
 import "./layout.scss";
 
-export const Row: React.FC<{
+type LayoutProps = {
   children: React.ReactNode;
   className?: string;
-}> = ({ children, className }) => {
-  return <div className={`row ${className ?? ""}`}>{children}</div>;
+  id?: string;
 };
 
-export const Column: React.FC<{ children: React.ReactNode }> = ({
+export const Row: React.FC<LayoutProps> = (props) => {
+  return <Layout type="row" {...props} />;
+};
+
+export const Column: React.FC<LayoutProps> = (props) => {
+  return <Layout type="column" {...props} />;
+};
+
+export const Centered: React.FC<LayoutProps> = (props) => {
+  return (
+    <Layout type="centered" {...props}>
+      <div className="centered-col">{props.children}</div>
+    </Layout>
+  );
+};
+
+const Layout: React.FC<{ type: string } & LayoutProps> = ({
+  type,
   children,
+  className = "",
+  id = "",
 }) => {
-  return <div className="column">{children}</div>;
+  return (
+    <div className={`${type} ${className}`} id={id}>
+      {children}
+    </div>
+  );
 };

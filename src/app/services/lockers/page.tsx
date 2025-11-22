@@ -1,4 +1,4 @@
-import { MarkdownSection } from "@/app/components/markdown-section/markdown-section";
+import { MarkdownSection } from "@/app/components/markdown-section/markdown-section.server";
 import { Page } from "@/app/components/page/page-component";
 import { Metadata } from "next";
 

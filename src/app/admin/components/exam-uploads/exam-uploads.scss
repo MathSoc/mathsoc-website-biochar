@@ -1,0 +1,45 @@
+.exam-uploads {
+  #exam-file-input {
+    width: 100%;
+    text-transform: uppercase;
+  }
+
+  .file-uploads-table {
+    input {
+      width: 100px;
+    }
+
+    .file-name {
+      white-space: nowrap;
+    }
+  }
+
+  input[type="file"] {
+    cursor: pointer;
+    background-color: white;
+    font-size: 0;
+    max-width: 160px;
+    margin: auto;
+
+    &::file-selector-button {
+      font-size: 0.85rem;
+      font-weight: 300;
+      text-transform: uppercase;
+      border: 1px solid var(--mathsoc-pink);
+      color: var(--mathsoc-pink);
+      font-family: var(--primary-font);
+      background-color: var(--background);
+      cursor: pointer;
+      width: 100%;
+      padding: 8px;
+    }
+
+    &:disabled {
+      &::file-selector-button {
+        color: var(--mathsoc-grey-2);
+        border-color: var(--mathsoc-grey-2);
+        cursor: not-allowed;
+      }
+    }
+  }
+}
