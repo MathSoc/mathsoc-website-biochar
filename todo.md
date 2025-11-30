@@ -1,6 +1,7 @@
-# Easy todos:
+# Easier todos:
 
 - Refresh the community page to use new descriptions obtained from clubs, and to link to their websites
+- Add a Council section that acts as a single source of truth for all MathSoc council committees, projects, etc.
 
 # Harder todos:
 
