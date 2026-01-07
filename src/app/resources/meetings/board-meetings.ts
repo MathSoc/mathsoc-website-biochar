@@ -2,6 +2,41 @@ import { Meeting } from "@/app/resources/meetings/components/meetings-tables/mee
 
 export const boardMeetings: Meeting[] = [
   {
+    date: "December 23 2025",
+    agenda:
+      "https://docs.google.com/document/d/10u6nUiwuNKIuLEIeEqV5TX3C1l1BQz86AF-OmSS5qFI/edit?usp=sharing",
+    minutes:
+      "https://docs.google.com/document/d/1mp49jFKnDn3tmNK_HGmdYeosnB3FfkY-XxaaDHbX4dI/edit?usp=sharing",
+  },
+  {
+    date: "November 25 2025",
+    agenda:
+      "https://docs.google.com/document/d/1oJtnGcH-S-ZVhRQue5Jr3oKRtAqmrLfGHBgpjdg2cBo/edit?usp=sharing",
+    minutes:
+      "https://docs.google.com/document/d/19vBfTOkzfVzCro6RNwEanf__u6vr1saKSFKR40nytXc/edit?usp=sharing",
+  },
+  {
+    date: "November 20 2025",
+    agenda:
+      "https://docs.google.com/document/d/1hH9DjQwGzNZIOrazmNs3eCrl00dHgc_m2K5KxBv-GyA/edit?usp=sharing",
+    minutes:
+      "https://docs.google.com/document/d/1LDtePV-0MlqOXJeh7WBGGrrBElPG69hX2-RFuv5pTuM/edit?usp=sharing",
+  },
+  {
+    date: "November 4 2025",
+    agenda:
+      "hhttps://docs.google.com/document/d/1M39Y_S_-bSM57KNo2xk6oOc6dh7Z9XPf-TOU6PyToIM/edit?usp=sharing",
+    minutes:
+      "https://docs.google.com/document/d/1jSU3kAJQSe1HBbH1lcaOiRWoAwgDRRzGQjrgdwfgAXM/edit?usp=sharing",
+  },
+  {
+    date: "October 7 2025",
+    agenda:
+      "https://docs.google.com/document/d/1w3RJSF0yzk7mKW8qETc3fHHvorAm8vPAVKAuHEA1a0Q/edit?usp=sharing",
+    minutes:
+      "https://docs.google.com/document/d/1NoghpvEOBprWU5xQW-WAc6NvWh95pgdFZbNNyCkd11U/edit?usp=sharing",
+  },
+  {
     date: "September 18 2025",
     agenda:
       "https://docs.google.com/document/d/1e5kvpTFi1bVYDwuaQuCon5DzDOUJOo5C1vl8ama1O_4/edit?usp=sharing",

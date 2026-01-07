@@ -2,6 +2,13 @@ import { Meeting } from "@/app/resources/meetings/components/meetings-tables/mee
 
 export const generalMeetings: Meeting[] = [
   {
+    date: "November 13 2025",
+    agenda:
+      "https://docs.google.com/document/d/1I62rfR_BXIL215sfQOb86fAcvUekiOVf3x9q147bfXU/edit?usp=sharing",
+    minutes:
+      "https://docs.google.com/document/d/1nytRmi7dsC-OKGb21GZz7TGqJGyL2MVrfZ0W4PUVDCA/edit?usp=sharing",
+  },
+  {
     date: "July 17 2025",
     agenda:
       "https://docs.google.com/document/d/1U3dNn7Mb0Mf-J2vjLcwRkAIYdR2E_FgOTpOPPoyq-Uw/edit?usp=sharing",

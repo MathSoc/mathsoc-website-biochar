@@ -1,3 +1,46 @@
+# Winter 2026 General Election
+
+## President
+
+**Veertej Sehdave**
+
+Eligible voters: 8109 / Number of votes cast: 4
+
+|             | Number of Votes | Percentage of Votes |
+| ----------- | :-------------- | ------------------: |
+| Yes         | 4               |                100% |
+| No          | 0               |                  0% |
+| Abstentions | 0               |                  0% |
+
+## Vice-President, Academic
+
+**Samantha Pater**
+
+Eligible voters: 8109 / Number of votes cast: 2
+
+|             | Number of Votes | Percentage of Votes |
+| ----------- | :-------------- | ------------------: |
+| Yes         | 4               |                100% |
+| No          | 0               |                  0% |
+| Abstentions | 0               |                  0% |
+
+## PMAMCO Representatives (acclaimed)
+
+- E-Therng Lee
+- Alex Lavallee
+
+## Computer Science Representatives (acclaimed)
+
+- River Stanley
+- Patrik Buhring
+- Sai Jilla
+- Valery Lai
+- Cristian Moretto
+
+## Business Representatives (acclaimed)
+
+- Nicholas Rebello
+
 # Fall 2025 By-Election
 
 ## First-Year Representatives
