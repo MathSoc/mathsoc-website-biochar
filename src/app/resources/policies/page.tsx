@@ -1,11 +1,12 @@
 import { Banner, BannerTitles } from "@/app/components/banner/banner";
 import { Page } from "../../components/page/page-component";
-import Link from "next/link";
-import { faNewspaper, IconDefinition } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faNewspaper } from "@fortawesome/free-solid-svg-icons";
 import "./policies.scss";
-import { faEye } from "@fortawesome/free-solid-svg-icons/faEye";
 import { Metadata } from "next";
+import {
+  DocumentCard,
+  DocumentCardRow,
+} from "@/app/components/documents-card/document-card";
 
 export const metadata: Metadata = { title: "Policies" };
 
@@ -15,70 +16,29 @@ export default async function PoliciesPage() {
       <Banner src="/img/banners/mathsoc-wall.jpeg" variant="pink">
         <BannerTitles title="Policies and Bylaws" />
       </Banner>
-      <div className="cards">
-        <DocumentsCard
+      <DocumentCardRow>
+        <DocumentCard
           icon={faNewspaper}
           name="Policies"
           description="council, clubs"
           path="/documents/policies-public.pdf"
           lastUpdated={new Date("2025-08-18 EST")}
         />
-        <DocumentsCard
+        <DocumentCard
           icon={faNewspaper}
           name="Board procedures"
           description="long-term governance"
           path="/documents/board-procedures-public.pdf"
           lastUpdated={new Date("2025-10-22 EST")}
         />
-        <DocumentsCard
+        <DocumentCard
           icon={faNewspaper}
           name="Bylaws"
           description="the Society at large"
           path="/documents/bylaws-public.pdf"
           lastUpdated={new Date("2025-08-18 EST")}
         />
-      </div>
-      <h1>Reports</h1>
-      <div className="cards">
-        <DocumentsCard
-          icon={faEye}
-          name="On Proctoring Software"
-          path="/resources/policies/proctoring"
-          lastUpdated={new Date("2022-04-20 EST")}
-        />
-      </div>
+      </DocumentCardRow>
     </Page>
   );
 }
-
-/**
- * Note: if lastUpdated is not provided with a timezone, you'll see an off-by-one
- * error due to timezone issues.
- *
- * The ideal way to pass in a date is `new Date("YYYY/MM/DD EST")`
- */
-const DocumentsCard: React.FC<{
-  name: string;
-  icon: IconDefinition;
-  description?: string;
-  path: string;
-  lastUpdated: Date;
-}> = ({ name, icon, description, path, lastUpdated }) => {
-  return (
-    <Link href={path} className="document-card">
-      <FontAwesomeIcon icon={icon} className="document-icon" />
-      <div className="gap"></div>
-      <span className="name">{name}</span>
-      <span className="description">{description}</span>
-      <span className="last-updated">
-        Last updated:
-        <br />
-        {lastUpdated.toLocaleDateString("en-CA", {
-          month: "long",
-          year: "numeric",
-          day: "numeric",
-        })}
-      </span>
-    </Link>
-  );
-};

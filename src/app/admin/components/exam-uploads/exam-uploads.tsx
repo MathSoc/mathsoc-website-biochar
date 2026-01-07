@@ -5,8 +5,8 @@ import React, { useRef, useState } from "react";
 import "./exam-uploads.scss";
 import { Button } from "@/app/components/button/button.client";
 import { Centered } from "@/app/components/layout/layout-components";
-import { regenerateExamsListAction } from "../../actions";
 import { toast } from "react-toastify";
+import { postExamsAction } from "../../actions";
 
 export const ExamUploads: React.FC = () => {
   const [files, setFiles] = useState<File[]>([]);
@@ -31,9 +31,7 @@ export const ExamUploads: React.FC = () => {
     }
 
     setUploading(true);
-    await fetch("/api/exams", { method: "POST", body: formData });
-    await regenerateExamsListAction();
-
+    await postExamsAction(formData);
     setFiles([]);
 
     toast(`Exams uploaded!`);

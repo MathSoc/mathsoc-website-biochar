@@ -6,9 +6,11 @@ export const Button: React.FC<
   ButtonProps & {
     href?: string;
     action?: () => void;
+    prefetch?: boolean;
   }
 > = (props) => {
-  const { children, href, action, disabled } = props;
+  const { children, href, action, disabled, prefetch } = props;
+  const shouldPrefetch = prefetch === false ? false : true;
 
   if (!href && !action) {
     throw new Error(`Button requires href or action`);
@@ -31,7 +33,7 @@ export const Button: React.FC<
   }
 
   return (
-    <Link href={href!} className={className}>
+    <Link href={href!} className={className} prefetch={shouldPrefetch}>
       {children}
     </Link>
   );

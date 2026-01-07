@@ -25,10 +25,7 @@ export default function Home() {
             <Button href="/community/volunteer" variant="white">
               Get Involved
             </Button>
-            <Button
-              href="https://services.mathsoc.uwaterloo.ca/resources/exam-bank"
-              variant="white"
-            >
+            <Button href="/resources/exam-bank" variant="white">
               Exam Bank
             </Button>
           </div>

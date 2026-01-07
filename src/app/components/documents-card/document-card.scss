@@ -1,0 +1,60 @@
+@use "../../sass-mixins" as *;
+
+.document-card {
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background-color: var(--mathsoc-pink);
+  padding: 8px;
+  height: 250px;
+  transition: var(--transition);
+  font-family: var(--title-font);
+
+  @include title-font;
+
+  color: white;
+  &:hover,
+  &:visited {
+    color: white;
+  }
+
+  .document-icon {
+    $size: 64px;
+    width: $size;
+    height: $size;
+    padding-top: 48px;
+    margin: auto;
+  }
+
+  .gap {
+    flex-grow: 1;
+  }
+
+  .name {
+    font-size: 1.2rem;
+  }
+
+  .description,
+  .last-updated {
+    font-size: 0.7rem;
+  }
+
+  .last-updated {
+    margin-top: 16px;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--mathsoc-pink-2);
+  }
+}
+
+.document-cards {
+  display: flex;
+  flex-direction: row;
+  margin-top: 48px;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+}

@@ -29,6 +29,11 @@ export default async function ContactPage() {
         <a href="mailto:info@mathsoc.uwaterloo.ca">info@mathsoc.uwaterloo.ca</a>
         .
       </p>
+      <h2>Website updates</h2>
+      <p>
+        Looking for changes to the MathSoc website? Contact the VPC at{" "}
+        <a href="mailto:vpc@mathsoc.uwaterloo.ca">vpc@mathsoc.uwaterloo.ca</a>.
+      </p>
     </Page>
   );
 }

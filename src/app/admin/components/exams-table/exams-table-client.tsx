@@ -4,10 +4,7 @@ import { termNumberToString } from "@/app/resources/exam-bank/util";
 import { Button } from "../../../components/button/button.server";
 import { Button as ClientButton } from "../../../components/button/button.client";
 import "./exams-table.scss";
-import {
-  deleteExamAction,
-  regenerateExamsListAction,
-} from "@/app/admin/actions";
+import { deleteExamAction } from "@/app/admin/actions";
 import { Column } from "../../../components/layout/layout-components";
 import { useCallback, useState } from "react";
 import { toast } from "react-toastify";
@@ -54,39 +51,12 @@ export const ExamsTableClient: React.FC<{
               return null;
             }
 
-            const onDeleteExam = () => {
-              const newExam: Exam = { ...exam, examFile: undefined };
-              const otherExams = exams.filter((e) => e !== exam);
-
-              if (exam.solutionFile) {
-                setExams([...otherExams, newExam]);
-              } else {
-                setExams(otherExams);
-              }
-
-              toast(`Exam ${exam.examFile} deleted!`);
-            };
-
-            const onDeleteSolution = () => {
-              const newExam: Exam = { ...exam, solutionFile: undefined };
-              const otherExams = exams.filter((e) => e !== exam);
-
-              if (exam.examFile) {
-                setExams([...otherExams, newExam]);
-              } else {
-                setExams(otherExams);
-              }
-
-              toast(`Solution ${exam.solutionFile} deleted!`);
-            };
-
             return (
               <ExamRow
                 exam={exam}
                 key={exam.name}
                 isAdmin={isAdmin}
-                onDeleteExam={onDeleteExam}
-                onDeleteSolution={onDeleteSolution}
+                setExams={setExams}
               />
             );
           })}
@@ -99,32 +69,27 @@ export const ExamsTableClient: React.FC<{
 const ExamRow: React.FC<{
   exam: Exam;
   isAdmin: boolean;
-  onDeleteExam: () => void;
-  onDeleteSolution: () => void;
-}> = ({ exam, isAdmin, onDeleteExam, onDeleteSolution }) => {
+  setExams: (exams: Exam[]) => void;
+}> = ({ exam, isAdmin, setExams }) => {
   const [department, coursecode, term, ...typeParts] = exam.name.split("-");
 
   const name = `${department} ${coursecode}`;
   const type = typeParts.join(" ").split(".")[0];
 
   const onDelete = useCallback(
-    (file: string) => {
+    async (file: string) => {
       const confirmation = confirm(`Are you sure you want to delete ${file}?`);
 
       if (!confirmation) {
         return;
       }
 
-      deleteExamAction(file);
-      regenerateExamsListAction();
+      const updatedList = await deleteExamAction(file);
+      setExams(updatedList);
 
-      if (file.includes("-sol")) {
-        onDeleteSolution();
-      } else {
-        onDeleteExam();
-      }
+      toast(`${file} deleted successfully`);
     },
-    [onDeleteExam, onDeleteSolution],
+    [setExams],
   );
 
   return (
@@ -139,6 +104,7 @@ const ExamRow: React.FC<{
               href={`/api/exams/${exam.examFile}`}
               variant="pink"
               size="small"
+              prefetch={false}
             >
               {isAdmin ? "See exam" : "Exam"}
             </Button>
@@ -158,7 +124,12 @@ const ExamRow: React.FC<{
       <td className="exam-sol">
         {exam.solutionFile ? (
           <>
-            <Button href={exam.solutionFile} variant="pink" size="small">
+            <Button
+              href={`/api/exams/${exam.solutionFile}`}
+              variant="pink"
+              size="small"
+              prefetch={false}
+            >
               {isAdmin ? "See solution" : "Solution"}
             </Button>
 

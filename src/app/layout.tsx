@@ -4,6 +4,8 @@ import "./globals.scss";
 import { Navbar } from "./components/navigation/navbar";
 import Footer from "./components/footer/footer";
 import { ToastContainer } from "react-toastify";
+import { Analytics } from "@vercel/analytics/next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -33,6 +35,8 @@ export default function RootLayout({
         <main id="main-content">{children}</main>
         <Footer />
         <ToastContainer theme="light" />
+        <Analytics />
+        <GoogleAnalytics gaId="G-F60QNSPFF3" />
       </body>
     </html>
   );

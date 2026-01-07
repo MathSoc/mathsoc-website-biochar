@@ -5,7 +5,6 @@ export type ExamFile = {
 
 export type Exam = {
   name: string;
-  uploadedAt: string;
 
   examFile?: string;
   solutionFile?: string;

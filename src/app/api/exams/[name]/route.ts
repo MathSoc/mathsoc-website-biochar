@@ -1,34 +1,31 @@
-import { EXAMS_BUCKET_NAME } from "@/app/admin/components/util/exam-config";
-import { Storage } from "@google-cloud/storage";
 import { NextResponse } from "next/server";
-
-const storage = new Storage();
+import { requireStudentAuthentication, withErrorHandling } from "../../utils";
+import { fetchFromExamBankWorker } from "../../exam-bank-worker";
 
 /**
  * Returns an exam found at the provided route
- *
- * @todo add auth to this
  */
 export async function GET(
   _: Request,
   context: RouteContext<"/api/exams/[name]">,
-) {
-  const { params } = context;
+): Promise<NextResponse> {
+  return withErrorHandling(async () => {
+    const session = await requireStudentAuthentication();
 
-  try {
-    const file = storage.bucket(EXAMS_BUCKET_NAME!).file((await params).name);
+    const { params } = context;
+    const examName = (await params).name;
 
-    const [contents] = await file.download();
+    const res = await fetchFromExamBankWorker(session, {
+      method: "get-exam",
+      k: examName,
+    });
 
-    return new NextResponse(new Uint8Array(contents), {
+    return new NextResponse(res.body, {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
         "Content-Disposition": "inline",
       },
     });
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: "Failed to fetch PDF" }, { status: 500 });
-  }
+  });
 }

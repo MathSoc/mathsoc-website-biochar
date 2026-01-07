@@ -7,7 +7,7 @@ export const metadata: Metadata = { title: "Proctoring" };
 export default async function ProctoringPage() {
   return (
     <Page id="proctoring-page">
-      <MarkdownSection src="src/app/resources/policies/proctoring/proctoring.md" />
+      <MarkdownSection src="src/app/resources/advocacy/proctoring/proctoring.md" />
     </Page>
   );
 }

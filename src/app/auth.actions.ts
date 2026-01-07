@@ -8,6 +8,14 @@ import { redirect } from "next/navigation";
 export const isAuthDisabled = async (): Promise<boolean> => {
   const isDisabled = process.env.AUTH_DISABLED === "true";
 
+  if (process.env.NODE_ENV !== "development") {
+    if (isDisabled) {
+      throw new Error(`Cannot disable auth on production`);
+    }
+
+    return isDisabled;
+  }
+
   if (isDisabled) {
     c.yellow(" ! MathSoc authentication DISABLED");
   } else {
@@ -17,13 +25,18 @@ export const isAuthDisabled = async (): Promise<boolean> => {
   return isDisabled;
 };
 
+export const isAuthEnabled = async (): Promise<boolean> =>
+  isAuthDisabled().then((res: boolean) => !res);
+
 export const isAdmin = async (session: Session | null) => {
   return session?.user?.email?.includes?.("mathsoc.uwaterloo.ca");
 };
 
+// @todo de-duplicate this with the equivalent function in api/utils.
 export async function protectToStudents(currentURL: string): Promise<Session> {
   if (await isAuthDisabled()) {
     console.warn("⚠️ Skipping UW authentication");
+    return { expires: new Date(2077, 8, 13).toISOString() };
   }
 
   const session = await auth();
@@ -39,6 +52,10 @@ export async function protectToStudents(currentURL: string): Promise<Session> {
 export async function protectToAdmins(currentURL: string): Promise<Session> {
   if (await isAuthDisabled()) {
     console.warn("⚠️ Skipping admin authentication");
+    return {
+      expires: new Date(2077, 8, 13).toISOString(),
+      user: { email: "localdev.admin@mathsoc.uwaterloo.ca" },
+    };
   }
 
   const session = await auth();

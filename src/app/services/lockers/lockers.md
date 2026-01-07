@@ -4,4 +4,4 @@ If a student is on a study term and has paid their MathSoc fee, they are eligibl
 
 MathSoc offers lockers on a term-by-term basis, first-come-first-serve. For Fall 2025, locker sign outs will be available starting **September 6th for math students** who have paid their MathSoc fee, and **September 28th for non-math students** who have paid their MathSoc fee.
 
-**Locker signouts are open for all MathSoc fee-paying students via [this form](https://docs.google.com/forms/d/e/1FAIpQLScdW9OL1e2dUsdvnk5UyZEjs_UNjdFefU4FdiOF_N2AmmrGdA/viewform).**
+**Locker signouts are open for all MathSoc fee-paying students via [this form](https://forms.gle/9Bp2M3sh6siRansV8).**

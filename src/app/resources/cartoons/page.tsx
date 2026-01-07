@@ -71,6 +71,7 @@ const DepartmentCourseCartoonsList: React.FC<{
             <Button
               variant="pink"
               href={`/resources/cartoons/${course}`}
+              prefetch={false}
               key={course}
             >
               {course}

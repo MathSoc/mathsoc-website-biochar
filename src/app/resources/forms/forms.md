@@ -74,7 +74,7 @@ We would love to answer any other questions you may have! Shoot us an email at [
 
 [CIF Proposal](https://docs.google.com/forms/d/e/1FAIpQLSc9vgDsq-Dn2EWAzyhThaIcCr1QIa02-gAIRCylMPxlAGxgVQ/viewform)
 
-[WUSA Societies Event Form](https://forms.office.com/pages/responsepage.aspx?id=685YobAEf0GogoWyMNQSrRXeQtb5sYlMrG6Jfc3ybc5UM0o3VU1NMkw4MFVGMzgxTEk5MUFFOUszUy4u&route=shorturl)
+[WUSA Societies Event Form](https://wusa.ca/about/student-bodies/student-societies/event-form/)
 
 [MathSoc Key/Fob Form](https://drive.google.com/file/d/17V7bBkLtmwDLs6qXY3WKniRUodfiRtZE/view)
 
