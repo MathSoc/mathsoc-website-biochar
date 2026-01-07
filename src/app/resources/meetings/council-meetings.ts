@@ -2,6 +2,27 @@ import { Meeting } from "@/app/components/meetings-tables/meetings-tables";
 
 export const councilMeetings: Meeting[] = [
   {
+    date: "November 27 2025",
+    agenda:
+      "https://docs.google.com/document/d/1rCFaHjjmO0xcXDI3Ru7_R2NikqpwykYw1ruGB-N7zAY/edit?usp=sharing",
+    minutes:
+      "https://docs.google.com/document/d/1DGlOWeolrpul5oDe3VsGIjmv1U1WGnLByHyxHmvQrwI/edit?usp=sharing",
+  },
+  {
+    date: "November 6 2025",
+    agenda:
+      "https://docs.google.com/document/d/1h4ODPpqcYxHZxmAPyl3UCHPjiPO84r_bwK4whRdZQCo/edit?usp=sharing",
+    minutes:
+      "https://docs.google.com/document/d/18aYTCKE5Dqu5hZY7sAPKbZvcGIbvlgkVgTyeE1OglHs/edit?usp=sharing",
+  },
+  {
+    date: "October 23 2025",
+    agenda:
+      "https://docs.google.com/document/d/1LmVhsLUj-85TE2yiLO8agBpVg-6V0kvkTeshblogOpg/edit?usp=sharing",
+    minutes:
+      "https://docs.google.com/document/d/143_jkNT8XGCmZJTrLTV1KaxGlxuihcV0HwnNlddOdek/edit?usp=sharing",
+  },
+  {
     date: "October 2 2025",
     agenda:
       "https://docs.google.com/document/d/12inLxeHo1TnbD5McPK8xET5B1AG7Q6iPonLwuRdYgdA/edit?usp=sharing",
