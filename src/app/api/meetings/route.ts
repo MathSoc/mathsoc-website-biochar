@@ -10,11 +10,11 @@ import { withErrorHandling } from "../utils";
 export async function GET(): Promise<NextResponse> {
   return withErrorHandling(async () => {
     return new NextResponse(
-      {
+      JSON.stringify({
         boardMeetings,
         councilMeetings,
         generalMeetings,
-      },
+      }),
       {
         status: 200,
       },
