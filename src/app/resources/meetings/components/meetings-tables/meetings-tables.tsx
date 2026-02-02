@@ -36,7 +36,7 @@ export const MeetingsTables: React.FC<{
   divideBy: "year" | "term";
 }> = ({ meetings, divideBy }) => {
   const dividedMeetings = Object.groupBy(
-    meetings.sort((a, b) => (a.date < b.date ? 1 : -1)),
+    meetings.sort((a, b) => (new Date(a.date) < new Date(b.date) ? 1 : -1)),
     divideBy === "year" ? getMeetingYear : getMeetingTerm,
   );
 
