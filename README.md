@@ -57,10 +57,12 @@ Follow the link it gives you (likely http://localhost:3000) to see the website.
 - **Authentication**: Authentication is powered by `next-auth`. We have two layers of authentication: student-level, powered by the University of Waterloo's DUO OIDC, and admin-level, powered by MathSoc's Google organization.
 - **Exam bank**: MathSoc uses a Cloudflare R2 bucket to store exam files. The code powering this bucket can be found in a private repository within the MathSoc GitHub organization.
 
+Further reading can be found in `INFRA.md`.
+
 ## Contact information
 
 If you need help with the website, contact any of:
 
 - The MathSoc web infrastructure director
 - The MathSoc VPC, [vpc@mathsoc.uwaterloo.ca](mailto:vpc@mathsoc.uwaterloo.ca)
-- River Stanley, [river.stanley@uwaterloo.ca](mailto:river.stanley@uwaterloo.ca)
+- River Stanley (CS/BBA '26), [river.stanley@uwaterloo.ca](mailto:river.stanley@uwaterloo.ca)
