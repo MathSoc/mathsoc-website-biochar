@@ -29,7 +29,7 @@ export const ExecutiveGrid: React.FC = () => (
       email="vpo@mathsoc.uwaterloo.ca"
     />
     <Headshot
-      name="Brook Khoo"
+      name="Xavier Solano"
       position="Vice-President, Communications"
       email="vpc@mathsoc.uwaterloo.ca"
     />
