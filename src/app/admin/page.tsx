@@ -5,7 +5,7 @@ import { ExamUploads } from "./components/exam-uploads/exam-uploads";
 import { protectToAdmins } from "../auth.actions";
 
 export default async function Admin() {
-  const session = await protectToAdmins("/admin");
+  const session = await protectToAdmins("/admin", ["write-exam-bank"]);
 
   return (
     <Page id="admin-page" size="large">
