@@ -29,7 +29,7 @@ export const listExamsAction = async (): Promise<Exam[]> => {
 };
 
 export const postExamsAction = async (formData: FormData) => {
-  const session = await protectToAdmins("/admin");
+  const session = await protectToAdmins("/admin", ["write-exam-bank"]);
 
   const res = await fetchFromExamBankWorker(
     session,
@@ -44,7 +44,7 @@ export const postExamsAction = async (formData: FormData) => {
 };
 
 export const deleteExamAction = async (file: string): Promise<Exam[]> => {
-  const session = await protectToAdmins("/admin");
+  const session = await protectToAdmins("/admin", ["write-exam-bank"]);
 
   const res = await fetchFromExamBankWorker(
     session,

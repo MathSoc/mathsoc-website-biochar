@@ -4,6 +4,7 @@ import { Session } from "next-auth";
 import { auth } from "../../auth";
 import c from "ansi-colors";
 import { redirect } from "next/navigation";
+import { admins, Permission } from "../../admins";
 
 export const isAuthDisabled = async (): Promise<boolean> => {
   const isDisabled = process.env.AUTH_DISABLED === "true";
@@ -28,8 +29,26 @@ export const isAuthDisabled = async (): Promise<boolean> => {
 export const isAuthEnabled = async (): Promise<boolean> =>
   isAuthDisabled().then((res: boolean) => !res);
 
-export const isAdmin = async (session: Session | null) => {
-  return session?.user?.email?.includes?.("mathsoc.uwaterloo.ca");
+export const isAdmin = async (
+  session: Session | null,
+  requiredPermissions: Permission[],
+) => {
+  const userPermissions = admins.find(
+    (value) => value.email === session?.user?.email,
+  );
+
+  if (!userPermissions) {
+    return false;
+  }
+
+  // ensure user has every permission the page needs
+  for (const requiredPermission of requiredPermissions) {
+    if (!userPermissions.permissions.includes(requiredPermission)) {
+      return false;
+    }
+  }
+
+  return true;
 };
 
 // @todo de-duplicate this with the equivalent function in api/utils.
@@ -49,7 +68,10 @@ export async function protectToStudents(currentURL: string): Promise<Session> {
   return session;
 }
 
-export async function protectToAdmins(currentURL: string): Promise<Session> {
+export async function protectToAdmins(
+  currentURL: string,
+  requiredPermissions: Permission[],
+): Promise<Session> {
   if (await isAuthDisabled()) {
     console.warn("⚠️ Skipping admin authentication");
     return {
@@ -65,7 +87,7 @@ export async function protectToAdmins(currentURL: string): Promise<Session> {
     );
   }
 
-  if (!(await isAdmin(session))) {
+  if (!(await isAdmin(session, requiredPermissions))) {
     redirect(
       `/api/mathsoc-auth/sign-out/?redirect_url=${encodeURIComponent(currentURL)}`,
     );
