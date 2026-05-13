@@ -145,7 +145,7 @@ The Deputy Vice President, Academic will assist the Vice President, Academic and
 
 - About 1–5 hours per week, with opportunities to take on additional work if desired.
 
-[Apply here for Spring 2026!](https://forms.gle/zAukgpXpDZcj1utH9)
+[Apply here for Spring 2026!](https://docs.google.com/forms/d/e/1FAIpQLSckoT9fhxiBnHc7BtuGDMTKsy_6WlRlhCwO82LB9ECf4kRXDQ/viewform?usp=header)
 
 ## Academic Events Coordinator
 
@@ -169,7 +169,7 @@ The Academic Events Coordinator will work with the Vice President, Academic, and
 - About 5-10 hours per week during the preparation of academic events.
 - Little to no work after events are run.
 
-[Apply here for Spring 2026!](https://forms.gle/zAukgpXpDZcj1utH9)
+[Apply here for Spring 2026!](https://docs.google.com/forms/d/e/1FAIpQLSckoT9fhxiBnHc7BtuGDMTKsy_6WlRlhCwO82LB9ECf4kRXDQ/viewform?usp=header)
 
 ## Exam Bank Librarian
 
@@ -191,7 +191,7 @@ The Exam Bank Librarian will work with the Vice President, Academic and is respo
 
 - 0–2 hours per week.
 
-[Apply here for Spring 2026!](https://forms.gle/zAukgpXpDZcj1utH9)
+[Apply here for Spring 2026!](https://docs.google.com/forms/d/e/1FAIpQLSckoT9fhxiBnHc7BtuGDMTKsy_6WlRlhCwO82LB9ECf4kRXDQ/viewform?usp=header)
 
 ## Textbook Librarian
 
@@ -210,7 +210,7 @@ The Textbook Librarian will work with the Vice President, Academic and is respon
 
 - 0–2 hours per week.
 
-[Apply here for Spring 2026!](https://forms.gle/zAukgpXpDZcj1utH9)
+[Apply here for Spring 2026!](https://docs.google.com/forms/d/e/1FAIpQLSckoT9fhxiBnHc7BtuGDMTKsy_6WlRlhCwO82LB9ECf4kRXDQ/viewform?usp=header)
 
 # Administrative
 
