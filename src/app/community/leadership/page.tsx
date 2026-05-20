@@ -107,7 +107,7 @@ const Board: React.FC = () => {
       <h2>Directors</h2>
       <HeadshotGrid>
         <Headshot
-          name="Patrik Buhring"
+          name="Andy Chang"
           position="Chair, At-Large Director"
           email="chair@mathsoc.uwaterloo.ca"
         />
