@@ -4,7 +4,7 @@ import { Headshot } from "@/app/components/headshot/headshot";
 export const ExecutiveGrid: React.FC = () => (
   <HeadshotGrid>
     <Headshot
-      name="Remington Zhi"
+      name="Remington Aginskaya-Zhi"
       position="President"
       email="president@mathsoc.uwaterloo.ca"
     />
