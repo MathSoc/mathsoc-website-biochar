@@ -19,7 +19,7 @@ export const ExecutiveGrid: React.FC = () => (
       email="vpf@mathsoc.uwaterloo.ca"
     />
     <Headshot
-      name=""
+      name="Molly Peng"
       position="Vice-President, Internal"
       email="vpi@mathsoc.uwaterloo.ca"
     />
