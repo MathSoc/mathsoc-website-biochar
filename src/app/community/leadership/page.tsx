@@ -35,9 +35,9 @@ const Council: React.FC = () => {
           email="a2lavallee@uwaterloo.ca"
         />
         <Headshot
-          name="E-Therng Lee"
+          name="Sara Nayar"
           position="Pure Mathematics, Applied Mathematics, and Combinatorics and Optimization Representative"
-          email="e-therng.lee@uwaterloo.ca"
+          email="s5nayar@uwaterloo.ca"
         />
         <Headshot
           name="River Stanley"
