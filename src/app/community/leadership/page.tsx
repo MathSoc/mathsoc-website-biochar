@@ -77,6 +77,11 @@ const Board: React.FC = () => {
           email="chair@mathsoc.uwaterloo.ca"
         />
         <Headshot
+          name="Aubrie Chan"
+          position="At-Large Director"
+          email="a342chan@uwaterloo.ca"
+        />
+        <Headshot
           name="Leo Chai"
           position="At-Large Director"
           email="j23chai@uwaterloo.ca"
