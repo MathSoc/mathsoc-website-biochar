@@ -28,26 +28,31 @@ const Council: React.FC = () => {
           name="Sara Nayar"
           position="Speaker, Pure Mathematics, Applied Mathematics, and Combinatorics and Optimization Representative"
           email="s5nayar@uwaterloo.ca"
+          image="/img/director-images/saranayar.webp"
         />
         <Headshot
           name="Alex Lavallee"
           position="Pure Mathematics, Applied Mathematics, and Combinatorics and Optimization Representative"
           email="a2lavallee@uwaterloo.ca"
+          image="/img/councillor-images/alexlavallee.webp"
         />
         <Headshot
           name="Saivenkat Jilla"
           position="Computer Science Representative"
           email="sljilla@uwaterloo.ca"
+          image="/img/councillor-images/saijilla.jpg"
         />
         <Headshot
           name="Valery Lai"
           position="Computer Science Representative"
           email="hqlai@uwaterloo.ca"
+          image="/img/councillor-images/valerylai.webp"
         />
         <Headshot
           name="Tengyi Xu"
           position="Computer Science Representative"
           email="t48xu@uwaterloo.ca"
+          image="/img/councillor-images/tengyixu.webp"
         />
         <Headshot
           name="Vera Misic"
@@ -90,11 +95,13 @@ const Board: React.FC = () => {
           name="Saivenkat Jilla"
           position="At-Large Director"
           email="sljilla@uwaterloo.ca"
+          image="/img/director-images/saijilla.jpg"
         />
         <Headshot
           name="Alex Lavallee"
           position="At-Large Director"
           email="a2lavallee@uwaterloo.ca"
+          image="/img/director-images/alexlavallee.webp"
         />
         <Headshot
           name="Nihal Mir"
@@ -115,11 +122,13 @@ const Board: React.FC = () => {
           name="Sara Nayar"
           position="Speaker, Councillor-Director"
           email="s5nayar@uwaterloo.ca"
+          image="/img/director-images/saranayar.webp"
         />
         <Headshot
           name="Grace Feng"
           position="Community Representative"
           email="g27feng@uwaterloo.ca"
+          image="/img/director-images/gfeng.jpg"
         />
         <Headshot
           name="Danya Matlin"
