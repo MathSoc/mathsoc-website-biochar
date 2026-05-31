@@ -122,13 +122,13 @@ const Board: React.FC = () => {
           name="Sara Nayar"
           position="Speaker, Councillor-Director"
           email="s5nayar@uwaterloo.ca"
-          image="/img/director-images/saranayar.webp"
+          //image="/img/director-images/saranayar.webp"
         />
         <Headshot
           name="Grace Feng"
           position="Community Representative"
           email="g27feng@uwaterloo.ca"
-          image="/img/director-images/gfeng.jpg"
+          //image="/img/director-images/gfeng.jpg"
         />
         <Headshot
           name="Danya Matlin"
