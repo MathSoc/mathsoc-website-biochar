@@ -90,6 +90,7 @@ const Board: React.FC = () => {
           name="Leo Chai"
           position="At-Large Director"
           email="j23chai@uwaterloo.ca"
+          image="/img/director-images/leochai.webp"
         />
         <Headshot
           name="Saivenkat Jilla"
