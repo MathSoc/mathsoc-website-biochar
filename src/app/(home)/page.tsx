@@ -34,6 +34,14 @@ export default function Home() {
 
       <div className="home-content">
         <h1 className="section-head">Hear about our upcoming events!</h1>
+        <div className="calendarEmbed">
+          <iframe
+            src="https://calendar.google.com/calendar/embed?src=c_f907cdc3727f57b8b402c99286c405afbc33892ddab1db184e96d13b614ada3f%40group.calendar.google.com&ctz=America%2FToronto"
+            title="MathSoc Events Calendar"
+            frameBorder="0"
+            scrolling="no"
+          />
+        </div>
         <div className="social-buttons">
           <SocialButton
             href="/resources/discord"
