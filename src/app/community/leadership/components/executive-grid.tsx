@@ -28,7 +28,7 @@ export const ExecutiveGrid: React.FC = () => (
       image="/img/exec-images/mollyp.webp"
     />
     <Headshot
-      name="Mica Morante"
+      name="Mica Andrea Morante"
       position="Vice-President, Operations"
       email="vpo@mathsoc.uwaterloo.ca"
       image="/img/exec-images/micamorante.webp"
