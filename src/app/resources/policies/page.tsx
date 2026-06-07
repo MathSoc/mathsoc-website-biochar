@@ -22,21 +22,21 @@ export default async function PoliciesPage() {
           name="Policies"
           description="council, clubs"
           path="/documents/policies-public.pdf"
-          lastUpdated={new Date("2025-08-18 EST")}
+          lastUpdated={new Date("2026-06-04 EST")}
         />
         <DocumentCard
           icon={faNewspaper}
           name="Board procedures"
           description="long-term governance"
           path="/documents/board-procedures-public.pdf"
-          lastUpdated={new Date("2025-10-22 EST")}
+          lastUpdated={new Date("2026-06-04 EST")}
         />
         <DocumentCard
           icon={faNewspaper}
           name="Bylaws"
           description="the Society at large"
           path="/documents/bylaws-public.pdf"
-          lastUpdated={new Date("2025-08-18 EST")}
+          lastUpdated={new Date("2026-06-04 EST")}
         />
       </DocumentCardRow>
     </Page>
