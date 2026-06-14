@@ -1,8 +1,8 @@
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import "./document-card.scss";
 import React from "react";
+import "./document-card.scss";
 
 /**
  * Note: if lastUpdated is not provided with a timezone, you'll see an off-by-one
@@ -15,7 +15,7 @@ export const DocumentCard: React.FC<{
   icon: IconDefinition;
   description?: string;
   path: string;
-  lastUpdated: Date;
+  lastUpdated?: Date;
 }> = ({ name, icon, description, path, lastUpdated }) => {
   return (
     <Link href={path} className="document-card">
@@ -23,15 +23,17 @@ export const DocumentCard: React.FC<{
       <div className="gap"></div>
       <span className="name">{name}</span>
       <span className="description">{description}</span>
-      <span className="last-updated">
-        Last updated:
-        <br />
-        {lastUpdated.toLocaleDateString("en-CA", {
-          month: "long",
-          year: "numeric",
-          day: "numeric",
-        })}
-      </span>
+      {lastUpdated ? (
+        <span className="last-updated">
+          Last updated:
+          <br />
+          {lastUpdated.toLocaleDateString("en-CA", {
+            month: "long",
+            year: "numeric",
+            day: "numeric",
+          })}
+        </span>
+      ) : null}
     </Link>
   );
 };
