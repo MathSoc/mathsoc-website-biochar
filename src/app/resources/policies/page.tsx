@@ -36,21 +36,21 @@ export default async function PoliciesPage() {
           icon={faNewspaper}
           name="Policies"
           description="council, clubs"
-          path="https://github.com/MathSoc/mathSocDocuments/releases/download/latest-docs/policies-public.pdf"
+          path="/api/resources/policies/policies"
           lastUpdated={lastUpdated}
         />
         <DocumentCard
           icon={faNewspaper}
           name="Board procedures"
           description="long-term governance"
-          path="https://github.com/MathSoc/mathSocDocuments/releases/download/latest-docs/board-procedures-public.pdf"
+          path="/api/resources/policies/board-procedures"
           lastUpdated={lastUpdated}
         />
         <DocumentCard
           icon={faNewspaper}
           name="Bylaws"
           description="the Society at large"
-          path="https://github.com/MathSoc/mathSocDocuments/releases/download/latest-docs/bylaws-public.pdf"
+          path="/api/resources/policies/bylaws"
           lastUpdated={lastUpdated}
         />
       </DocumentCardRow>
