@@ -47,7 +47,7 @@ export const boardMeetings: Meeting[] = [
   {
     date: "November 4 2025",
     agenda:
-      "hhttps://docs.google.com/document/d/1M39Y_S_-bSM57KNo2xk6oOc6dh7Z9XPf-TOU6PyToIM/edit?usp=sharing",
+      "https://docs.google.com/document/d/1M39Y_S_-bSM57KNo2xk6oOc6dh7Z9XPf-TOU6PyToIM/edit?usp=sharing",
     minutes:
       "https://docs.google.com/document/d/1jSU3kAJQSe1HBbH1lcaOiRWoAwgDRRzGQjrgdwfgAXM/edit?usp=sharing",
   },
@@ -89,9 +89,9 @@ export const boardMeetings: Meeting[] = [
   {
     date: "July 24 2025",
     agenda:
-      "https://docs.google.com/document/d/1nht_22OvolQHR6qacc8ZxQjPlowgVQsDaCHoSvUhvCc/edit?usp=sharing",
+      "https://docs.google.com/document/d/1c7-KpXUTv8JtZ84sWZXnsI5tfqXxGPiDh4tXqqAGYgc/edit?usp=sharing",
     minutes:
-      "https://docs.google.com/document/d/1sQCKljK989U6ulQuvjzZ04kyfoNHpa4jb9uSKJK5SfU/edit?usp=sharing",
+      "https://docs.google.com/document/d/1iBYLGC6NCYtQl170Jw1C8P_rmYnAOY95_m-O4hinQPA/edit?usp=sharing",
   },
   {
     date: "January 16 2025",
