@@ -1,0 +1,51 @@
+@use "../../sass-mixins" as *;
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+
+  @include tablet-down {
+    flex-direction: row;
+  }
+
+  .tabs-header {
+    display: flex;
+    flex-direction: row;
+
+    gap: 8px;
+    width: 100%;
+    border-bottom: 1px solid var(--background-3);
+    overflow-x: auto;
+
+    @include tablet-down {
+      flex-direction: column;
+      flex-shrink: 1;
+    }
+
+    .tab-button {
+      padding: 4px;
+      border-bottom: 0px solid var(--mathsoc-pink);
+      transition: var(--transition);
+
+      &.active,
+      &:hover,
+      &:focus-visible {
+        padding-bottom: 8px;
+        border-width: 1px;
+        color: var(--mathsoc-pink);
+        border-color: var(--mathsoc-pink);
+      }
+    }
+  }
+
+  .tabs-body {
+    padding: 0 16px;
+    .tab-contents {
+      display: none;
+
+      &.active {
+        display: block;
+      }
+    }
+  }
+}
