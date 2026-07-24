@@ -1,10 +1,25 @@
 import { Budget } from "@/app/resources/budgets/components/budgets-table/budgets-table";
 
 export const budgets: Budget[] = [
+ {
+    year: 2026,
+    term: "Winter",
+    path: "https://docs.google.com/spreadsheets/d/1WqmwZPczhbPjkD0FYp64dq5YLpm6JQBi/edit?usp=sharing&ouid=117638809746906328648&rtpof=true&sd=true",
+  },
   {
     year: 2025,
     term: "Winter",
     path: "https://docs.google.com/spreadsheets/d/1FK5jPqIpF9_8_NvTo4B1W1pVUgnt3ZJ7/edit?usp=sharing&ouid=116601158694693914235&rtpof=true&sd=true",
+  },
+  {
+    year: 2025,
+    term: "Spring",
+    path: "https://docs.google.com/spreadsheets/d/1JOjQaVotqs643XWG0GIsHAbnmqXa-ixg/edit?usp=sharing&ouid=117638809746906328648&rtpof=true&sd=true",
+  },
+  {
+    year: 2025,
+    term: "Fall",
+    path: "https://docs.google.com/spreadsheets/d/1uPCjFFUAhuJhp5CyimVBv_hL6IIRsFYY/edit?usp=sharing&ouid=117638809746906328648&rtpof=true&sd=true",
   },
   {
     year: 2024,
