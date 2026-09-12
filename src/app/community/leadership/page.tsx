@@ -82,6 +82,16 @@ const Board: React.FC = () => {
           email="chair@mathsoc.uwaterloo.ca"
         />
         <Headshot
+          name="E-Therng Lee"
+          position="At-Large Director"
+          email="???"
+        />
+        <Headshot
+          name="Mary Li"
+          position="At-Large Director"
+          email="chair@mathsoc.uwaterloo.ca"
+        />
+        <Headshot
           name="Aubrie Chan"
           position="At-Large Director"
           email="a342chan@uwaterloo.ca"
@@ -114,17 +124,17 @@ const Board: React.FC = () => {
           position="At-Large Director"
           email="sarah.mei@uwaterloo.ca"
         />
-        <Headshot
+        {/*<Headshot
           name="Isabela Souza"
           position="At-Large Director"
           email="isabelacefrin@gmail.com"
         />
-        <Headshot
+        {/*<Headshot
           name="Sara Nayar"
           position="Speaker, Councillor-Director"
           email="s5nayar@uwaterloo.ca"
           image="/img/director-images/saranayar.webp"
-        />
+        />*/}
         <Headshot
           name="Grace Feng"
           position="Community Representative"
