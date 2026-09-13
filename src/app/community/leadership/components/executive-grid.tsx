@@ -29,6 +29,7 @@ export const ExecutiveGrid: React.FC = () => (
       name="Leon Yang"
       position="Vice-President, Operations"
       email="vpo@mathsoc.uwaterloo.ca"
+      image="/img/exec-images/leonyang.jpg"
     />
     <Headshot
       name="Jiamiao Zeng"

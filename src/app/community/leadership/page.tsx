@@ -84,7 +84,7 @@ const Board: React.FC = () => {
         <Headshot
           name="E-Therng Lee"
           position="At-Large Director"
-          email="???"
+          email="etherng.lee@uwaterloo.ca"
           image="/img/director-images/ethernglee.webp"
         />
         <Headshot
