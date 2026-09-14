@@ -119,6 +119,7 @@ const Board: React.FC = () => {
           name="Nihal Mir"
           position="At-Large Director"
           email="n2mir@uwaterloo.ca"
+          image="/img/exec-images/nihalmir.png"
         />
         <Headshot
           name="Sarah Mei"
