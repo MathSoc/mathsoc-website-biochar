@@ -19,11 +19,13 @@ export const ExecutiveGrid: React.FC = () => (
       name="Cynthia Sun"
       position="Vice-President, Finance"
       email="vpf@mathsoc.uwaterloo.ca"
+      image="/img/exec-images/cynthiasun.jpg"
     />
     <Headshot
       name="Nihal Mir"
       position="Vice-President, Internal"
       email="vpi@mathsoc.uwaterloo.ca"
+      image="/img/exec-images/nihalmir.png"
     />
     <Headshot
       name="Leon Yang"
