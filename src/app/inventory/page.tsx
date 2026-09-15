@@ -9,7 +9,7 @@ import { Button } from "../components/button/button.server";
 export const metadata: Metadata = { title: "Inventory" };
 
 const BOARD_GAMES_LINK =
-   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQNCB57mU5TYuwKd5gbiqUGVa7DI8_KsCg_QYdUzZsgXHSIrnZR8QIfARNM0gc7PjkdvaPwwYZhlYTw/pubhtml?gid=1558150648&single=true&widget=true&headers=false";
+   "https://docs.google.com/spreadsheets/d/e/2PACX-1vSKQ8f7Yp2BQLkZHZCfSOH-OisbpMXGaccGwXvpdxns66IDhPzRw2-qGmyytG7_cqdxrpjTUPg9aWZc/pubhtml?gid=1558150648&single=true&widget=true&headers=false";
 
 export default async function InventoryPage() {
   const novelties = inventory.filter((item) => item.category == "Novelties");
