@@ -3,7 +3,7 @@ import { Headshot } from "@/app/components/headshot/headshot";
 
 export const ExecutiveGrid: React.FC = () => (
   <HeadshotGrid>
-    {/*<Headshot
+    <Headshot
       name="Remington Aginskaya-Zhi"
       position="President"
       email="president@mathsoc.uwaterloo.ca"
@@ -14,30 +14,30 @@ export const ExecutiveGrid: React.FC = () => (
       position="Vice-President, Academic"
       email="vpa@mathsoc.uwaterloo.ca"
       image="/img/exec-images/ethernglee.webp"
-    />*/}
+    />
     <Headshot
-      name="Cynthia Sun"
+      name="Mary Li"
       position="Vice-President, Finance"
       email="vpf@mathsoc.uwaterloo.ca"
-      image="/img/exec-images/cynthiasun.jpg"
+      image="/img/exec-images/maryli.JPG"
     />
     <Headshot
-      name="Nihal Mir"
+      name="Molly Peng"
       position="Vice-President, Internal"
       email="vpi@mathsoc.uwaterloo.ca"
-      image="/img/exec-images/nihalmir.png"
+      image="/img/exec-images/mollyp.webp"
     />
     <Headshot
-      name="Leon Yang"
+      name="Mica Morante"
       position="Vice-President, Operations"
       email="vpo@mathsoc.uwaterloo.ca"
-      image="/img/exec-images/leonyang.jpg"
+      image="/img/exec-images/micamorante.webp"
     />
     <Headshot
-      name="Jiamiao Zeng"
+      name="Chelsea Kim"
       position="Vice-President, Communications"
       email="vpc@mathsoc.uwaterloo.ca"
-      image="/img/exec-images/jiamiaozeng.JPG"
+      image="/img/exec-images/chelseakim.webp"
     />
   </HeadshotGrid>
 );
