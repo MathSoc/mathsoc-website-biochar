@@ -21,7 +21,7 @@ The Senior Finance Officer is a senior leadership role designed to work closely 
 
 - Approximately 5–10 hours per week, with flexibility depending on workload during peak financial periods and MathSoc events.
 
-[Apply here for Spring 2026!](https://forms.gle/Rh4wKUamxu2SigNe9)
+[Apply here for Fall 2026!](https://forms.gle/pFbutrJ5eCpDKHJeA)
 
 ## Finance Director
 
@@ -43,4 +43,4 @@ The Finance Director is a supportive operational role designed to assist with th
 
 - Approximately 3–7 hours per week, with flexibility depending on workload during peak financial periods and MathSoc events.
 
-[Apply here for Spring 2026!](https://forms.gle/Rh4wKUamxu2SigNe9)
+[Apply here for Fall 2026!](https://forms.gle/pFbutrJ5eCpDKHJeA)
