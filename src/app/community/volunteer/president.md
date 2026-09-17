@@ -1,3 +1,7 @@
+**Works with:** President
+
+Administrative volunteers work with the elected President. The President coordinates society-wide priorities, supports cross-team projects, and helps volunteers understand how their work fits into MathSoc.
+
 ## Presidential Assistant
 
 The Presidential Assistant will work closely with the president and understand what the day-to-day of the President looks like. They will also assist and suggest solutions to Society’s ongoing or previous problems and issues. We are looking for an undergraduate student with excellent writing and communication skills. We believe this position can offer the volunteer training, support, and immense experience. Preference will be given to those who can work in-person.

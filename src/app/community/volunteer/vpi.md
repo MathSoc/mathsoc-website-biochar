@@ -1,3 +1,7 @@
+**Works with:** Vice-President, Internal
+
+Event volunteers work with the Vice-President, Internal on student-facing events, club support, event planning, setup, and day-of logistics.
+
 ## Games Night Director
 
 As a Games Night Director, you will be in charge of planning the weekly games night as well as the Party with Profs event alongside the VP Internal. You will be responsible for running the weekly events and supplying food, snacks, or beverages to your discretion. Please note that this is an **in-person position**.

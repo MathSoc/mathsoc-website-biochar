@@ -1,3 +1,7 @@
+**Works with:** Chair, Speaker, Secretary, Board, or Council
+
+Governance roles are separate from the executive volunteer portfolios. These positions support meetings, records, representation, policy, appointments, and the decision-making bodies that keep MathSoc accountable.
+
 ## Executive team
 
 See [Executives](/community/leadership).

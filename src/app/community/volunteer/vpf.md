@@ -1,3 +1,7 @@
+**Works with:** Vice-President, Finance
+
+Finance volunteers work with the Vice-President, Finance on budgets, reimbursements, deposits, finance records, club finance support, and other financial processes that keep MathSoc running.
+
 ## Senior Finance Officer
 
 The Senior Finance Officer is a senior leadership role designed to work closely with the Vice President, Finance (VPF) to oversee MathSoc’s financial operations and support Finance Directors. Preference will be given to candidates with prior experience as a Finance Director in previous terms.

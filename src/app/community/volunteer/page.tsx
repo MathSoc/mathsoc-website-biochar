@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import { Headshot } from "@/app/components/headshot/headshot";
+import { HeadshotGrid } from "@/app/components/headshot-grid/headshot-grid";
 import { MarkdownSection } from "../../components/markdown-section/markdown-section.server";
 import { Page } from "../../components/page/page-component";
 import Tabs from "@/app/components/tabs/tabs";
@@ -54,6 +56,11 @@ export default async function VolunteerPage() {
             ),
           },
           {
+            title: "Infrastructure",
+            id: "infra",
+            contents: <InfrastructureTab />,
+          },
+          {
             title: "Governance",
             id: "governance",
             contents: (
@@ -65,3 +72,24 @@ export default async function VolunteerPage() {
     </Page>
   );
 }
+
+const InfrastructureTab: React.FC = () => {
+  return (
+    <>
+      <div className="markdown-section">
+        <div className="inner-contents">
+          <h2>Current Infrastructure Lead</h2>
+          <HeadshotGrid>
+            <Headshot
+              name="Mica Morante"
+              position="Current Lead, Infrastructure"
+              email="webdev@mathsoc.uwaterloo.ca"
+              image="/img/infra/mica-morante.jpg"
+            />
+          </HeadshotGrid>
+        </div>
+      </div>
+      <MarkdownSection src="src/app/community/volunteer/infra.md" />
+    </>
+  );
+};

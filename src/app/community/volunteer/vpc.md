@@ -1,3 +1,7 @@
+**Works with:** Vice-President, Communications
+
+Marketing and communications volunteers work with the Vice-President, Communications on MathSoc's public-facing communication, posters, social media, photography, website content updates, notices, and promotion.
+
 ## Marketing Director
 
 Marketing Directors are responsible for creating digital graphics for our Social Media pages, or physical poster designs for the society-managed posting boards. Prior experience with visual software, such as Canva, would be considered an asset but is not required. This position can be done remotely.
