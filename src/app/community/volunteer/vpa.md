@@ -1,3 +1,7 @@
+**Works with:** Vice-President, Academic
+
+Academic volunteers work with the Vice-President, Academic on academic advocacy, academic events, exam bank support, textbook library support, and other academic resources for Math students.
+
 ## Deputy Vice President, Academic
 
 The Deputy Vice President, Academic will assist the Vice President, Academic and advocate on special topics as the need arises. This role will involve some secretarial work but will generally be an advocacy role.

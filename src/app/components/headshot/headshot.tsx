@@ -5,7 +5,7 @@ import Link from "next/link";
 export const Headshot: React.FC<{
   name: string;
   position: string;
-  email: string;
+  email?: string;
   image?: string;
 }> = ({
   name,
@@ -20,9 +20,11 @@ export const Headshot: React.FC<{
       </div>
       <span className="headshot-name">{name}</span>
       <span className="headshot-position">{position}</span>
-      <span className="headshot-email">
-        <Link href={`mailto:${email}`}>{email}</Link>
-      </span>
+      {email && (
+        <span className="headshot-email">
+          <Link href={`mailto:${email}`}>{email}</Link>
+        </span>
+      )}
     </div>
   );
 };

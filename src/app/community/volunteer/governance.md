@@ -1,3 +1,7 @@
+**Works with:** Chair, Speaker, Secretary, Board, Council, or the executive team
+
+Governance roles are not always under one Vice-President. These positions support meetings, records, representation, policy, appointments, and the decision-making bodies that keep MathSoc accountable.
+
 ## Executive team
 
 See [Executives](/community/leadership).

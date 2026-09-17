@@ -1,3 +1,7 @@
+**Works with:** Lead, Infrastructure and Vice-President, Communications
+
+Infrastructure volunteers work on MathSoc's website and technical systems. The Lead, Infrastructure guides technical work and supports web developers, while the Vice-President, Communications helps connect website work to public-facing content and communication needs.
+
 ## Lead, Infrastructure
 
 The Lead, Infrastructure is MathSoc's main technical infrastructure lead and primary developer for the MathSoc website. This role helps keep MathSoc's web systems maintainable, reliable, and easy for future volunteers to continue improving.
@@ -48,4 +52,4 @@ Website Developer Volunteers help build, maintain, and improve the MathSoc websi
 - Care about accessible, student-friendly websites.
 - Enjoy improving tools that lots of MathSoc members use.
 
-If you are interested in website volunteering, email the VPC at [vpc@mathsoc.uwaterloo.ca](mailto:vpc@mathsoc.uwaterloo.ca).
+If you are interested in website volunteering, email the current Lead, Infrastructure at [webdev@mathsoc.uwaterloo.ca](mailto:webdev@mathsoc.uwaterloo.ca).
