@@ -1,6 +1,6 @@
 **Works with:** President
 
-Administrative volunteers usually work with the President or the executive named in the posting. The President coordinates society-wide priorities, supports cross-team projects, and helps volunteers understand how their work fits into MathSoc.
+Administrative volunteers work with the elected President. The President coordinates society-wide priorities, supports cross-team projects, and helps volunteers understand how their work fits into MathSoc.
 
 ## Presidential Assistant
 
