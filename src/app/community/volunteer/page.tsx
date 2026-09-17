@@ -54,6 +54,13 @@ export default async function VolunteerPage() {
             ),
           },
           {
+            title: "Infrastructure",
+            id: "infra",
+            contents: (
+              <MarkdownSection src="src/app/community/volunteer/infra.md" />
+            ),
+          },
+          {
             title: "Governance",
             id: "governance",
             contents: (
