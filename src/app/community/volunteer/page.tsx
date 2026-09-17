@@ -84,7 +84,7 @@ const InfrastructureTab: React.FC = () => {
               name="Mica Morante"
               position="Current Lead, Infrastructure"
               email="webdev@mathsoc.uwaterloo.ca"
-              image="/img/councillor-images/default.png"
+              image="/img/infra/mica-morante.jpg"
             />
           </HeadshotGrid>
         </div>
