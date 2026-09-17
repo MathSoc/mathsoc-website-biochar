@@ -7,11 +7,13 @@ export const Headshot: React.FC<{
   position: string;
   email?: string;
   image?: string;
+  description?: string;
 }> = ({
   name,
   position,
   email,
   image = "/img/councillor-images/default.png",
+  description,
 }) => {
   return (
     <div className="headshot">
@@ -24,6 +26,9 @@ export const Headshot: React.FC<{
         <span className="headshot-email">
           <Link href={`mailto:${email}`}>{email}</Link>
         </span>
+      )}
+      {description && (
+        <span className="headshot-description">{description}</span>
       )}
     </div>
   );

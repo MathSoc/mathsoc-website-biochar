@@ -74,6 +74,15 @@ const Board: React.FC = () => {
     <div className="board-section">
       <h1>Board</h1>
       <MarkdownSection src="src/app/community/leadership/board.md" />
+      <h2>Resource Members</h2>
+      <HeadshotGrid>
+        <Headshot
+          name="Mica Morante"
+          position="Lead, Infrastructure"
+          email="webdev@mathsoc.uwaterloo.ca"
+          image="/img/infra/mica-morante.jpg"
+        />
+      </HeadshotGrid>
       <h2>Directors</h2>
       <HeadshotGrid>
         <Headshot
@@ -85,7 +94,7 @@ const Board: React.FC = () => {
           name="E-Therng Lee"
           position="At-Large Director"
           email="etherng.lee@uwaterloo.ca"
-          image="/img/director-images/ethernglee.webp"
+          image="/img/director-images/E-Therng_Lee.JPG"
         />
         <Headshot
           name="Mary Li"
