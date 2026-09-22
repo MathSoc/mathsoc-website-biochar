@@ -7,7 +7,7 @@ MathSoc offers lockers on a term-by-term basis, first-come, first-served. For **
 - **September 21** for Math students who have paid their MathSoc fee.
 - **September 28** for non-Math students who have paid their MathSoc fee.
 
-**The locker sign-out form will be available here soon. Sign-ups will open on the dates listed above.**
+**Sign-ups are now open! Please complete this [form](https://docs.google.com/forms/d/e/1FAIpQLSeCsUw3RXWuSwpCCPqBwt5HO5q-IRyOu8865frlkgYqtK6ywQ/viewform) to be assigned a locker.**
 
 ## End-of-term locker cleanout
 
