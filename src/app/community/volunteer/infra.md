@@ -4,6 +4,8 @@ Infrastructure volunteers help maintain and improve MathSoc's website and techni
 
 ## Website Developer Volunteer
 
+**Applications are closed.*
+
 Website Developer Volunteers help build, maintain, and improve the MathSoc website.
 
 **Works with:** Lead, Infrastructure and Vice-President, Communications.
