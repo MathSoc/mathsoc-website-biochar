@@ -25,10 +25,9 @@ const Council: React.FC = () => {
       <h2>Councillors</h2>
       <HeadshotGrid>
         <Headshot
-          name="Sara Nayar"
-          position="Speaker, Pure Mathematics, Applied Mathematics, and Combinatorics and Optimization Representative"
-          email="s5nayar@uwaterloo.ca"
-          image="/img/director-images/saranayar.webp"
+          name="Elisa Liang"
+          position="Pure Mathematics, Applied Mathematics, and Combinatorics and Optimization Representative"
+          email=""
         />
         <Headshot
           name="Alex Lavallee"
@@ -49,10 +48,9 @@ const Council: React.FC = () => {
           image="/img/councillor-images/valerylai.webp"
         />
         <Headshot
-          name="Tengyi Xu"
+          name="Sai Jilla"
           position="Computer Science Representative"
-          email="t48xu@uwaterloo.ca"
-          image="/img/councillor-images/tengyixu.webp"
+          email=""
         />
         <Headshot
           name="Vera Misic"
@@ -60,9 +58,9 @@ const Council: React.FC = () => {
           email="a2misic@uwaterloo.ca"
         />
         <Headshot
-          name="Anvay Mukim"
+          name="Jason Tang"
           position="At-Large Representative"
-          email="amukim@uwaterloo.ca"
+          email=""
         />
       </HeadshotGrid>
     </div>
