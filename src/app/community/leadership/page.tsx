@@ -31,7 +31,7 @@ const Council: React.FC = () => {
           //image="/img/director-images/saranayar.webp"
         />
         <Headshot
-          name="Sai Jilla"
+          name="Saivenkat Jilla"
           position="Computer Science Representative"
           //email="sljilla@uwaterloo.ca"
           image="/img/councillor-images/saijilla.jpg"
@@ -153,13 +153,13 @@ const Board: React.FC = () => {
         <Headshot
           name="Grace Feng"
           position="Community Representative"
-          email="g27feng@uwaterloo.ca"
+          //email="g27feng@uwaterloo.ca"
           image="/img/director-images/gfeng.jpg"
         />
         <Headshot
           name="Danya Matlin"
           position="Community Representative"
-          email="dmatlin@uwaterloo.ca"
+          //email="dmatlin@uwaterloo.ca"
         />
       </HeadshotGrid>
     </div>
