@@ -396,8 +396,6 @@ try {
     scene.append(rollButton);
     const piperStage = document.createElement('div');
     piperStage.className = 'ms-piper-stage';
-    piperStage.style.visibility = 'hidden';
-    let piperHideTimer;
     piperStage.setAttribute('aria-hidden', 'true');
     const caption = app.querySelector('.ms-surprise > p');
     const captionLine = document.createElement('div');
@@ -691,8 +689,7 @@ try {
       if (!game) return;
       const result = app.querySelector('.ms-random-result');
       const animations = [];
-      clearTimeout(piperHideTimer);
-      piperStage.style.visibility = 'visible';
+      captionLine.classList.add('ms-piper-visible');
       isRolling = true;
       button.disabled = true;
       result.textContent = 'Choosing a game…';
@@ -749,7 +746,6 @@ try {
         for (const animation of animations) {
           try { animation.cancel(); } catch { /* Already stopped. */ }
         }
-        piperHideTimer = setTimeout(() => { piperStage.style.visibility = 'hidden'; }, 1200);
         isRolling = false;
         button.disabled = !getMatches().some(canRollGame);
       }

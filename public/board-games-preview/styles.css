@@ -540,3 +540,19 @@ body{background:#18191c}
   #mathsoc-games .ms-hero { padding: 24px 16px; gap: 8px; }
   #mathsoc-games button.ms-piper-welcome { width: 64px; height: 64px; flex-basis: 64px; }
 }
+
+/* Start centred, then make room for Piper on the first roll. */
+#mathsoc-games .ms-piper-caption { gap: 0; transition: gap 300ms ease; }
+#mathsoc-games .ms-piper-caption p { text-align: center; }
+#mathsoc-games .ms-piper-caption .ms-piper-stage { flex: 0 0 0px; width: 0; opacity: 0; overflow: hidden; transition: flex-basis 300ms ease, width 300ms ease, opacity 300ms ease; }
+#mathsoc-games .ms-piper-caption .ms-piper-stage img { width: 80px; max-width: none; }
+#mathsoc-games .ms-piper-caption.ms-piper-visible { gap: 8px; }
+#mathsoc-games .ms-piper-caption.ms-piper-visible .ms-piper-stage { flex-basis: 80px; width: 80px; opacity: 1; }
+@media (max-width: 600px) {
+  #mathsoc-games .ms-piper-caption.ms-piper-visible { gap: 4px; }
+  #mathsoc-games .ms-piper-caption.ms-piper-visible .ms-piper-stage { flex-basis: 72px; width: 72px; }
+  #mathsoc-games .ms-piper-caption .ms-piper-stage img { width: 72px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #mathsoc-games .ms-piper-caption, #mathsoc-games .ms-piper-caption .ms-piper-stage { transition: none; }
+}
