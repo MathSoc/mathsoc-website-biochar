@@ -1,6 +1,7 @@
 "use client";
 
 import "./navbar.scss";
+import { PiperWelcome } from "./piper-welcome";
 import { navItems } from "./nav-items";
 import { DesktopNav } from "./components/desktop-nav";
 import { MobileNav } from "./components/mobile-nav";
@@ -27,6 +28,7 @@ export function Navbar() {
 
       <DesktopNav
         items={navItems}
+        welcome={isBoardGames ? <PiperWelcome /> : undefined}
         toggleMobileMenu={toggleMobileMenu}
         closeMobileMenu={() => setMobileMenuOpen(false)}
       />

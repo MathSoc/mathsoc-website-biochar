@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { NavItem } from "../nav-items";
@@ -6,9 +7,10 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 export const DesktopNav: React.FC<{
   items: NavItem[];
+  welcome?: ReactNode;
   toggleMobileMenu: () => void;
   closeMobileMenu: () => void;
-}> = ({ items, toggleMobileMenu, closeMobileMenu }) => {
+}> = ({ items, welcome, toggleMobileMenu, closeMobileMenu }) => {
   return (
     <nav id="navbar">
       <div id="inner-navbar">
@@ -23,6 +25,8 @@ export const DesktopNav: React.FC<{
             />
           </div>
         </Link>
+
+        {welcome}
 
         <ul className="items">
           {items.map((category, index) => (

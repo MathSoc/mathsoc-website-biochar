@@ -213,3 +213,41 @@
     color: #ff58aa;
   }
 }
+
+/* Board Games welcome beside the MathSoc logo. */
+.board-games-navigation .piper-nav-welcome {
+  position: absolute;
+  left: 208px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  span { position: absolute; inset: 0; background-size: contain; background-position: center; background-repeat: no-repeat; }
+  &:focus-visible { outline: 2px solid #ff58aa; outline-offset: 2px; }
+}
+@media (max-width: 360px) {
+  .board-games-navigation .piper-nav-welcome { left: 202px; width: 48px; height: 48px; }
+}
+
+/* Place Piper immediately to the left of the mobile menu. */
+.board-games-navigation .piper-nav-welcome {
+  @include tablet-down {
+    left: auto;
+    right: 64px;
+    width: 56px;
+    height: 56px;
+  }
+}
+@media (max-width: 360px) {
+  .board-games-navigation .piper-nav-welcome {
+    left: auto;
+    right: 58px;
+    width: 44px;
+    height: 44px;
+  }
+}

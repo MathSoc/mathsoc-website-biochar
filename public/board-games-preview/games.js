@@ -388,6 +388,147 @@ try {
     diceShadow.className = 'ms-dice-shadow';
     diceShadow.setAttribute('aria-hidden', 'true');
     app.querySelector('.ms-roll').prepend(diceShadow);
+    // Piper shares the die's timeline; its images are decorative.
+    const rollButton = app.querySelector('.ms-roll');
+    const scene = document.createElement('div');
+    scene.className = 'ms-roll-scene';
+    rollButton.before(scene);
+    scene.append(rollButton);
+    const piperStage = document.createElement('div');
+    piperStage.className = 'ms-piper-stage';
+    piperStage.setAttribute('aria-hidden', 'true');
+    const caption = app.querySelector('.ms-surprise > p');
+    const captionLine = document.createElement('div');
+    captionLine.className = 'ms-piper-caption';
+    caption.before(captionLine);
+    captionLine.append(caption, piperStage);
+    const piperNames = ['piper_hmm', 'piper_hi', 'piper_mad', 'piperannoyed', 'piper_surprise'];
+    const piperImages = piperNames.map((name, index) => {
+      const image = document.createElement('img');
+      image.src = `assets/piper/${name}.png`;
+      image.alt = '';
+      image.width = 160;
+      image.height = 160;
+      image.style.opacity = index === 0 ? '1' : '0';
+      piperStage.append(image);
+      return image;
+    });
+    // Start decoding immediately, rather than loading each pose mid-roll.
+    const piperReady = Promise.all(piperImages.map(image => image.decode().catch(() => {})));
+    const helpHeading = [...app.querySelectorAll('.ms-borrow-help h3')].find(heading => heading.textContent.trim() === 'Need help?');
+    if (helpHeading) {
+      const helpTitle = document.createElement('div');
+      helpTitle.className = 'ms-piper-help';
+      helpHeading.before(helpTitle);
+      const helpButton = document.createElement('button');
+      helpButton.type = 'button';
+      helpButton.className = 'ms-piper-help-stage';
+      helpButton.setAttribute('aria-label', 'Replay Piper help animation');
+      const question = document.createElement('img');
+      question.src = 'assets/piper/piper_question.png';
+      question.alt = '';
+      const vibe = document.createElement('img');
+      vibe.src = 'assets/piper/piper_vibe.png';
+      vibe.alt = '';
+      vibe.style.opacity = '0';
+      helpButton.append(question, vibe);
+      helpTitle.append(helpButton, helpHeading);
+      const helpReady = Promise.all([question, vibe].map(image => image.decode().catch(() => {})));
+      let helpRunning = false;
+      async function playHelpTransition() {
+        if (helpRunning || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        helpRunning = true;
+        const animations = [];
+        try {
+          await helpReady;
+          if (!question.animate) return;
+          const options = { duration: 2200, easing: 'linear', fill: 'forwards' };
+          const questionFrames = [{ opacity: 1, offset: 0 }, { opacity: 1, offset: .2 }, { opacity: 0, offset: .4 }, { opacity: 0, offset: .7 }, { opacity: 1, offset: .9 }, { opacity: 1, offset: 1 }];
+          animations.push(question.animate(questionFrames, options));
+          animations.push(vibe.animate(questionFrames.map(frame => ({ ...frame, opacity: 1 - frame.opacity })), options));
+          const start = document.timeline.currentTime;
+          if (start !== null) animations.forEach(animation => { animation.startTime = start; });
+          await Promise.all(animations.map(animation => animation.finished.catch(() => {})));
+        } finally {
+          question.style.opacity = '1'; vibe.style.opacity = '0';
+          animations.forEach(animation => { try { animation.cancel(); } catch {} });
+          helpRunning = false;
+        }
+      }
+      helpButton.addEventListener('click', () => { void playHelpTransition().catch(() => {}); });
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(entries => {
+          if (entries.some(entry => entry.isIntersecting)) { observer.disconnect(); void playHelpTransition().catch(() => {}); }
+        }, { threshold: .25 });
+        observer.observe(helpTitle);
+      }
+    }
+    const replayPoseNames = ['piper_happy', 'piper_heart', 'piper_love', 'pipermuah', 'piperblush', 'pipersigh', 'pipertired', 'piperannoyed', 'piper_tear', 'piper_cry'];
+    const replayAssets = new Map(replayPoseNames.map(name => {
+      const image = new Image();
+      image.src = `assets/piper/${name}.png`;
+      return [name, image];
+    }));
+    const replayReady = Promise.all([...replayAssets.values()].map(image => image.decode().catch(() => {})));
+    let replayToken = 0;
+    let replayAnimations = [];
+    function clearReplayReaction() {
+      replayToken++;
+      replayAnimations.forEach(animation => { try { animation.cancel(); } catch {} });
+      replayAnimations = [];
+      detail.querySelector('.ms-piper-reaction')?.remove();
+    }
+    async function showReplayReaction(choice) {
+      clearReplayReaction();
+      const token = replayToken;
+      const sequence = choice === 'yes'
+        ? ['piper_heart', 'piper_love']
+        : ['pipertired', 'pipersigh'];
+      const target = detail.querySelector('.ms-replay');
+      if (!target) return;
+      const stage = document.createElement('span');
+      stage.className = 'ms-piper-reaction';
+      stage.setAttribute('aria-hidden', 'true');
+      target.append(stage);
+      const images = sequence.map((name, index) => {
+        const image = replayAssets.get(name).cloneNode();
+        image.alt = '';
+        image.width = 96;
+        image.height = 96;
+        image.style.opacity = index === 0 ? '1' : '0';
+        stage.append(image);
+        return image;
+      });
+      await replayReady;
+      if (token !== replayToken || !stage.isConnected) return;
+      function holdLastPose() { images.forEach((image, index) => { image.style.opacity = index === images.length - 1 ? '1' : '0'; }); }
+      if (!stage.animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches) { holdLastPose(); return; }
+      const gap = 750;
+      const fade = 160;
+      const duration = (sequence.length - 1) * gap + fade;
+      try {
+        images.forEach((image, index) => {
+          const frames = [{ opacity: index === 0 ? 1 : 0, offset: 0 }];
+          if (index) frames.push({ opacity: 0, offset: index * gap / duration }, { opacity: 1, offset: (index * gap + fade) / duration });
+          if (index < images.length - 1) frames.push({ opacity: 1, offset: (index + 1) * gap / duration }, { opacity: 0, offset: ((index + 1) * gap + fade) / duration });
+          frames.push({ opacity: index === images.length - 1 ? 1 : 0, offset: 1 });
+          replayAnimations.push(image.animate(frames, { duration, easing: 'linear', fill: 'forwards' }));
+        });
+        const startTime = document.timeline.currentTime;
+        if (startTime !== null) replayAnimations.forEach(animation => { animation.startTime = startTime; });
+        const animations = [...replayAnimations];
+        await Promise.all(animations.map(animation => animation.finished.catch(() => {})));
+        if (token === replayToken && stage.isConnected) holdLastPose();
+        animations.forEach(animation => { try { animation.cancel(); } catch {} });
+      } catch {
+        if (token === replayToken) {
+          holdLastPose();
+          replayAnimations.forEach(animation => { try { animation.cancel(); } catch {} });
+        }
+      }
+    }
+
+
     search.value = state.query;
     sort.value = state.sort;
     function syncPreferences() {
@@ -510,6 +651,7 @@ try {
 
     function showGameDetails(game) {
       if (!game) return;
+      clearReplayReaction();
       state.selected = game.title;
       detail.hidden = false;
       const bgg = game.bgg;
@@ -549,27 +691,51 @@ try {
       const animations = [];
       isRolling = true;
       button.disabled = true;
-      result.textContent = 'Rolling…';
+      result.textContent = 'Choosing a game…';
+      const poseStarts = [0, 1000, 1700, 3250, 4650];
+      const duration = 4950;
+      const fade = 300;
+      function showPose(index) {
+        piperImages.forEach((image, position) => { image.style.opacity = position === index ? '1' : '0'; });
+      }
       try {
         try {
-          const die = app.querySelector('.ms-dice');
-          const tumble = buildCubeRoll(cubePose, 1 + Math.floor(Math.random() * 6));
-          if (die.animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            const motion = buildDiceThrow(dicePose);
-            animations.push(die.animate(motion.frames, { duration: motion.duration, easing: 'linear', fill: 'forwards' }));
-            animations.push(diceShadow.animate(motion.shadows, { duration: motion.duration, easing: 'linear', fill: 'forwards' }));
-            animations.push(cube.animate(tumble.frames, { duration: motion.duration, easing: 'linear', fill: 'forwards' }));
-            try { await animations[0].finished; } catch { /* Still reveal the recommendation. */ }
-            dicePose = motion.pose;
-            die.style.transform = motion.frames.at(-1).transform;
-            diceShadow.style.transform = motion.shadows.at(-1).transform;
+          showPose(0);
+          const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (cube.animate && !reducedMotion) {
+            await new Promise(resolve => {
+              const timeout = setTimeout(resolve, 1000);
+              piperReady.then(() => { clearTimeout(timeout); resolve(); });
+            });
+            const tumble = buildCubeRoll(cubePose, 1 + Math.floor(Math.random() * 6));
+            // The die starts with the throw pose and lands with Piper’s surprised pose.
+            const cubeFrames = [
+              { ...tumble.frames[0], offset: 0 },
+              { ...tumble.frames[0], offset: 1000 / duration },
+              ...tumble.frames.map((frame, index) => ({ ...frame, offset: (1000 + index / (tumble.frames.length - 1) * 3650) / duration })),
+              { ...tumble.frames.at(-1), offset: 1 },
+            ];
+            animations.push(cube.animate(cubeFrames, { duration, easing: 'linear', fill: 'forwards' }));
+            piperImages.forEach((image, index) => {
+              const start = poseStarts[index];
+              const next = poseStarts[index + 1];
+              const frames = [{ opacity: index === 0 ? 1 : 0, offset: 0 }];
+              if (index) frames.push({ opacity: 0, offset: start / duration }, { opacity: 1, offset: (start + fade) / duration });
+              if (next !== undefined) frames.push({ opacity: 1, offset: next / duration }, { opacity: 0, offset: (next + fade) / duration });
+              frames.push({ opacity: index === piperImages.length - 1 ? 1 : 0, offset: 1 });
+              animations.push(image.animate(frames, { duration, easing: 'linear', fill: 'forwards' }));
+            });
+            // Assign one start time so all poses and the die stay in sync.
+            const startTime = document.timeline.currentTime;
+            if (startTime !== null) animations.forEach(animation => { animation.startTime = startTime; });
+            await Promise.all(animations.map(animation => animation.finished.catch(() => {})));
+            cube.style.transform = tumble.frames.at(-1).transform;
+            cubePose = tumble.pose;
           }
-          cube.style.transform = tumble.frames.at(-1).transform;
-          cubePose = tumble.pose;
         } catch (error) {
-          console.warn('Dice animation unavailable:', error);
+          console.warn('Roll animation unavailable:', error);
         }
-        button.setAttribute('aria-label', 'Roll the die to pick a game.');
+        showPose(piperImages.length - 1);
         result.textContent = game.title;
         showGameDetails(game);
       } catch (error) {
@@ -614,6 +780,7 @@ try {
         window.mathsocState.save({ playAgain });
         renderCatalogue();
         showGameDetails(gamesById.get(id));
+        if (playAgain[id]) void showReplayReaction(playAgain[id]).catch(() => {});
       }
       const vote = event.target.closest('[data-wish]');
       if (vote) addWishlistVote(vote.dataset.wish, Number(vote.dataset.direction), vote.dataset.kind, vote.dataset.bggId);
@@ -626,6 +793,7 @@ try {
       const card = event.target.closest('[data-game]');
       if (card) showGameDetails(gamesById.get(card.dataset.game));
       if (event.target.closest('.ms-close')) {
+        clearReplayReaction();
         detail.hidden = true; state.selected = null; saveState(state);
       }
     });

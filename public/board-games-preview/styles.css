@@ -484,3 +484,59 @@ body{background:#18191c}
 #mathsoc-games .ms-wishlist-matches { display: flex; flex-direction: column; align-items: stretch; gap: 8px; margin-top: 12px; }
 #mathsoc-games .ms-wishlist-match { text-align: left; }
 #mathsoc-games .ms-wishlist-list a { color: var(--ms-pink); text-underline-offset: 3px; }
+
+/* Piper stays to the right of the existing die without bouncing. */
+#mathsoc-games .ms-roll-scene { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 0 auto; width: fit-content; max-width: 100%; }
+#mathsoc-games .ms-piper-stage { position: relative; flex: 0 0 160px; width: 160px; height: 160px; pointer-events: none; }
+#mathsoc-games .ms-piper-stage img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; }
+#mathsoc-games .ms-roll-scene .ms-roll { flex-shrink: 0; }
+@media (max-width: 600px) {
+  #mathsoc-games .ms-roll-scene { gap: 0; }
+  #mathsoc-games .ms-piper-stage { flex-basis: 112px; width: 112px; height: 112px; }
+  #mathsoc-games .ms-roll-scene .ms-roll { min-width: 155px; min-height: 205px; }
+}
+
+/* Plan B: Piper accompanies the caption rather than the 3D die. */
+#mathsoc-games .ms-piper-caption { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 4px auto 12px; max-width: 480px; }
+#mathsoc-games .ms-piper-caption .ms-piper-stage { flex: 0 0 80px; width: 80px; height: 80px; }
+#mathsoc-games .ms-piper-caption p { margin: 0; text-align: left; }
+@media (max-width: 600px) {
+  #mathsoc-games .ms-piper-caption { max-width: 340px; gap: 4px; }
+  #mathsoc-games .ms-piper-caption .ms-piper-stage { flex-basis: 72px; width: 72px; height: 72px; }
+}
+
+/* Small, decorative Piper moments for help and game feedback. */
+#mathsoc-games .ms-piper-help { display: flex; align-items: center; gap: 8px; }
+#mathsoc-games .ms-piper-help img { flex-shrink: 0; width: 80px; height: 80px; object-fit: contain; }
+#mathsoc-games .ms-piper-help h3 { margin: 0; }
+#mathsoc-games .ms-replay .ms-piper-reaction { display: inline-block; position: relative; width: 96px; height: 96px; flex: 0 0 96px; padding: 0; background: transparent; vertical-align: middle; }
+#mathsoc-games .ms-piper-reaction img { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+
+#mathsoc-games .ms-piper-help-stage { position: relative; display: block; flex: 0 0 80px; width: 80px; height: 80px; }
+#mathsoc-games .ms-piper-help-stage img { position: absolute; inset: 0; }
+
+#mathsoc-games button.ms-piper-help-stage { padding: 0; border: 0; background: transparent; cursor: pointer; border-radius: 8px; }
+#mathsoc-games button.ms-piper-help-stage:focus-visible { outline: 2px solid var(--ms-pink); outline-offset: 3px; }
+#mathsoc-games .ms-piper-help-stage img { width: 80px; height: 80px; }
+
+#mathsoc-games .ms-replay .ms-piper-reaction { width: 60px; height: 60px; flex-basis: 60px; }
+
+#mathsoc-games .ms-hero { position: relative; }
+#mathsoc-games .ms-piper-welcome { position: absolute; right: 24px; bottom: 14px; width: 112px; height: 112px; pointer-events: none; }
+#mathsoc-games .ms-piper-welcome img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; }
+@media (max-width: 600px) {
+  #mathsoc-games .ms-hero { padding-bottom: 100px; }
+  #mathsoc-games .ms-piper-welcome { right: 12px; bottom: 8px; width: 88px; height: 88px; }
+}
+
+#mathsoc-games button.ms-piper-welcome { padding: 0; border: 0; background: transparent; border-radius: 8px; pointer-events: auto; cursor: pointer; }
+#mathsoc-games button.ms-piper-welcome:focus-visible { outline: 2px solid white; outline-offset: 3px; }
+
+/* Keep the welcome beside the heading without adding a separate row. */
+#mathsoc-games .ms-hero { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 18px; padding: 30px; }
+#mathsoc-games .ms-hero > div:first-child { min-width: 0; }
+#mathsoc-games button.ms-piper-welcome { position: relative; inset: auto; width: 96px; height: 96px; flex: 0 0 96px; }
+@media (max-width: 600px) {
+  #mathsoc-games .ms-hero { padding: 24px 16px; gap: 8px; }
+  #mathsoc-games button.ms-piper-welcome { width: 64px; height: 64px; flex-basis: 64px; }
+}
