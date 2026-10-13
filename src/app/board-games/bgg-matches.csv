@@ -1,0 +1,322 @@
+game_id,title,bgg_id
+G0001,Citadels,205398
+G0002,Connect 4,2719
+G0003,One Night Ultimate Werewolf: Daybreak,163166
+G0004,Scattergories,2381
+G0005,Avalon: Big Box,367396
+G0006,Battleship,165283
+G0007,Catch the Moon,218129
+G0008,Chess,171
+G0009,"Chess, Checkers, and Tic Tac Toe",
+G0010,Chinese Checkers,2386
+G0011,Deluxe Mancala,
+G0012,Double Six Dominoes,
+G0013,Double Twelve Mexican Train Dominoes,11634
+G0014,Micro Macro: Crime City,318977
+G0015,Mr. Jack Pocket,72287
+G0016,Pentago,19841
+G0017,Skip-Bo,1269
+G0018,Tapple,129556
+G0019,Trunk Dexting,424439
+G0020,Two Rooms and a Boom,134352
+G0021,Unusual Suspects,178570
+G0022,At the Gates of Loyang,39683
+G0023,Can't Stop,41
+G0024,Captain Sonar,171131
+G0025,Disney Villainous: The Worst Takes It All,256382
+G0026,Godzilla: Tokyo Clash,303051
+G0027,King of Tokyo,70323
+G0028,Onitama,160477
+G0029,Sekigahara,214296
+G0030,Spyfall,166384
+G0031,Takenoko,70919
+G0032,Tayu,117
+G0033,Tsuro,16992
+G0034,Yomi,43022
+G0035,Battle Line,760
+G0036,Cascadia,295947
+G0037,Coup,131357
+G0038,Coup: Rebellion G54,148943
+G0039,Coup: Reformation,148931
+G0040,Embers of Memory,
+G0041,Forbidden Desert,136063
+G0042,Hardback,223750
+G0043,Impact: Battle of Elements,246228
+G0044,Letter Jam,275467
+G0045,Munchkin,1927
+G0046,No Thanks!,12942
+G0047,Quoridor,624
+G0048,Saboteur,9220
+G0049,Saboteur 2,91072
+G0050,The Red Dragon Inn: Gambling? I'm In!,46530
+G0051,Welcome to the Dungeon,150312
+G0052,Werewords,219215
+G0053,Ad Astra,38343
+G0054,Alien Frontiers,48726
+G0055,Diplomacy,483
+G0056,Flatline,216597
+G0057,Kingsburg,27162
+G0058,Quantum,143519
+G0059,Steam: Rails to Riches,27833
+G0060,The Pillars of the Earth,24480
+G0061,XCOM: The Board Game,163602
+G0062,Dominion 2nd edition,209418
+G0063,Dominion: Adventures,171915
+G0064,Dominion: Alchemy,66098
+G0065,Dominion: Base Cards,
+G0066,Dominion: Cornucopia,90850
+G0067,Dominion: Dark Ages,125403
+G0068,Dominion: Empires,192951
+G0069,Dominion: Guilds,137166
+G0070,Dominion: Hinterlands,104557
+G0071,Dominion: Intrigue,40834
+G0072,Dominion: Prosperity,66690
+G0073,Dominion: Renaissance,257673
+G0074,Dominion: Seaside,51811
+G0075,Ascension: Chronicle of the Godslayer,69789
+G0076,Camel Up,153938
+G0077,Descent: Journeys in the Dark (Second Edition),104162
+G0078,Descent: Journeys in the Dark (Second Edition) – Labyrinth of Ruin,137842
+G0079,Descent: Journeys in the Dark (Second Edition) – Shadow of Nerekhall,149915
+G0080,Patchwork,163412
+G0081,Tash-Kalar: Arena of Legends,146278
+G0082,The Grizzled,171668
+G0083,Agricola,31260
+G0084,Agricola: All Creatures Big and Small – The Big Box,255262
+G0085,Bärenpark,219513
+G0086,Century: A New World,270970
+G0087,Century: Eastern Wonders,242574
+G0088,Century: Spice Road,209685
+G0089,Pandemic,30549
+G0090,Pandemic: In the Lab,137136
+G0091,Portal,396654
+G0092,Rush n' Crush,46782
+G0093,Terraforming Mars,167791
+G0094,Acquire: Conquest,
+G0095,Acquire: Super City,
+G0096,Cryo,330608
+G0097,Dice Forge,194594
+G0098,Edo,340432
+G0099,Goa: A New Expedition,9216
+G0100,Le Havre,35677
+G0101,Ora et Labora,70149
+G0102,Pandemic: The Cure,150658
+G0103,Art Decko,260316
+G0104,Between Two Cities,168435
+G0105,Hues and Cues,302520
+G0106,Near and Far,195421
+G0107,Ra,12
+G0108,Root,237182
+G0109,San Juan,8217
+G0110,Sheriff of Nottingham,157969
+G0111,Sky Traders,121958
+G0112,Small World,40692
+G0113,Tzolk'in: The Mayan Calendar,126163
+G0114,Wavelength,262543
+G0115,FUSE,286350
+G0116,Isle of Skye: From Chieftain to King,176494
+G0117,Libertalia: Paoloori,125618
+G0118,Libertalia: Winds of Galecrest,356033
+G0119,Mutant Meeples,109969
+G0120,Seasons,108745
+G0121,Smash Up,122522
+G0122,Summoner Wars: Master Set,93260
+G0123,Teotihuacan: City of Gods,229853
+G0124,Azul,230802
+G0125,Azul: Summer Pavilion,287954
+G0126,Imhotep,191862
+G0127,Meeple Party,252484
+G0128,The Castles of Burgundy,271320
+G0129,The Good the Bad the Ugly,
+G0130,Through the Desert,503
+G0131,Ticket to Ride,9209
+G0132,Ticket to Ride: Europe,14996
+G0133,Ticket to Ride: Nordic Countries,31627
+G0134,Tigris & Euphrates,42
+G0135,7 Wonders Duel,173346
+G0136,Adventure Time Card Wars: Finn vs. Jake,144728
+G0137,Haggis,37628
+G0138,Keyflower,122515
+G0139,Lost Cities,50
+G0140,Railroad Ink: Blazing Red Edition (could have more editions?),251678
+G0141,The Crew: Mission Deep Sea,324856
+G0142,The Crew: The Quest for Planet Nine,284083
+G0143,Tides of Madness,195544
+G0144,Happy Little Dinosaurs,325414
+G0145,Mansions of Madness,83330
+G0146,Mind MGMT,284653
+G0147,Oceans (deluxe edition),232414
+G0148,Photosynthesis,218603
+G0149,Wingspan,266192
+G0150,Wingspan: Asia,366161
+G0151,Wingspan: European Expansion,290448
+G0152,Wingspan: Oceania Expansion,300580
+G0153,Catan,13
+G0154,Catan: 5-6 Player Extension,2807
+G0155,Catan: Cities & Knights,926
+G0156,Catan: Seafarers,325
+G0157,Killer Bunnies and the Quest for the Magic Carrot,3699
+G0158,Ponzi Scheme,180899
+G0159,The Settlers Of Catan,152959
+G0160,The Settlers Of Catan Card Game,278
+G0161,Trajan,102680
+G0162,Viticulture: Essential Edition,183394
+G0163,Betrayal at House on the Hill,10547
+G0164,Clank!: A Deck-Building Adventure,201808
+G0165,Dominant Species,62219
+G0166,Dominant Species: The Card Game,96260
+G0167,Earth,350184
+G0168,"Labyrinth: The War on Terror, 2001 – ?",62227
+G0169,Munchkin Quest,29678
+G0170,Risk,181
+G0171,Risk 2210 A.D.,1829
+G0172,Terra Mystica,120677
+G0173,Terra Mystica: Fire & Ice,161317
+G0174,Battlestar Galactica: The Board Game - Daybreak Expansion,141648
+G0175,City of Horror,120217
+G0176,Concordia,124361
+G0177,Dead of Winter: A Crossroads game,150376
+G0178,Dead of Winter: The Long Night,193037
+G0179,Memoir '44,10630
+G0180,Stone Age,34635
+G0181,The Republic of Rome,1513
+G0182,1960: The Making of the President,27708
+G0183,Axis & Allies: 1942,41863
+G0184,Carcassonne,822
+G0185,Carcassonne: Hunters and Gatherers,4390
+G0186,Caylus,18602
+G0187,Gears of War: The Board Game,42776
+G0188,Lowlands,242804
+G0189,Power Grid: Factory Manager,44163
+G0190,Secret Hitler,188834
+G0191,Thanos rising: Avengers Infinity War,248158
+G0192,Twilight Struggle,12333
+G0193,Betrayal at Baldur's Gate,228660
+G0194,Cutthroat Caverns,28259
+G0195,Great Western Trail,193738
+G0196,Level 7 [Escape],125658
+G0197,Lords of Waterdeep: Scoundrels of Skullport,134342
+G0198,Robinson Crusoe: Adventures on the Cursed Island,121921
+G0199,Tales of the Arabian Nights,34119
+G0200,War of the Ring,452041
+G0201,Poker Set,
+G0202,Apples to Apples,74
+G0203,Apples to Apples: Expansion Crate Two,
+G0204,Catopoly,9704
+G0205,Clue,374342
+G0206,Clue: The Simpsons,1294
+G0207,Codenames: Pictures,198773
+G0208,Costco Monopoly,402608
+G0209,Monopoly,36611
+G0210,Ms. Monopoly,289363
+G0211,The Game of Life (2013- Editions),172307
+G0212,Twister,5894
+G0213,Waterloo-Opoly,1406
+G0214,Bohnanza,11
+G0215,Cards Against Humanity,50381
+G0216,Cover Your Kingdom,281132
+G0217,Dumb Ways to Die,392173
+G0218,Guess Who?,4143
+G0219,Hey! That's My Fish! Deluxe,8203
+G0220,Jenga,2452
+G0221,Lanterns: The Harvest Festival,160851
+G0222,Scrabble,320
+G0223,Sequence,2375
+G0224,Shuttles,1916
+G0225,Sorry!,313121
+G0226,Stratego,232822
+G0227,Tetris,342016
+G0228,5D playing cards,
+G0229,"Air, Land & Sea",247367
+G0230,Anomia,67877
+G0231,Arboretum,140934
+G0232,Arschmallows,394430
+G0233,BANG!,3955
+G0234,Beasty Bar,165950
+G0235,Biblios,34219
+G0236,Bicycle Playing Cards,
+G0237,Chrononauts,815
+G0238,Cover Your Assets,121193
+G0239,Cthulhu Gloom,95234
+G0240,Deck Box: Up,
+G0241,Decrypto,225694
+G0242,Dungeons & Dragons: Three-Dragon Ante,20806
+G0243,Dutch Blitz,148203
+G0244,Early American Chrononauts,9825
+G0245,Exploding Kittens,172225
+G0246,Fantasy Realms,223040
+G0247,Fantasy Wizard,1465
+G0248,Flip 7,420087
+G0249,Friday,43570
+G0250,Good Cop Bad Cop,153064
+G0251,Hanamikoji,158600
+G0252,Just One,254640
+G0253,Letters to Santa,129622
+G0254,Love Letter,277085
+G0255,Marvel cards,
+G0256,Math Fluxx 2.0,354541
+G0257,Mexican Train,11634
+G0258,Micro Robots,191543
+G0259,Millions of Dollars,415807
+G0260,Modern Art Card Game,40381
+G0261,Monopoly Deal,40398
+G0262,Monty Python Fluxx,36345
+G0263,One Night Ultimate Vampire (2016),180956
+G0264,ONO 99,7803
+G0265,Poetry for Neanderthals:,312786
+G0266,Point Salad,274960
+G0267,Red7,161417
+G0268,Rick and Morty: Total Rickall Card Game,194232
+G0269,Schotten Totten,372
+G0270,Schrödinger's Cats,172235
+G0271,Scout,469373
+G0272,SET,1198
+G0273,Skip Bo,1269
+G0274,Startups,223770
+G0275,Stay Cool,267475
+G0276,The Mind,244992
+G0277,The Resistance: Avalon,128882
+G0278,The Shipwreck Arcana,220517
+G0279,Trial by Trolley,282171
+G0280,Ultra Pro up,
+G0281,UNO,2223
+G0282,UNO Express,293522
+G0283,UNO Flip,64447
+G0284,UNO: Show 'Em No Mercy,399088
+G0285,Welcome Back to the Dungeon,195043
+G0286,Bunny Kingdom,184921
+G0287,Downforce,215311
+G0288,Drop it,244916
+G0289,Eminent Domain,68425
+G0290,Formula D,37904
+G0291,Pavilion: Black & White Backgammon,2397
+G0292,Sagrada,199561
+G0293,Space Base,242302
+G0294,Suburbia,123260
+G0295,Tiny Towns,265736
+G0296,Above and Below,172818
+G0297,Alchemists,161970
+G0298,Dragon Valley,157083
+G0299,Dungeon Lords,45315
+G0300,Dungeon Petz,97207
+G0301,Mice and Mystics,124708
+G0302,Space Alert,38453
+G0303,World of Warcraft: The Adventure Game,29294
+G0304,Blokus,2453
+G0305,"Goblins, Inc.",110524
+G0306,Ingenious,9674
+G0307,Mysterium,181304
+G0308,Qwirkle,25669
+G0310,Santorini,194655
+G0311,Steampunk Rally,162007
+G0312,The Quest for El Dorado,217372
+G0313,Underwater Cities,247763
+G0314,A Game of Thrones: The Board Game (Second Edition),103343
+G0315,Citadels,205398
+G0316,Puerto Rico,318985
+G0317,The Lord of the Rings,23571
+G0318,Chro,
+G0319,Magnet Forensics,
+G0320,Codenames (Regular),178900
+G0321,Cities of Splendor: Expansion,220653
+G0322,Plunder,146094

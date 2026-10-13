@@ -46,3 +46,6 @@ ChatGPT_Files
 # custom
 mathsoc-website
 package-lock.json
+
+# Local environment settings and API tokens
+.env.local

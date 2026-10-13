@@ -80,4 +80,8 @@ export const navItems: NavItem[] = [
     title: "Inventory",
     ref: "/inventory",
   },
+  {
+    title: "Board games",
+    ref: "/board-games",
+  },
 ];

@@ -1,3 +1,4 @@
+import { HomeAnnouncement } from "./home-announcement";
 import "./home.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiscord, faInstagram } from "@fortawesome/free-brands-svg-icons";
@@ -11,7 +12,9 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <Page id="homepage" variant="pink">
+    <div className="homepage-stack">
+      <HomeAnnouncement />
+      <Page id="homepage" variant="pink">
       <Banner src="/img/banners/mathsoc-wall.jpeg" variant="pink" size="large">
         <div id="logo">
           <Image
@@ -60,7 +63,8 @@ export default function Home() {
           />
         </div>
       </div>
-    </Page>
+      </Page>
+    </div>
   );
 }
 
