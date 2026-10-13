@@ -350,7 +350,7 @@ try {
       maxWeight: [2,3].includes(Number(saved.maxWeight)) ? Number(saved.maxWeight) : 0,
       view: saved.view === 'compact' ? 'compact' : 'detailed',
       limit: saved.view === 'compact' ? 24 : settings.pageSize, selected: null, showShelf: true,
-      wishlist: Array.isArray(saved.wishlist) ? saved.wishlist.filter(entry => entry && typeof entry.title === 'string').slice(0, 30).map(entry => ({ title: String(entry.title).slice(0, 100), kind: entry.kind === 'copies' ? 'copies' : 'new', votes: Number(entry.votes) || 0, userVote: [-1, 1].includes(entry.userVote) ? entry.userVote : entry.voted ? 1 : 0 })) : [],
+      wishlist: Array.isArray(saved.wishlist) ? saved.wishlist.filter(entry => entry && typeof entry.title === 'string').slice(0, 30).map(entry => ({ title: String(entry.title).slice(0, 100), kind: entry.kind === 'copies' ? 'copies' : 'new', bggId: Number.isSafeInteger(Number(entry.bggId)) && Number(entry.bggId) > 0 ? Number(entry.bggId) : null, votes: Number(entry.votes) || 0, userVote: [-1, 1].includes(entry.userVote) ? entry.userVote : entry.voted ? 1 : 0 })) : [],
     };
     const grid = app.querySelector('.ms-grid');
     const detail = app.querySelector('.ms-detail');
@@ -400,30 +400,72 @@ try {
       return filterGames(ordered, state);
     }
 
-    // Only an explicit request adds a missing game; typing never casts a vote.
+    function normalizeWishlistTitle(value) {
+      return value.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+    }
+    // Collapse exact normalized duplicates in old browser data, never fuzzy matches.
+    state.wishlist = state.wishlist.filter((entry, index, list) => index === list.findIndex(item => item.kind === entry.kind && (entry.bggId && item.bggId ? entry.bggId === item.bggId : normalizeWishlistTitle(entry.title) === normalizeWishlistTitle(item.title))));
+    const matchPanel = document.createElement('div');
+    matchPanel.className = 'ms-wishlist-matches';
+    matchPanel.setAttribute('aria-live', 'polite');
+    app.querySelector('.ms-wishlist-add').after(matchPanel);
+    let matchQuery = '';
+    let candidates = [];
+    let searchBusy = false;
+
     function renderWishlist() {
       const ranked = [...state.wishlist].sort((a, b) => b.votes - a.votes || a.title.localeCompare(b.title));
       app.querySelector('.ms-wishlist-list').innerHTML = ranked.map((entry, index) =>
-        `<div class="ms-wishlist-row"><span>${index + 1}</span><span>${escapeHtml(entry.title)}<small class="ms-request-kind">${entry.kind === 'copies' ? 'More copies · ' + (games.find(game => game.title.toLowerCase() === entry.title.toLowerCase())?.total ?? 0) + ' owned' : 'New game'}</small></span><span class="ms-vote-controls"><button type="button" data-wish="${escapeHtml(entry.title)}" data-kind="${entry.kind}" data-direction="1" aria-label="Upvote ${escapeHtml(entry.title)}" aria-pressed="${entry.userVote === 1}">↑</button><strong aria-label="Score">${entry.votes}</strong><button type="button" data-wish="${escapeHtml(entry.title)}" data-kind="${entry.kind}" data-direction="-1" aria-label="Downvote ${escapeHtml(entry.title)}" aria-pressed="${entry.userVote === -1}">↓</button></span></div>`
+        `<div class="ms-wishlist-row"><span>${index + 1}</span><span>${entry.bggId ? `<a href="https://boardgamegeek.com/boardgame/${entry.bggId}" target="_blank" rel="noopener noreferrer">${escapeHtml(entry.title)}</a>` : escapeHtml(entry.title)}<small class="ms-request-kind">${entry.kind === 'copies' ? 'More copies · ' + (games.find(game => normalizeWishlistTitle(game.title) === normalizeWishlistTitle(entry.title))?.total ?? 0) + ' owned' : entry.bggId ? 'New game · View on BGG' : 'New game · Unmatched'}</small></span><span class="ms-vote-controls"><button type="button" data-wish="${escapeHtml(entry.title)}" data-kind="${entry.kind}" data-bgg-id="${entry.bggId || ''}" data-direction="1" aria-label="Upvote ${escapeHtml(entry.title)}" aria-pressed="${entry.userVote === 1}">↑</button><strong aria-label="Score">${entry.votes}</strong><button type="button" data-wish="${escapeHtml(entry.title)}" data-kind="${entry.kind}" data-bgg-id="${entry.bggId || ''}" data-direction="-1" aria-label="Downvote ${escapeHtml(entry.title)}" aria-pressed="${entry.userVote === -1}">↓</button></span></div>`
       ).join('') || '<p>No requests yet. Search for a game we don’t own to start the wishlist.</p>';
     }
 
-    // A browser gets one vote per game. Clicking again removes it; switching replaces it.
-    function addWishlistVote(title, direction = 1, kind = 'new') {
+    function addWishlistVote(title, direction = 1, kind = 'new', bggId = null, confirm = false) {
       const cleanTitle = title.trim().slice(0, 100);
-      const owned = games.some(game => game.title.toLowerCase() === cleanTitle.toLowerCase());
-      if (!cleanTitle || (kind === 'copies' ? !owned : owned)) return;
-      let entry = state.wishlist.find(item => item.title.toLowerCase() === cleanTitle.toLowerCase());
+      const id = Number.isSafeInteger(Number(bggId)) && Number(bggId) > 0 ? Number(bggId) : null;
+      const key = normalizeWishlistTitle(cleanTitle);
+      const owned = games.some(game => normalizeWishlistTitle(game.title) === key || (id && game.bgg?.id === id));
+      if (!key || (kind === 'copies' ? !owned : owned)) {
+        if (owned && kind === 'new') app.querySelector('.ms-wishlist-status').textContent = 'We already own this game. Open its card to request another copy.';
+        return;
+      }
+      let entry = state.wishlist.find(item => item.kind === kind && ((id && item.bggId === id) || (!item.bggId && normalizeWishlistTitle(item.title) === key)));
+      if (confirm && !entry) entry = state.wishlist.find(item => item.kind === kind && !item.bggId && normalizeWishlistTitle(item.title) === normalizeWishlistTitle(matchQuery));
       if (!entry) {
         if (state.wishlist.length >= 30) return;
-        entry = { title: cleanTitle, kind, votes: 0, userVote: 0 };
+        entry = { title: cleanTitle, kind, bggId: id, votes: 0, userVote: 0 };
         state.wishlist.push(entry);
       }
-      const nextVote = entry.userVote === direction ? 0 : direction;
+      if (confirm && id) {
+        entry.bggId = id; entry.title = cleanTitle;
+        state.wishlist = state.wishlist.filter(item => item === entry || item.kind !== kind || item.bggId || ![key, normalizeWishlistTitle(matchQuery)].includes(normalizeWishlistTitle(item.title)));
+      }
+      const nextVote = confirm ? 1 : entry.userVote === direction ? 0 : direction;
       entry.votes += nextVote - entry.userVote;
       entry.userVote = nextVote;
       app.querySelector('.ms-wishlist-status').textContent = nextVote === 0 ? `Removed your vote for ${entry.title}.` : `${nextVote === 1 ? 'Upvoted' : 'Downvoted'} ${entry.title}.`;
       renderWishlist(); renderCatalogue(); saveState(state);
+    }
+
+    async function findWishlistMatches() {
+      if (searchBusy) return;
+      matchQuery = state.query.trim().slice(0, 80);
+      const query = matchQuery;
+      searchBusy = true;
+      matchPanel.textContent = 'Finding possible matches on BGG…';
+      try {
+        const response = await fetch(`/api/bgg/search?q=${encodeURIComponent(query)}`, { signal: AbortSignal.timeout(18000) });
+        const data = await response.json();
+        if (state.query.trim().slice(0, 80) !== query) return;
+        if (!response.ok) throw new Error(data.error || 'Search unavailable.');
+        candidates = (Array.isArray(data.candidates) ? data.candidates : []).filter(item => Number.isSafeInteger(item.id) && item.id > 0 && typeof item.title === 'string');
+        matchPanel.innerHTML = '<p>Choose the correct game. Similar titles and expansions stay separate.</p>' + candidates.map((item, index) => `<button type="button" class="ms-wishlist-match" data-match-index="${index}">${escapeHtml(item.title)}${item.year ? ` (${escapeHtml(item.year)})` : ''}${item.type === 'boardgameexpansion' ? ' · Expansion' : ''}</button>`).join('') + '<button type="button" class="ms-wishlist-unmatched">None of these: add an unmatched request</button>';
+      } catch (error) {
+        if (state.query.trim().slice(0, 80) !== query) return;
+        matchPanel.replaceChildren();
+        const message = document.createElement('p'); message.textContent = error.message || 'Search unavailable.'; matchPanel.append(message);
+        const fallback = document.createElement('button'); fallback.type = 'button'; fallback.className = 'ms-wishlist-unmatched'; fallback.textContent = 'Add an unmatched request'; matchPanel.append(fallback);
+      } finally { searchBusy = false; }
     }
 
     function renderCatalogue() {
@@ -434,9 +476,10 @@ try {
       app.querySelector('.ms-wishlist-prompt').hidden = !missing;
       app.querySelector('.ms-missing-title').textContent = `Game not found: “${query}” isn’t in our collection. Add it to our wishlist?`;
       const addButton = app.querySelector('.ms-wishlist-add');
-      const requested = state.wishlist.some(entry => entry.title.toLowerCase() === query.toLowerCase());
-      addButton.disabled = requested || state.wishlist.length >= 30;
-      addButton.textContent = requested ? 'Already on the wishlist ✓' : 'Add to wishlist';
+      const requested = state.wishlist.some(entry => normalizeWishlistTitle(entry.title) === normalizeWishlistTitle(query));
+      addButton.disabled = state.wishlist.length >= 30;
+      addButton.textContent = requested ? 'Confirm wishlist game on BGG' : 'Find on BGG';
+      if (matchQuery && matchQuery !== query.slice(0, 80)) { matchPanel.replaceChildren(); candidates = []; }
       grid.innerHTML = matches.slice(0, state.limit)
         .map(game => createGameCard(game, state.showShelf)).join('')
         || (missing ? '<p>Game not found. You can request it using the wishlist prompt above.</p>' : '<p>No games match your filters. Try changing the filters.</p>');
@@ -479,36 +522,50 @@ try {
 
     async function rollForGame() {
       const button = app.querySelector('.ms-roll');
-      if (button.disabled) return;
+      if (button.disabled || isRolling) return;
       const game = getRandomGame(getMatches().filter(canRollGame));
+      if (!game) return;
+      const result = app.querySelector('.ms-random-result');
+      const animations = [];
       isRolling = true;
       button.disabled = true;
-      app.querySelector('.ms-random-result').textContent = 'Rolling…';
-      const die = app.querySelector('.ms-dice');
-      const face = 1 + Math.floor(Math.random() * 6);
-      const tumble = buildCubeRoll(cubePose, face);
-      // Native animation: no library, no repeating timer; skip for reduced motion.
-      if (die.animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        const throwMotion = buildDiceThrow(dicePose);
-        const roll = die.animate(throwMotion.frames, { duration: throwMotion.duration, easing: 'linear', fill: 'forwards' });
-        const shadowMotion = diceShadow.animate(throwMotion.shadows, { duration: throwMotion.duration, easing: 'linear', fill: 'forwards' });
-        const cubeMotion = cube.animate(tumble.frames, { duration: throwMotion.duration, easing: 'linear', fill: 'forwards' });
-        try { await roll.finished; } catch { /* A cancelled animation still reveals the pick. */ }
-        dicePose = throwMotion.pose;
-        die.style.transform = throwMotion.frames.at(-1).transform;
-        diceShadow.style.transform = throwMotion.shadows.at(-1).transform;
-        roll.cancel(); shadowMotion.cancel(); cubeMotion.cancel();
+      result.textContent = 'Rolling…';
+      try {
+        try {
+          const die = app.querySelector('.ms-dice');
+          const tumble = buildCubeRoll(cubePose, 1 + Math.floor(Math.random() * 6));
+          if (die.animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            const motion = buildDiceThrow(dicePose);
+            animations.push(die.animate(motion.frames, { duration: motion.duration, easing: 'linear', fill: 'forwards' }));
+            animations.push(diceShadow.animate(motion.shadows, { duration: motion.duration, easing: 'linear', fill: 'forwards' }));
+            animations.push(cube.animate(tumble.frames, { duration: motion.duration, easing: 'linear', fill: 'forwards' }));
+            try { await animations[0].finished; } catch { /* Still reveal the recommendation. */ }
+            dicePose = motion.pose;
+            die.style.transform = motion.frames.at(-1).transform;
+            diceShadow.style.transform = motion.shadows.at(-1).transform;
+          }
+          cube.style.transform = tumble.frames.at(-1).transform;
+          cubePose = tumble.pose;
+        } catch (error) {
+          console.warn('Dice animation unavailable:', error);
+        }
+        button.setAttribute('aria-label', 'Roll the die to pick a game.');
+        result.textContent = game.title;
+        showGameDetails(game);
+      } catch (error) {
+        console.error('Game recommendation could not be displayed:', error);
+        result.textContent = 'Please try again or choose a game from the collection.';
+      } finally {
+        for (const animation of animations) {
+          try { animation.cancel(); } catch { /* Already stopped. */ }
+        }
+        isRolling = false;
+        button.disabled = !getMatches().some(canRollGame);
       }
-      cube.style.transform = tumble.frames.at(-1).transform;
-      cubePose = tumble.pose;
-      button.setAttribute('aria-label', 'Roll the die to pick a game.');
-      app.querySelector('.ms-random-result').textContent = game ? game.title : 'No matching games.';
-      if (game) showGameDetails(game);
-      isRolling = false;
-      button.disabled = !getMatches().some(canRollGame);
     }
 
     function updateFilters(event) {
+      if (state.query !== search.value) app.querySelector('.ms-wishlist-status').textContent = '';
       state.query = search.value;
       state.sort = sort.value;
       const key = event?.target.dataset.filter;
@@ -539,14 +596,20 @@ try {
         showGameDetails(gamesById.get(id));
       }
       const vote = event.target.closest('[data-wish]');
-      if (vote) addWishlistVote(vote.dataset.wish, Number(vote.dataset.direction), vote.dataset.kind);
+      if (vote) addWishlistVote(vote.dataset.wish, Number(vote.dataset.direction), vote.dataset.kind, vote.dataset.bggId);
+      const match = event.target.closest('[data-match-index]');
+      if (match) {
+        const candidate = candidates[Number(match.dataset.matchIndex)];
+        if (candidate && state.query.trim().slice(0, 80) === matchQuery) addWishlistVote(candidate.title, 1, 'new', candidate.id, true);
+      }
+      if (event.target.closest('.ms-wishlist-unmatched') && state.query.trim().slice(0, 80) === matchQuery) addWishlistVote(matchQuery, 1, 'new', null, true);
       const card = event.target.closest('[data-game]');
       if (card) showGameDetails(gamesById.get(card.dataset.game));
       if (event.target.closest('.ms-close')) {
         detail.hidden = true; state.selected = null; saveState(state);
       }
     });
-    app.querySelector('.ms-wishlist-add').addEventListener('click', () => addWishlistVote(state.query));
+    app.querySelector('.ms-wishlist-add').addEventListener('click', findWishlistMatches);
     search.addEventListener('input', updateFilters);
     app.querySelectorAll('.ms-toolbar select, .ms-bgg-filters select, .ms-dice-preferences select').forEach(select => select.addEventListener('change', updateFilters));
     app.querySelector('.ms-more').addEventListener('click', () => {

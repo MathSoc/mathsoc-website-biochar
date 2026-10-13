@@ -480,3 +480,7 @@ body{background:#18191c}
 #mathsoc-games .ms-side-column .ms-periods button { color: var(--ms-text); }
 #mathsoc-games .ms-side-column .ms-periods button[aria-pressed="true"] { background: var(--ms-pink); color: var(--ms-bg); }
 #mathsoc-games .ms-period-unavailable { padding: 12px 0; line-height: 1.6; }
+
+#mathsoc-games .ms-wishlist-matches { display: flex; flex-direction: column; align-items: stretch; gap: 8px; margin-top: 12px; }
+#mathsoc-games .ms-wishlist-match { text-align: left; }
+#mathsoc-games .ms-wishlist-list a { color: var(--ms-pink); text-underline-offset: 3px; }
