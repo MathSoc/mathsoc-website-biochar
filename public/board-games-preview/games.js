@@ -94,14 +94,14 @@ try {
   function renderDifficulty(weight) {
     const score = Number(weight);
     if (weight == null || !Number.isFinite(score) || score < 1 || score > 5) {
-      return '<span>Difficulty unrated</span>';
+      return '<span>Complexity unrated</span>';
     }
     const displayScore = score.toFixed(1);
     const segments = Array.from({ length: 5 }, (_, index) => {
       const fill = Math.max(0, Math.min(1, score - index)) * 100;
       return `<i><em style="width:${fill}%"></em></i>`;
     }).join('');
-    return `<span class="ms-difficulty" aria-label="Difficulty ${displayScore} out of 5, based on BGG complexity; 1 light, 5 heavy"><span>Difficulty ${displayScore} / 5</span><span class="ms-difficulty-scale" aria-hidden="true">${segments}</span><small>BGG complexity · 1 light, 5 heavy</small></span>`;
+    return `<span class="ms-difficulty" aria-label="Complexity ${displayScore} out of 5, based on BGG complexity; 1 light, 5 heavy"><span>Complexity ${displayScore} / 5</span><span class="ms-difficulty-scale" aria-hidden="true">${segments}</span><small>BGG complexity · 1 light, 5 heavy</small></span>`;
   }
 
   // Return a sorted copy, leaving the original catalogue unchanged.
@@ -116,6 +116,26 @@ try {
   }
 
   // Work entirely on cached local data. Missing BGG fields do not match BGG filters.
+  // Groups overlap when a game supports counts in multiple ranges.
+  function matchesGroupSize(metadata, group) {
+    const min = metadata?.minPlayers;
+    const max = metadata?.maxPlayers;
+    if (!Number.isFinite(min) || !Number.isFinite(max) || min < 1 || max < min) return false;
+    if (group === 'solo') return min <= 1 && max >= 1;
+    if (group === 'two') return min <= 2 && max >= 2;
+    if (group === 'small') return min <= 4 && max >= 3;
+    if (group === 'large') return max >= 5;
+    return false;
+  }
+
+  function matchesComplexity(weight, category) {
+    if (!Number.isFinite(weight) || weight < 1 || weight > 5) return false;
+    if (category === 'light') return weight <= 2;
+    if (category === 'medium') return weight > 2 && weight <= 3;
+    if (category === 'heavy') return weight > 3;
+    return false;
+  }
+
   function filterGames(allGames, state) {
     const query = state.query.trim().toLowerCase();
     return allGames.filter(game => {
@@ -123,9 +143,9 @@ try {
       if (state.availability === 'available' && game.available <= 0) return false;
       if (state.availability === 'unavailable' && game.available > 0) return false;
       const bgg = game.bgg;
-      if (state.players && (!bgg || !(bgg.minPlayers > 0) || !(bgg.maxPlayers > 0) || bgg.minPlayers > state.players || bgg.maxPlayers < state.players)) return false;
+      if (state.players && !matchesGroupSize(bgg, state.players)) return false;
       if (state.maxMinutes && (!bgg || !bgg.maxMinutes || bgg.maxMinutes > state.maxMinutes)) return false;
-      if (state.maxWeight && (!bgg || !bgg.weight || bgg.weight > state.maxWeight)) return false;
+      if (state.complexity && !matchesComplexity(bgg?.weight, state.complexity)) return false;
       return true;
     });
   }
@@ -256,7 +276,7 @@ try {
       <div class="ms-game-info">
         <span class="ms-game-title">${escapeHtml(game.title)}</span>${gameTypeLabel(game)}
         ${gameDescriptions[game.title] ? `<span class="ms-card-description">${escapeHtml(gameDescriptions[game.title])}</span>` : ''}
-        <span class="ms-card-stats">${renderAvailability(game)}${game.bgg ? renderPlayerTime(game.bgg) + renderDifficulty(game.bgg.weight) : '<span class="ms-stat"><span class="ms-stat-label">Players</span><span class="ms-stat-value">–</span><small>Not matched yet</small></span><span class="ms-stat"><span class="ms-stat-label">Play time</span><span class="ms-stat-value">–</span><small>Not matched yet</small></span><span class="ms-stat"><span class="ms-stat-label">Difficulty</span><span class="ms-stat-value">– / 5</span><small>Not matched yet</small></span>'}</span>
+        <span class="ms-card-stats">${renderAvailability(game)}${game.bgg ? renderPlayerTime(game.bgg) + renderDifficulty(game.bgg.weight) : '<span class="ms-stat"><span class="ms-stat-label">Players</span><span class="ms-stat-value">–</span><small>Not matched yet</small></span><span class="ms-stat"><span class="ms-stat-label">Play time</span><span class="ms-stat-value">–</span><small>Not matched yet</small></span><span class="ms-stat"><span class="ms-stat-label">Complexity</span><span class="ms-stat-value">– / 5</span><small>Not matched yet</small></span>'}</span>
         ${game.bgg && !game.bgg.demo ? '' : `<span class="ms-card-note">${game.bgg?.demo ? 'Illustrative stats · BGG connection pending' : 'Player count, time & difficulty await BGG matching.'}</span>`}
         <span class="ms-replay-summary">${playAgainSummary(game.id)}</span>
         <span class="ms-meta">${game.total} ${game.total === 1 ? 'copy' : 'copies'}${showShelf ? ' · Shelf ' + escapeHtml(game.shelf) : ''}</span>
@@ -266,7 +286,7 @@ try {
 
   // Save local preferences and wishlist votes without a remote service.
   function saveState(state) {
-    window.mathsocState.save({ query: state.query, sort: state.sort, availability: state.availability, players: state.players, maxMinutes: state.maxMinutes, maxWeight: state.maxWeight, view: state.view, wishlist: state.wishlist });
+    window.mathsocState.save({ query: state.query, sort: state.sort, availability: state.availability, players: state.players, maxMinutes: state.maxMinutes, complexity: state.complexity, view: state.view, wishlist: state.wishlist });
   }
 
   // A new notice ID makes an updated announcement visible again.
@@ -345,9 +365,9 @@ try {
     const state = {
       query: saved.query || '', sort: ['popular', 'az', 'za', 'replay-high', 'replay-low'].includes(saved.sort) ? saved.sort : 'popular',
       availability: ['all', 'available', 'unavailable'].includes(saved.availability) ? saved.availability : 'available',
-      players: [1,2,3,4,5,6,7,8].includes(Number(saved.players)) ? Number(saved.players) : 0,
+      players: ['solo', 'two', 'small', 'large'].includes(saved.players) ? saved.players : '',
       maxMinutes: [30,60,120].includes(Number(saved.maxMinutes)) ? Number(saved.maxMinutes) : 0,
-      maxWeight: [2,3].includes(Number(saved.maxWeight)) ? Number(saved.maxWeight) : 0,
+      complexity: ['light', 'medium', 'heavy'].includes(saved.complexity) ? saved.complexity : '',
       view: saved.view === 'compact' ? 'compact' : 'detailed',
       limit: saved.view === 'compact' ? 24 : settings.pageSize, selected: null, showShelf: true,
       wishlist: Array.isArray(saved.wishlist) ? saved.wishlist.filter(entry => entry && typeof entry.title === 'string').slice(0, 30).map(entry => ({ title: String(entry.title).slice(0, 100), kind: entry.kind === 'copies' ? 'copies' : 'new', bggId: Number.isSafeInteger(Number(entry.bggId)) && Number(entry.bggId) > 0 ? Number(entry.bggId) : null, votes: Number(entry.votes) || 0, userVote: [-1, 1].includes(entry.userVote) ? entry.userVote : entry.voted ? 1 : 0 })) : [],
@@ -375,9 +395,9 @@ try {
         control.value = String(state[control.dataset.filter] || '');
       });
       const captions = [];
-      if (state.players) captions.push(`${state.players} players`);
+      if (state.players) captions.push(({ solo: 'Solo', two: 'Two players', small: 'Small group · 3–4', large: 'Large group · 5+' })[state.players]);
       if (state.maxMinutes) captions.push(`Up to ${state.maxMinutes} min`);
-      if (state.maxWeight) captions.push(`Difficulty up to ${state.maxWeight}/5`);
+      if (state.complexity) captions.push(`${{ light: 'Light', medium: 'Medium', heavy: 'Heavy' }[state.complexity]} complexity`);
       captions.push({ all: 'All games', available: 'Available now', unavailable: 'Unavailable' }[state.availability]);
       if (state.query.trim()) captions.push(`Search: ${state.query.trim()}`);
       app.querySelector('.ms-dice-filter-summary').textContent = captions.join(' · ');
@@ -569,7 +589,7 @@ try {
       state.query = search.value;
       state.sort = sort.value;
       const key = event?.target.dataset.filter;
-      if (key) state[key] = key === 'availability' ? event.target.value : Number(event.target.value);
+      if (key) state[key] = ['availability', 'complexity', 'players'].includes(key) ? event.target.value : Number(event.target.value);
       syncPreferences();
       state.view = view.value;
       app.dataset.cardView = state.view;
@@ -616,7 +636,7 @@ try {
       state.limit += state.view === 'compact' ? 24 : settings.pageSize; renderCatalogue();
     });
     app.querySelector('.ms-reset-preferences').addEventListener('click', () => {
-      state.availability = 'available'; state.players = 0; state.maxMinutes = 0; state.maxWeight = 0;
+      state.availability = 'available'; state.players = ''; state.maxMinutes = 0; state.complexity = '';
       syncPreferences(); updateFilters();
     });
     app.querySelector('.ms-roll').addEventListener('click', rollForGame);
