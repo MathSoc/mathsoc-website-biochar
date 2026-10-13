@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
   outputFileTracingExcludes: {
     "/*": ["public/img/cartoons**/*"],
   },
+  outputFileTracingIncludes: {
+    "/api/board-games": [
+      "./src/app/board-games/bgg-matches.csv",
+    ],
+  },
 };
 
 export default nextConfig;

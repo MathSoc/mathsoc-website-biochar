@@ -1,7 +1,7 @@
 /* Small preview-only feature. No network requests, accounts, database or timers.
  * Load this before games.js. Dates and weekly/monthly examples are kept together.
  */
-function initializeCommunityFeatures(app, gamesById, popularGames, showGameDetails, escapeHtml) {
+function initializeCommunityFeatures(app, gamesById, popularGames, showGameDetails, escapeHtml, renderAvailability) {
   const samplePeriods = {
     week: [['Wavelength', 4], ['Coup', 3], ['Cascadia', 2]],
     month: [['Catan', 9], ['Secret Hitler', 6], ['Wingspan', 5]],
@@ -24,12 +24,49 @@ function initializeCommunityFeatures(app, gamesById, popularGames, showGameDetai
   const feed = app.querySelector('.ms-feed');
   let activePeriod = 'all';
   let activeTab = 'browse';
-  // Invented people and reasons, solely to illustrate the proposed feed.
+  // Sample recommendations requested for the preview; not real submitted posts.
   const sampleRecommendations = [
-    { user: 'Sam', title: 'Coup', reason: 'Five minutes to learn. An entire evening of accusing your friends.', time: 'Sample · 2 min ago' },
-    { user: 'Maya', title: 'Wavelength', reason: 'The debates are the best part. Great with a bigger group.', time: 'Sample · 8 min ago' },
-    { user: 'Jordan', title: 'Cascadia', reason: '', time: 'Sample · 15 min ago' },
-  ];
+  {
+    "id": "G0265",
+    "user": "Mica",
+    "title": "Poetry for Neanderthals:",
+    "displayTitle": "Poetry for Neanderthals",
+    "reason": "I like that ya get to boink friends with an inflatable ooga booga stick.",
+    "time": "Sample recommendation"
+  },
+  {
+    "id": "G0008",
+    "user": "E-Therng",
+    "title": "Chess",
+    "displayTitle": "Chess",
+    "reason": "",
+    "time": "Sample recommendation"
+  },
+  {
+    "id": "G0229",
+    "user": "Mark",
+    "title": "Air, Land & Sea",
+    "displayTitle": "Air, Land & Sea",
+    "reason": "",
+    "time": "Sample recommendation"
+  },
+  {
+    "id": "G0011",
+    "user": "Sarah",
+    "title": "Deluxe Mancala",
+    "displayTitle": "Mancala",
+    "reason": "",
+    "time": "Sample recommendation"
+  },
+  {
+    "id": "G0037",
+    "user": "River",
+    "title": "Coup",
+    "displayTitle": "Coup",
+    "reason": "",
+    "time": "Sample recommendation"
+  }
+];
 
   // Keep one recommendation per game from this browser. Sample posts do not count.
   const savedRecommendations = window.mathsocState.saved.recommendations;
@@ -49,7 +86,7 @@ function initializeCommunityFeatures(app, gamesById, popularGames, showGameDetai
     const tied = leaders.filter(entry => entry[1] === leaders[0][1]);
     favourite.innerHTML = `<h3>Community favourite${tied.length > 1 ? 's · tied' : ''}</h3>${tied.map(([id, count]) => `<p><button type="button" data-game="${escapeHtml(id)}">${escapeHtml(gamesById.get(id).title)}</button> · ${count} recommendation${count === 1 ? '' : 's'}</p>`).join('')}<small>Local preview · one recommendation per game per browser.</small>`;
   }
-  const pageSize = 4;
+  const pageSize = 5;
   let historyPage = 0;
   let pendingMessages = 0;
   let historyAnchor = null;
@@ -91,42 +128,32 @@ function initializeCommunityFeatures(app, gamesById, popularGames, showGameDetai
   });
 
   // Borrower and last-rental figures transcribed from the supplied Oct 4 poster.
-  const posterStats = { Catan: { borrowers: 16, last: 'Oct 1' }, Anomia: { borrowers: 9, last: 'Jul 22' }, 'Secret Hitler': { borrowers: 7, last: 'Sep 25' } };
-
-  // All-time uses the real snapshot. Other periods are explicitly demo data.
-  function renderPodium(period) {
+  // Compact all-time rental bars use the live catalogue totals.
+  function renderPodium(period = 'all') {
     activePeriod = period;
-    const leaders = period === 'all'
-      ? popularGames.slice(0, 3).map(game => ({ game, count: game.rentals }))
-      : samplePeriods[period].map(([title, count]) => ({
-          game: [...gamesById.values()].find(game => game.title === title), count,
-        }));
-    // Visual order is second, first, third, like the supplied poster.
-    const places = [1, 0, 2];
-    const names = ['ms-first', 'ms-second', 'ms-third'];
-    app.querySelector('.ms-podium').innerHTML = places.map(index => {
-      const entry = leaders[index];
-      if (!entry?.game) return '';
-      return `<button type="button" data-game="${entry.game.id}" class="ms-podium-place ${names[index]} cursor-interaction">
-        <span class="ms-podium-title">${escapeHtml(entry.game.title)}</span>
-        <span class="ms-podium-value">${entry.count}<small>times rented</small></span>
-        <span class="ms-step"><span class="ms-step-top"><b aria-label="${['First', 'Second', 'Third'][index]} place">${index + 1}</b><span class="ms-medal-dot" aria-hidden="true"></span></span>
-          <span class="ms-podium-facts">
-            ${period === 'all' && posterStats[entry.game.title] ? `<span class="ms-podium-fact"><span>Unique borrowers</span><strong>${posterStats[entry.game.title].borrowers}</strong></span>` : ''}
-            <span class="ms-podium-fact"><span class="ms-status ${entry.game.available > 0 ? 'ms-in' : 'ms-out'}">Available: ${entry.game.available} / ${entry.game.total}</span></span>
-            ${period === 'all' && posterStats[entry.game.title] ? `<span class="ms-podium-fact"><span>Last rented</span><strong>${posterStats[entry.game.title].last}</strong></span>` : ''}
-          </span></span>
-      </button>`;
-    }).join('');
-    app.querySelector('.ms-period-caption').textContent = period === 'all'
-      ? 'The top 3 since rentals went live on May 18, 2026'
-      : period === 'week' ? 'This week · illustrative preview data' : 'This month · illustrative preview data';
-    app.querySelector('.ms-podium-note').textContent = period === 'all'
-      ? 'Rentals: Oct 5 · Availability: Oct 10 · Borrowers / last rented: supplied Oct 4 graphic'
-      : 'Demo counts only · Connect dated rental totals to show real weekly and monthly favourites.';
+    const scopes = {
+      all: 'Since May 18, 2026 · Top 3 · All-time',
+      month: 'Past 30 days · Top 3',
+      week: 'Past 7 days · Top 3',
+    };
     app.querySelectorAll('[data-period]').forEach(button => {
       button.setAttribute('aria-pressed', String(button.dataset.period === period));
     });
+    if (period !== 'all') {
+      app.querySelector('.ms-period-caption').textContent = scopes[period];
+      app.querySelector('.ms-podium').innerHTML = '<p class="ms-period-unavailable">These rankings will appear once dated rental totals are connected.</p>';
+      app.querySelector('.ms-podium-note').textContent = 'All-time rankings are available now.';
+      return;
+    }
+    const leaders = popularGames.filter(game => game.rentals > 0).slice(0, 3);
+    const maximum = Math.max(1, ...leaders.map(game => game.rentals));
+    app.querySelector('.ms-podium').innerHTML = leaders.map((game, index) => `
+      <button type="button" data-game="${escapeHtml(game.id)}" class="ms-rental-bar-card cursor-interaction">
+        <span class="ms-rental-bar-label"><span>${index + 1}. ${escapeHtml(game.title)}</span><strong>${game.rentals} <small>rentals</small></strong></span>
+        <span class="ms-rental-bar-track" aria-hidden="true"><span style="width:${game.rentals / maximum * 100}%"></span></span>
+      </button>`).join('') || '<p>No rental totals yet.</p>';
+    app.querySelector('.ms-period-caption').textContent = scopes.all;
+    app.querySelector('.ms-podium-note').textContent = 'One copy borrowed counts as one rental.';
   }
 
   function switchCommunityTab(tab) {
@@ -154,12 +181,12 @@ function initializeCommunityFeatures(app, gamesById, popularGames, showGameDetai
     navigation.querySelector('.ms-feed-live').hidden = !historyPage;
     navigation.querySelector('.ms-feed-live').textContent = pendingMessages ? `Back to live · ${pendingMessages} new` : 'Back to live';
     feed.innerHTML = entries.slice(start, start + pageSize).map(entry => {
-      const game = [...gamesById.values()].find(game => game.title === entry.title);
+      const game = gamesById.get(entry.id) || [...gamesById.values()].find(game => game.title === entry.title);
       if (!game) return '';
       return `<article class="ms-feed-row">
         <span class="ms-feed-avatar" aria-hidden="true">${escapeHtml(entry.user.slice(0, 1))}</span>
         <div class="ms-feed-body"><span class="ms-feed-time">${escapeHtml(entry.time)}</span>
-          <p><strong>${escapeHtml(entry.user)}</strong> suggests <button type="button" class="ms-feed-game cursor-interaction" data-game="${game.id}">${escapeHtml(game.title)}</button></p>
+          <p><strong>${escapeHtml(entry.user)}</strong> suggests <button type="button" class="ms-feed-game cursor-interaction" data-game="${game.id}">${escapeHtml(entry.displayTitle || game.title)}</button></p>
           ${entry.reason ? `<p>“${escapeHtml(entry.reason)}”</p>` : ''}
         </div><img class="ms-feed-dice" src="${diceImage}" alt="Pink MathSoc die">
       </article>`;
@@ -218,7 +245,11 @@ function initializeCommunityFeatures(app, gamesById, popularGames, showGameDetai
   // A visible sidebar keeps recommendations beside the collection.
   const sidebar = app.querySelector('.ms-community');
   app.querySelector('.ms-board').hidden = true;
-  app.querySelector('.ms-columns').append(sidebar);
+  const sideColumn = document.createElement('aside');
+  sideColumn.className = 'ms-side-column';
+  sideColumn.setAttribute('aria-label', 'Wishlist and community picks');
+  sideColumn.append(app.querySelector('.ms-feature'), app.querySelector('.ms-featured-wishlist'), sidebar);
+  app.querySelector('.ms-columns').append(sideColumn);
   app.querySelector('.ms-page-tabs').hidden = true;
   sidebar.hidden = false;
   sidebar.querySelector('.ms-community-head h3').textContent = 'Community picks';
@@ -226,13 +257,6 @@ function initializeCommunityFeatures(app, gamesById, popularGames, showGameDetai
   sidebar.querySelector('.ms-community-head p').textContent = 'From your next game-night crew.';
   sidebar.querySelector('.ms-community-columns').prepend(sidebar.querySelector('.ms-feed-section'));
   form.querySelector('h3').textContent = 'Suggest a game';
-  const feature = app.querySelector('.ms-feature');
-  const picks = app.querySelector('.ms-picks');
-  if (app.dataset.browseView === 'podium') {
-    feature.after(picks);
-  } else {
-    app.querySelector('.ms-event-banner').after(app.querySelector('.ms-columns'));
-    app.querySelector('.ms-columns').after(picks);
-    picks.after(feature);
-  }
+  // Keep the dice and its result directly above the collection.
+  app.querySelector('.ms-columns').before(app.querySelector('.ms-picks'));
 }

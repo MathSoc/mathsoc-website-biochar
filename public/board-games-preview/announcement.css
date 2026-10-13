@@ -1,0 +1,32 @@
+#mathsoc-games .ms-announcement {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 24px;
+  background: #222328;
+  color: #f7f2f7;
+  border-bottom: 1px solid #45414a;
+  font: inherit;
+}
+#mathsoc-games .ms-announcement p { flex: 1; margin: 0; line-height: 1.5; }
+#mathsoc-games .ms-announcement-icon { font-size: 22px; }
+#mathsoc-games .ms-announcement-close {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 32px;
+  cursor: pointer;
+}
+#mathsoc-games .ms-announcement-close:hover { background: #353039; }
+#mathsoc-games .ms-announcement :focus-visible { outline: 2px solid #ff58aa; outline-offset: 4px; }
+@media (max-width: 600px) {
+  #mathsoc-games .ms-announcement { display: grid; grid-template-columns: 24px 1fr 44px; gap: 10px; padding: 12px 14px; }
+  #mathsoc-games .ms-announcement-close { grid-column: 3; grid-row: 1; }
+}

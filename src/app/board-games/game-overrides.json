@@ -1,0 +1,16 @@
+{
+  "G0008": {
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "minMinutes": null,
+    "maxMinutes": null,
+    "weight": null
+  },
+  "G0009": {
+    "minPlayers": 2,
+    "maxPlayers": 2,
+    "minMinutes": null,
+    "maxMinutes": null,
+    "weight": null
+  }
+}

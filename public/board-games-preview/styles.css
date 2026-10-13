@@ -343,10 +343,36 @@ body{background:#18191c}
 
 #mathsoc-games .ms-wishlist-intro{line-height:1.65;margin:10px 0 16px}
 #mathsoc-games .ms-wishlist-intro strong{color:var(--ms-text);font-weight:600}
-#mathsoc-games .ms-build-notice{display:flex;align-items:baseline;gap:12px;padding:12px 16px;margin-bottom:18px;border-left:3px solid var(--ms-pink);background:var(--ms-soft);font-size:12px;line-height:1.6}
-#mathsoc-games .ms-build-notice strong{white-space:nowrap;color:var(--ms-pink)}
-#mathsoc-games .ms-build-notice span{color:var(--ms-muted)}
-@media(max-width:700px){#mathsoc-games .ms-build-notice{flex-direction:column;gap:4px}}
+/* Catalogue status uses a neutral panel. */
+#mathsoc-games .ms-build-notice {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    padding: 12px 16px;
+    margin-bottom: 18px;
+    border-left: 3px solid var(--ms-line);
+    background: var(--ms-panel);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  #mathsoc-games .ms-build-notice strong {
+    color: var(--ms-text);
+    font-weight: 600;
+  }
+
+  #mathsoc-games .ms-build-notice span {
+    color: var(--ms-muted);
+  }
+
+  /* Update date beneath the banner. */
+  #mathsoc-games .ms-update-caption {
+    margin: 10px 0 18px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--ms-muted);
+  }
 
 /* Podium stats must fit when narrow columns wrap onto extra lines. */
 #mathsoc-games .ms-step{height:auto;min-height:140px}
@@ -363,3 +389,94 @@ body{background:#18191c}
 #mathsoc-games .ms-feature-head{flex-wrap:wrap}
 #mathsoc-games .ms-podium-note{line-height:1.6}
 }
+
+/* Shared preferences beneath the die. */
+#mathsoc-games .ms-dice-filter-summary{font-size:12px;color:var(--ms-pink);margin:8px 0;overflow-wrap:anywhere}
+#mathsoc-games .ms-dice-preferences{width:100%;max-width:360px;text-align:left;margin-top:8px;border-top:1px solid var(--ms-line);padding-top:10px}
+#mathsoc-games .ms-dice-preferences summary{cursor:pointer;color:var(--ms-muted);font-size:13px;padding:8px 0}
+#mathsoc-games .ms-dice-filter-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+#mathsoc-games .ms-dice-filter-fields label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--ms-muted);min-width:0}
+#mathsoc-games .ms-dice-filter-fields select{width:100%;font-size:12px;min-height:42px}
+#mathsoc-games .ms-dice-filter-note{font-size:11px;margin:12px 0}
+#mathsoc-games .ms-reset-preferences{cursor:pointer;font-size:12px}
+@media(max-width:360px){#mathsoc-games .ms-dice-filter-fields{grid-template-columns:1fr}}
+
+/* Game art fills the rounded cover frame. Initials remain the fallback. */
+#mathsoc-games .ms-cover{border-radius:14px;overflow:hidden}
+#mathsoc-games .ms-cover.ms-cover-image{position:relative;padding:0}
+#mathsoc-games .ms-cover.ms-cover-image::before{display:none}
+#mathsoc-games .ms-cover.ms-cover-image img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:center;border-radius:inherit}
+/* Preserve the official logo colours and proportions on a light backing. */
+#mathsoc-games .ms-bgg-attribution{display:inline-flex;align-items:center;padding:8px 12px;margin:8px 0 12px;border-radius:8px;background:#fff}
+#mathsoc-games .ms-bgg-attribution img{display:block;width:171px;height:auto;max-width:100%}
+#mathsoc-games .ms-bgg-attribution:focus-visible{outline:2px solid var(--ms-pink);outline-offset:4px}
+
+/* Wishlist and community share one sidebar beside Explore. */
+#mathsoc-games .ms-side-column{display:flex;flex-direction:column;gap:20px;min-width:0}
+#mathsoc-games .ms-side-column .ms-featured-wishlist{margin:0;padding:18px;background:var(--ms-panel);border:1px solid var(--ms-line)}
+#mathsoc-games .ms-side-column .ms-community{flex:1;min-height:0;margin:0}
+#mathsoc-games .ms-side-column .ms-wishlist-intro{font-size:12px;line-height:1.6}
+#mathsoc-games .ms-side-column .ms-wishlist-row{grid-template-columns:18px minmax(0,1fr);gap:8px}
+#mathsoc-games .ms-side-column .ms-vote-controls{grid-column:2;justify-self:start}
+#mathsoc-games .ms-picks{grid-template-columns:1fr}
+#mathsoc-games .ms-surprise{padding:14px 18px}
+@media(max-width:800px){#mathsoc-games .ms-side-column{grid-row:auto}#mathsoc-games .ms-side-column .ms-community{flex:none}}
+
+/* Cover in the expanded game card. */
+#mathsoc-games .ms-detail .ms-detail-head { display: flex; align-items: center; gap: 18px; }
+#mathsoc-games .ms-detail .ms-detail-head h3 { flex: 1; min-width: 0; margin: 0; }
+#mathsoc-games .ms-detail .ms-cover.ms-detail-cover {
+  flex: 0 0 100px;
+  width: 100px;
+  height: 100px;
+  min-height: 100px;
+  max-height: 100px;
+  padding: 0;
+  border-radius: 14px;
+}
+#mathsoc-games .ms-detail .ms-close { flex-shrink: 0; }
+@media (max-width: 600px) {
+  #mathsoc-games .ms-detail .ms-detail-head { flex-wrap: wrap; gap: 12px; }
+  #mathsoc-games .ms-detail .ms-cover.ms-detail-cover { flex-basis: 72px; width: 72px; height: 72px; min-height: 72px; max-height: 72px; }
+  #mathsoc-games .ms-detail .ms-detail-head h3 { font-size: 22px; }
+}
+
+#mathsoc-games .ms-detail .ms-detail-title { flex: 1; min-width: 0; }
+#mathsoc-games .ms-detail .ms-detail-description {
+  margin: 8px 0 0;
+  color: var(--ms-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Dice-first browsing with a compact rental sidebar. */
+#mathsoc-games .ms-surprise { padding: 28px 18px 24px; }
+#mathsoc-games .ms-surprise .ms-roll { min-width: 230px; min-height: 230px; padding-top: 58px; }
+#mathsoc-games .ms-surprise .ms-dice-view { transform: rotateX(-22deg) rotateY(-32deg) scale3d(1.65,1.65,1.65); }
+#mathsoc-games .ms-surprise > strong { font-size: 26px; }
+#mathsoc-games .ms-picks { margin: 20px 0 32px; }
+#mathsoc-games .ms-columns { grid-template-columns: minmax(0, 2.5fr) minmax(280px, 1fr); align-items: start; }
+#mathsoc-games .ms-side-column .ms-feature { margin: 0; padding: 18px; border: 1px solid var(--ms-line); border-radius: 0; }
+#mathsoc-games .ms-side-column .ms-feature h3 { font-size: 22px; letter-spacing: 0; }
+#mathsoc-games .ms-side-column .ms-podium { display: flex; flex-direction: column; align-items: stretch; gap: 16px; }
+#mathsoc-games .ms-rental-bar-card { display: block; width: 100%; padding: 4px 0; border: 0; background: transparent; color: var(--ms-text); text-align: left; }
+#mathsoc-games .ms-rental-bar-label { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; }
+#mathsoc-games .ms-rental-bar-label > span { min-width: 0; overflow-wrap: anywhere; }
+#mathsoc-games .ms-rental-bar-label strong { flex-shrink: 0; color: var(--ms-pink); }
+#mathsoc-games .ms-rental-bar-label small { font-weight: 400; }
+#mathsoc-games .ms-rental-bar-track { display: block; height: 8px; margin-top: 8px; border-radius: 4px; background: var(--ms-soft); overflow: hidden; }
+#mathsoc-games .ms-rental-bar-track > span { display: block; height: 100%; background: var(--ms-pink); border-radius: inherit; }
+#mathsoc-games .ms-borrow-help { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--ms-line); }
+@media (max-width: 800px) {
+  #mathsoc-games .ms-columns { grid-template-columns: minmax(0,1fr); }
+  #mathsoc-games .ms-side-column { grid-row: auto; }
+}
+@media (max-width: 600px) {
+  #mathsoc-games .ms-surprise .ms-dice-view { transform: rotateX(-22deg) rotateY(-32deg) scale3d(1.4,1.4,1.4); }
+  #mathsoc-games .ms-surprise .ms-roll { min-width: 200px; min-height: 205px; }
+}
+
+#mathsoc-games .ms-side-column .ms-periods { display: flex; flex-wrap: wrap; gap: 4px; background: var(--ms-soft); }
+#mathsoc-games .ms-side-column .ms-periods button { color: var(--ms-text); }
+#mathsoc-games .ms-side-column .ms-periods button[aria-pressed="true"] { background: var(--ms-pink); color: var(--ms-bg); }
+#mathsoc-games .ms-period-unavailable { padding: 12px 0; line-height: 1.6; }

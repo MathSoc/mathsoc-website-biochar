@@ -2,15 +2,52 @@
  * Data lives in the ms-catalog JSON block. BGG data is optional.
  * See README.md for simple editing instructions.
  */
-(() => {
+(async () => {
   const settings = {
-    trackerLaunchDate: '2026-05-18', // Launch date from your supplied graphic.
+    trackerLaunchDate: '2026-05-18', // Launch date from supplied popularity graphic.
     pageSize: 12,
 
   };
 
   const root = document.getElementById('mathsoc-games');
-  const games = JSON.parse(document.getElementById('ms-catalog').textContent);
+  // Keep local descriptions and expansion labels alongside live inventory.
+const snapshot = JSON.parse(
+  document.getElementById('ms-catalog').textContent
+);
+const metadataById = new Map(
+  snapshot.map(game => [game.id, game])
+);
+
+let games = snapshot.filter(game => game.id !== "G0309");
+let liveData = null;
+
+try {
+  const response = await fetch('/api/board-games', {
+    cache: 'no-store',
+    signal: AbortSignal.timeout(55000),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Catalogue request failed: ${response.status}`);
+  }
+
+  const data = await response.json();
+
+  if (!Array.isArray(data.games) || !data.games.length) {
+    throw new Error('The catalogue response is empty.');
+  }
+
+  games = data.games.map(game => ({
+    ...metadataById.get(game.id),
+    ...game,
+    ...(game.id === "G0049" ? { gameType: "expansion", baseGame: "Saboteur" } : {}),
+    bgg: game.manualStats ? { ...game.bgg, ...game.manualStats, imageUrl: game.bgg?.imageUrl || null, source: "collection", demo: false } : game.bgg || null,
+  }));
+
+  liveData = data;
+} catch (error) {
+  console.error('Catalogue loading failed:', error);
+}
   const gamesById = new Map(games.map(game => [game.id, game]));
   const alphabeticalGames = sortGames(games, 'az');
   const popularGames = sortGames(games, 'popular');
@@ -35,13 +72,21 @@
   // One shared label keeps cards, details and spotlight availability consistent.
   function renderAvailability(game) {
     const available = game.available > 0;
-    const label = `Available: ${game.available} / ${game.total}`;
+    const label = available ? `Available: ${game.available} / ${game.total}` : game.needsReview > 0 ? "Check with staff" : "Not available";
     return `<span class="ms-status ${available ? 'ms-in' : 'ms-out'}"><span aria-hidden="true">${available ? '✓' : '×'}</span> ${escapeHtml(label)}</span>`;
   }
 
   // Label, value, and unit use the same stacked layout in both game views.
   function renderPlayerTime(bgg) {
-    return `<span class="ms-stat"><span class="ms-stat-label">Players</span><span class="ms-stat-value">${bgg.minPlayers}–${bgg.maxPlayers}</span><small>people</small></span><span class="ms-stat"><span class="ms-stat-label">Play time</span><span class="ms-stat-value">${bgg.maxMinutes} <small>min</small></span><small>up to</small></span>`;
+    const minPlayers = Number(bgg.minPlayers);
+    const maxPlayers = Number(bgg.maxPlayers);
+    const minMinutes = Number(bgg.minMinutes);
+    const maxMinutes = Number(bgg.maxMinutes);
+    const players = minPlayers > 0 && maxPlayers >= minPlayers
+      ? minPlayers === maxPlayers ? String(minPlayers) : `${minPlayers}–${maxPlayers}` : 'Unknown';
+    const minutes = maxMinutes > 0
+      ? minMinutes > 0 && minMinutes < maxMinutes ? `${minMinutes}–${maxMinutes}` : String(maxMinutes) : 'Unknown';
+    return `<span class="ms-stat"><span class="ms-stat-label">Players</span><span class="ms-stat-value">${players}</span><small>people</small></span><span class="ms-stat"><span class="ms-stat-label">Play time</span><span class="ms-stat-value">${minutes} <small>min</small></span><small>estimated</small></span>`;
   }
 
   // BGG weight is displayed as difficulty; five segments keep the scale easy to read.
@@ -51,11 +96,12 @@
     if (weight == null || !Number.isFinite(score) || score < 1 || score > 5) {
       return '<span>Difficulty unrated</span>';
     }
+    const displayScore = score.toFixed(1);
     const segments = Array.from({ length: 5 }, (_, index) => {
       const fill = Math.max(0, Math.min(1, score - index)) * 100;
       return `<i><em style="width:${fill}%"></em></i>`;
     }).join('');
-    return `<span class="ms-difficulty" aria-label="Difficulty ${score} out of 5; 1 easy, 5 challenging"><span>Difficulty ${score} / 5</span><span class="ms-difficulty-scale" aria-hidden="true">${segments}</span><small>1 easy · 5 challenging</small></span>`;
+    return `<span class="ms-difficulty" aria-label="Difficulty ${displayScore} out of 5, based on BGG complexity; 1 light, 5 heavy"><span>Difficulty ${displayScore} / 5</span><span class="ms-difficulty-scale" aria-hidden="true">${segments}</span><small>BGG complexity · 1 light, 5 heavy</small></span>`;
   }
 
   // Return a sorted copy, leaving the original catalogue unchanged.
@@ -74,9 +120,10 @@
     const query = state.query.trim().toLowerCase();
     return allGames.filter(game => {
       if (!game.title.toLowerCase().includes(query)) return false;
-      if (state.availableOnly && game.available <= 0) return false;
+      if (state.availability === 'available' && game.available <= 0) return false;
+      if (state.availability === 'unavailable' && game.available > 0) return false;
       const bgg = game.bgg;
-      if (state.players && (!bgg || bgg.minPlayers > state.players || bgg.maxPlayers < state.players)) return false;
+      if (state.players && (!bgg || !(bgg.minPlayers > 0) || !(bgg.maxPlayers > 0) || bgg.minPlayers > state.players || bgg.maxPlayers < state.players)) return false;
       if (state.maxMinutes && (!bgg || !bgg.maxMinutes || bgg.maxMinutes > state.maxMinutes)) return false;
       if (state.maxWeight && (!bgg || !bgg.weight || bgg.weight > state.maxWeight)) return false;
       return true;
@@ -186,6 +233,11 @@
   }
 
   // Explicit catalogue labels avoid guessing expansion status from punctuation.
+  function canRollGame(game) {
+    return !["expansion", "standalone-expansion", "accessory"].includes(game.gameType)
+      && game.bgg?.isExpansion !== true;
+  }
+
   function gameTypeLabel(game) {
     if (game.gameType === 'expansion') return `<span class="ms-game-type ms-expansion">Expansion · Requires ${escapeHtml(game.baseGame)}</span>`;
     if (game.gameType === 'standalone-expansion') return '<span class="ms-game-type">Standalone expansion · Play on its own or with Wingspan</span>';
@@ -200,12 +252,12 @@
       ? `<img src="${escapeHtml(image)}" alt="" loading="lazy">`
       : `<b>${escapeHtml(initials)}</b>`;
     return `<button type="button" class="ms-game cursor-interaction" data-game="${escapeHtml(game.id)}">
-      <div class="ms-cover" aria-hidden="true">${cover}</div>
+      <div class="ms-cover${image ? ' ms-cover-image' : ''}" aria-hidden="true">${cover}</div>
       <div class="ms-game-info">
         <span class="ms-game-title">${escapeHtml(game.title)}</span>${gameTypeLabel(game)}
         ${gameDescriptions[game.title] ? `<span class="ms-card-description">${escapeHtml(gameDescriptions[game.title])}</span>` : ''}
         <span class="ms-card-stats">${renderAvailability(game)}${game.bgg ? renderPlayerTime(game.bgg) + renderDifficulty(game.bgg.weight) : '<span class="ms-stat"><span class="ms-stat-label">Players</span><span class="ms-stat-value">–</span><small>Not matched yet</small></span><span class="ms-stat"><span class="ms-stat-label">Play time</span><span class="ms-stat-value">–</span><small>Not matched yet</small></span><span class="ms-stat"><span class="ms-stat-label">Difficulty</span><span class="ms-stat-value">– / 5</span><small>Not matched yet</small></span>'}</span>
-        <span class="ms-bgg-credit">Powered by BGG · API connection pending</span><span class="ms-card-note">${game.bgg?.demo ? 'Illustrative BGG stats · API connection pending' : game.bgg ? 'Game stats from BGG' : 'Player count, time & difficulty await BGG matching.'}</span>
+        ${game.bgg && !game.bgg.demo ? '' : `<span class="ms-card-note">${game.bgg?.demo ? 'Illustrative stats · BGG connection pending' : 'Player count, time & difficulty await BGG matching.'}</span>`}
         <span class="ms-replay-summary">${playAgainSummary(game.id)}</span>
         <span class="ms-meta">${game.total} ${game.total === 1 ? 'copy' : 'copies'}${showShelf ? ' · Shelf ' + escapeHtml(game.shelf) : ''}</span>
       </div>
@@ -214,15 +266,88 @@
 
   // Save local preferences and wishlist votes without a remote service.
   function saveState(state) {
-    window.mathsocState.save({ query: state.query, sort: state.sort, availableOnly: state.availableOnly, view: state.view, wishlist: state.wishlist });
+    window.mathsocState.save({ query: state.query, sort: state.sort, availability: state.availability, players: state.players, maxMinutes: state.maxMinutes, maxWeight: state.maxWeight, view: state.view, wishlist: state.wishlist });
+  }
+
+  // A new notice ID makes an updated announcement visible again.
+  async function initializeAnnouncement(app) {
+    try {
+      const response = await fetch('announcement.json', { cache: 'no-store' });
+      if (!response.ok) return;
+      const notice = await response.json();
+      if (notice.enabled !== true || typeof notice.id !== 'string' || !notice.id.trim()
+          || typeof notice.message !== 'string' || !notice.message.trim()) return;
+
+      const storageKey = 'mathsoc-board-games-dismissed-notice';
+      try { if (localStorage.getItem(storageKey) === notice.id) return; } catch {}
+
+      const stylesheet = document.createElement('link');
+      stylesheet.rel = 'stylesheet';
+      stylesheet.href = 'announcement.css';
+      document.head.append(stylesheet);
+
+      const banner = document.createElement('section');
+      banner.className = 'ms-announcement';
+      banner.setAttribute('aria-label', 'Board games announcement');
+      const icon = document.createElement('span');
+      icon.className = 'ms-announcement-icon';
+      icon.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v6"/><circle cx="12" cy="17" r="1" fill="currentColor" stroke="none"/></svg>';
+      icon.setAttribute('aria-hidden', 'true');
+      const message = document.createElement('p');
+      message.textContent = notice.message;
+      banner.append(icon, message);
+
+      const close = document.createElement('button');
+      close.type = 'button';
+      close.className = 'ms-announcement-close';
+      close.setAttribute('aria-label', 'Dismiss board games announcement');
+      close.textContent = '×';
+      close.addEventListener('click', () => {
+        try { localStorage.setItem(storageKey, notice.id); } catch {}
+        banner.remove();
+      });
+      banner.append(close);
+      const slot = app.querySelector('.ms-announcement-slot');
+      const hero = app.querySelector('.ms-hero');
+      if (slot) slot.append(banner);
+      else if (hero) hero.before(banner);
+      else app.prepend(banner);
+    } catch {
+      // An unavailable notice file does not prevent catalogue browsing.
+    }
   }
 
   function initializePage(app) {
+    initializeAnnouncement(app);
     app.replaceChildren(template.content.cloneNode(true));
+    // Attribution is a separate link, never nested inside a game-card button.
+    const attribution = document.createElement('a');
+    attribution.className = 'ms-bgg-attribution';
+    attribution.href = 'https://boardgamegeek.com/';
+    attribution.target = '_blank';
+    attribution.rel = 'noopener noreferrer';
+    attribution.innerHTML = '<img src="assets/powered-by-bgg-rgb.svg" alt="Powered by BGG" width="171" height="38">';
+    app.querySelector('.ms-bgg-filters').after(attribution);
+
+    // Failed cover downloads use the same initials placeholder as unmatched games.
+    app.addEventListener('error', event => {
+      const image = event.target;
+      if (!(image instanceof HTMLImageElement) || !image.closest('.ms-cover')) return;
+      const cover = image.closest('.ms-cover');
+      const game = gamesById.get(cover.dataset.gameId || cover.closest('[data-game]')?.dataset.game);
+      const initials = document.createElement('b');
+      initials.textContent = game.title.split(/\s+/).slice(0, 2).map(word => word[0]).join('');
+      cover.classList.remove('ms-cover-image');
+      cover.replaceChildren(initials);
+    }, true);
+
     const saved = window.mathsocState.saved;
     const state = {
       query: saved.query || '', sort: ['popular', 'az', 'za', 'replay-high', 'replay-low'].includes(saved.sort) ? saved.sort : 'popular',
-      availableOnly: Boolean(saved.availableOnly), players: 0, maxMinutes: 0, maxWeight: 0,
+      availability: ['all', 'available', 'unavailable'].includes(saved.availability) ? saved.availability : 'available',
+      players: [1,2,3,4,5,6,7,8].includes(Number(saved.players)) ? Number(saved.players) : 0,
+      maxMinutes: [30,60,120].includes(Number(saved.maxMinutes)) ? Number(saved.maxMinutes) : 0,
+      maxWeight: [2,3].includes(Number(saved.maxWeight)) ? Number(saved.maxWeight) : 0,
       view: saved.view === 'compact' ? 'compact' : 'detailed',
       limit: saved.view === 'compact' ? 24 : settings.pageSize, selected: null, showShelf: true,
       wishlist: Array.isArray(saved.wishlist) ? saved.wishlist.filter(entry => entry && typeof entry.title === 'string').slice(0, 30).map(entry => ({ title: String(entry.title).slice(0, 100), kind: entry.kind === 'copies' ? 'copies' : 'new', votes: Number(entry.votes) || 0, userVote: [-1, 1].includes(entry.userVote) ? entry.userVote : entry.voted ? 1 : 0 })) : [],
@@ -235,7 +360,6 @@
     const view = app.querySelector('.ms-view');
     view.value = state.view;
     app.dataset.cardView = state.view;
-    const availability = app.querySelector('.ms-availability');
     let dicePose = { x: 0, rotation: 0 };
     let cubePose = { x: 0, y: 0 };
     const cube = createDiceCube(app);
@@ -246,7 +370,19 @@
     app.querySelector('.ms-roll').prepend(diceShadow);
     search.value = state.query;
     sort.value = state.sort;
-    availability.value = state.availableOnly ? 'available' : 'all';
+    function syncPreferences() {
+      app.querySelectorAll('[data-filter]').forEach(control => {
+        control.value = String(state[control.dataset.filter] || '');
+      });
+      const captions = [];
+      if (state.players) captions.push(`${state.players} players`);
+      if (state.maxMinutes) captions.push(`Up to ${state.maxMinutes} min`);
+      if (state.maxWeight) captions.push(`Difficulty up to ${state.maxWeight}/5`);
+      captions.push({ all: 'All games', available: 'Available now', unavailable: 'Unavailable' }[state.availability]);
+      if (state.query.trim()) captions.push(`Search: ${state.query.trim()}`);
+      app.querySelector('.ms-dice-filter-summary').textContent = captions.join(' · ');
+    }
+    syncPreferences();
 
     // Cached orders mean typing in search doesn't sort all 322 games again.
     function getMatches() {
@@ -306,7 +442,7 @@
         || (missing ? '<p>Game not found. You can request it using the wishlist prompt above.</p>' : '<p>No games match your filters. Try changing the filters.</p>');
       app.querySelector('.ms-count').textContent = `${matches.length} matches · showing ${Math.min(matches.length, state.limit)}`;
       app.querySelector('.ms-more').hidden = matches.length <= state.limit;
-      app.querySelector('.ms-roll').disabled = isRolling || !matches.length;
+      app.querySelector('.ms-roll').disabled = isRolling || !matches.some(canRollGame);
     }
 
     function showGameDetails(game) {
@@ -314,9 +450,12 @@
       state.selected = game.title;
       detail.hidden = false;
       const bgg = game.bgg;
-      detail.innerHTML = `<div class="ms-detail-head"><h3>${escapeHtml(game.title)}</h3><button type="button" class="ms-close cursor-interaction">Close</button></div>
+      const image = getImageUrl(game);
+      const initials = game.title.split(/\s+/).slice(0, 2).map(word => word[0]).join('');
+      const detailCover = `<div class="ms-cover ms-detail-cover${image ? ' ms-cover-image' : ''}" data-game-id="${escapeHtml(game.id)}" aria-hidden="true">${image ? `<img src="${escapeHtml(image)}" alt="" decoding="async">` : `<b>${escapeHtml(initials)}</b>`}</div>`;
+      detail.innerHTML = `<div class="ms-detail-head">${detailCover}<div class="ms-detail-title"><h3>${escapeHtml(game.title)}</h3>${gameDescriptions[game.title] ? `<p class="ms-detail-description">${escapeHtml(gameDescriptions[game.title])}</p>` : ''}</div><button type="button" class="ms-close cursor-interaction">Close</button></div>
         ${gameTypeLabel(game)}<p class="ms-detail-stock">${renderAvailability(game)} <button type="button" class="ms-request-copy" data-copy="${escapeHtml(game.id)}" ${state.wishlist.some(entry => entry.kind === 'copies' && entry.title.toLowerCase() === game.title.toLowerCase()) ? 'disabled' : ''}>${state.wishlist.some(entry => entry.kind === 'copies' && entry.title.toLowerCase() === game.title.toLowerCase()) ? '✓ Requested' : 'Request another copy'}</button> · ${game.total} ${game.total === 1 ? 'copy' : 'copies'} · ${game.rentals ?? 0} rentals${state.showShelf ? ' · Shelf ' + escapeHtml(game.shelf) : ''}</p>
-        ${bgg ? `<div class="ms-detail-facts">${renderPlayerTime(bgg)}${renderDifficulty(bgg.weight)}</div><p class="ms-bgg-note">${bgg.demo ? 'Illustrative metadata · not fetched from BGG' : 'Game information from BGG'}</p>` : '<p>Game information will appear here after this title is matched to BGG.</p>'}`;
+        ${bgg ? `<div class="ms-detail-facts">${renderPlayerTime(bgg)}${renderDifficulty(bgg.weight)}</div><p class="ms-bgg-note">${bgg.demo ? 'Illustrative metadata · not fetched from BGG' : bgg.source === 'collection' ? 'Player count supplied by MathSoc' : 'Game information from BGG'}</p>` : '<p>Game information will appear here after this title is matched to BGG.</p>'}`;
       detail.innerHTML += `<section class="ms-replay"><span class="ms-replay-label">Would you play this again?</span><p class="ms-replay-summary" aria-live="polite">${playAgainSummary(game.id)}</p><div class="ms-replay-buttons"><button type="button" aria-label="Would play again" title="Would play again" data-replay="yes" data-replay-id="${escapeHtml(game.id)}" aria-pressed="${playAgain[game.id] === 'yes'}"><svg class="ms-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v11H3V10h4Zm0 0 5-7c1-1 3 0 3 2l-1 5h5a2 2 0 0 1 2 2l-2 7a2 2 0 0 1-2 2H7"/></svg></button><button type="button" aria-label="Would not play again" title="Would not play again" data-replay="no" data-replay-id="${escapeHtml(game.id)}" aria-pressed="${playAgain[game.id] === 'no'}"><svg class="ms-thumb-icon ms-thumb-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v11H3V10h4Zm0 0 5-7c1-1 3 0 3 2l-1 5h5a2 2 0 0 1 2 2l-2 7a2 2 0 0 1-2 2H7"/></svg></button></div><small>Local preview vote · click again to undo.</small></section>`;
       saveState(state);
       detail.scrollIntoView({ block: 'nearest', behavior: 'auto' });
@@ -341,7 +480,7 @@
     async function rollForGame() {
       const button = app.querySelector('.ms-roll');
       if (button.disabled) return;
-      const game = getRandomGame(getMatches());
+      const game = getRandomGame(getMatches().filter(canRollGame));
       isRolling = true;
       button.disabled = true;
       app.querySelector('.ms-random-result').textContent = 'Rolling…';
@@ -362,20 +501,19 @@
       }
       cube.style.transform = tumble.frames.at(-1).transform;
       cubePose = tumble.pose;
-      button.setAttribute('aria-label', `Die showing ${face}. Roll to pick a game.`);
-      app.querySelector('.ms-random-result').textContent = game ? `Rolled ${face} · ${game.title}` : 'No matching games.';
+      button.setAttribute('aria-label', 'Roll the die to pick a game.');
+      app.querySelector('.ms-random-result').textContent = game ? game.title : 'No matching games.';
       if (game) showGameDetails(game);
       isRolling = false;
-      button.disabled = !getMatches().length;
+      button.disabled = !getMatches().some(canRollGame);
     }
 
-    function updateFilters() {
+    function updateFilters(event) {
       state.query = search.value;
       state.sort = sort.value;
-      state.availableOnly = availability.value === 'available';
-      state.players = Number(app.querySelector('.ms-players').value);
-      state.maxMinutes = Number(app.querySelector('.ms-time').value);
-      state.maxWeight = Number(app.querySelector('.ms-weight').value);
+      const key = event?.target.dataset.filter;
+      if (key) state[key] = key === 'availability' ? event.target.value : Number(event.target.value);
+      syncPreferences();
       state.view = view.value;
       app.dataset.cardView = state.view;
       state.limit = state.view === 'compact' ? 24 : settings.pageSize;
@@ -410,18 +548,36 @@
     });
     app.querySelector('.ms-wishlist-add').addEventListener('click', () => addWishlistVote(state.query));
     search.addEventListener('input', updateFilters);
-    app.querySelectorAll('.ms-toolbar select, .ms-bgg-filters select').forEach(select => select.addEventListener('change', updateFilters));
+    app.querySelectorAll('.ms-toolbar select, .ms-bgg-filters select, .ms-dice-preferences select').forEach(select => select.addEventListener('change', updateFilters));
     app.querySelector('.ms-more').addEventListener('click', () => {
       state.limit += state.view === 'compact' ? 24 : settings.pageSize; renderCatalogue();
     });
+    app.querySelector('.ms-reset-preferences').addEventListener('click', () => {
+      state.availability = 'available'; state.players = 0; state.maxMinutes = 0; state.maxWeight = 0;
+      syncPreferences(); updateFilters();
+    });
     app.querySelector('.ms-roll').addEventListener('click', rollForGame);
     const hasBgg = games.some(game => game.bgg);
-    app.querySelectorAll('.ms-bgg-filters select').forEach(select => { select.disabled = !hasBgg; });
-    if (hasBgg) app.querySelector('.ms-bgg-note').textContent = 'Try the filters · 6 games have illustrative metadata. Real BGG data & covers await API connection.';
+    app.querySelectorAll('[data-filter]:not([data-filter="availability"])').forEach(select => { select.disabled = !hasBgg; });
+    const realCount = games.filter(game => game.bgg && !game.bgg.demo && game.bgg.source !== "collection").length;
+    const demoCount = games.filter(game => game.bgg?.demo).length;
+    if (hasBgg) app.querySelector('.ms-bgg-note').textContent = `${realCount} games with BGG data · ${demoCount} with illustrative stats. Games without metadata are excluded when metadata filters are selected.`;
     renderCatalogue(); renderLeaderboard(); renderWishlist();
-    initializeCommunityFeatures(app, gamesById, popularGames, showGameDetails, escapeHtml);
+    initializeCommunityFeatures(app, gamesById, popularGames, showGameDetails, escapeHtml, renderAvailability);
 
   }
 
   root.querySelectorAll('.ms-app').forEach(initializePage);
+
+  const updateCaption = document.createElement('p');
+  updateCaption.className = 'ms-update-caption';
+  updateCaption.setAttribute('role', 'status');
+
+  updateCaption.textContent = liveData
+    ? `Rental stats refreshed: ${
+        liveData.popularityRefreshed || 'date unavailable'
+      }`
+    : 'Showing saved availability. Please check with office staff.';
+
+  root.querySelector('.ms-hero').after(updateCaption);
 })();

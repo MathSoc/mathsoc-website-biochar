@@ -156,3 +156,60 @@
     display: block;
   }
 }
+
+/* Dark navigation on the Board Games page only. */
+.board-games-navigation {
+  --background: #222328;
+  --background-hover: #353039;
+  --text-color: #f7f2f7;
+
+  background-color: var(--background);
+
+  #navbar,
+  #mobile-nav {
+    background-color: var(--background);
+  }
+
+  #navbar .items .dropdown {
+    .dropdown-button {
+      color: #f7f2f7;
+    }
+
+    &:hover,
+    &:focus,
+    &:focus-within,
+    &:active {
+      .dropdown-button {
+        color: #ff58aa;
+        background-color: var(--background-hover);
+      }
+    }
+
+    .dropdown-content {
+      background-color: var(--background);
+
+      a {
+        color: #f7f2f7;
+
+        &:hover,
+        &:focus {
+          color: #ff58aa;
+          background-color: var(--background-hover);
+        }
+      }
+    }
+  }
+
+  #mobile-nav .items .dropdown {
+    .dropdown-button,
+    a,
+    a:link,
+    a:visited {
+      color: #f7f2f7;
+    }
+  }
+
+  .mobile-menu-button {
+    color: #ff58aa;
+  }
+}
