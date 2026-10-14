@@ -25,6 +25,10 @@ const Council: React.FC = () => {
       <h2>Councillors</h2>
       <HeadshotGrid>
         <Headshot
+          name="Mary Li"
+          position="Business Representative"
+        />
+        <Headshot
           name="Elisa Liang"
           position="Pure Mathematics, Applied Mathematics, and Combinatorics and Optimization Representative"
           //email="s5nayar@uwaterloo.ca"
