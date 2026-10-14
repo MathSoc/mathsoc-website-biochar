@@ -222,12 +222,60 @@ function initializeCommunityFeatures(app, gamesById, popularGames, showGameDetai
     window.mathsocState.save({ rankingPeriod: activePeriod });
   }
 
-  [...gamesById.values()].sort((a, b) => a.title.localeCompare(b.title)).forEach(game => {
+  const searchableGames = [...gamesById.values()].sort((a, b) => a.title.localeCompare(b.title));
+  // The hidden select retains game IDs for the existing submission handler.
+  gameSelect.hidden = true;
+  gameSelect.required = false;
+  gameSelect.replaceChildren();
+  const emptyOption = document.createElement('option');
+  emptyOption.value = '';
+  gameSelect.append(emptyOption);
+  searchableGames.forEach(game => {
     const option = document.createElement('option');
     option.value = game.id;
     option.textContent = game.title;
     gameSelect.append(option);
   });
+  const gameSearch = document.createElement('input');
+  gameSearch.type = 'text';
+  gameSearch.className = 'ms-recommend-search';
+  gameSearch.placeholder = 'Search for a game…';
+  gameSearch.setAttribute('aria-label', 'Choose a game from our collection');
+  gameSearch.autocomplete = 'off';
+  gameSearch.required = true;
+  const suggestions = document.createElement('datalist');
+  suggestions.id = 'ms-recommend-suggestions';
+  gameSearch.setAttribute('list', suggestions.id);
+  gameSelect.before(gameSearch, suggestions);
+  function normalizeGameSearch(value) {
+    return value.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  }
+  function updateGameSuggestions() {
+    const query = normalizeGameSearch(gameSearch.value);
+    const terms = query.split(' ').filter(Boolean);
+    const matches = searchableGames.filter(game => terms.every(term => normalizeGameSearch(game.title).includes(term)));
+    suggestions.replaceChildren();
+    const titles = new Set();
+    matches.forEach(game => {
+      if (titles.has(game.title)) return;
+      titles.add(game.title);
+      const option = document.createElement('option');
+      option.value = game.title;
+      suggestions.append(option);
+    });
+    const selected = searchableGames.find(game => normalizeGameSearch(game.title) === query);
+    gameSelect.value = selected?.id || '';
+    gameSearch.setCustomValidity(query && !selected ? 'Choose a game from the suggestions.' : '');
+  }
+  gameSearch.addEventListener('input', updateGameSuggestions);
+  gameSearch.addEventListener('change', updateGameSuggestions);
+  form.addEventListener('reset', () => {
+    gameSearch.value = '';
+    gameSearch.setCustomValidity('');
+    gameSelect.value = '';
+    updateGameSuggestions();
+  });
+  updateGameSuggestions();
   app.querySelectorAll('[data-period]').forEach(button => button.addEventListener('click', () => {
     renderPodium(button.dataset.period); saveCommunityChoice();
   }));
