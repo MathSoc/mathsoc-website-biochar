@@ -556,3 +556,5 @@ body{background:#18191c}
 @media (prefers-reduced-motion: reduce) {
   #mathsoc-games .ms-piper-caption, #mathsoc-games .ms-piper-caption .ms-piper-stage { transition: none; }
 }
+
+#mathsoc-games .ms-collection-notice { margin: 0 0 20px; padding: 14px 18px; border-left: 3px solid var(--ms-pink); background: var(--ms-panel); color: var(--ms-muted); font-size: 14px; line-height: 1.6; }

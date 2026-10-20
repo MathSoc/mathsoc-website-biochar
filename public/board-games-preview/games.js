@@ -136,10 +136,19 @@ try {
     return false;
   }
 
+  function gameCollections(game) {
+    const shelves = String(game.shelf || '').split(',').map(value => value.trim()).filter(Boolean);
+    return {
+      watsfic: shelves.some(value => /watsfic/i.test(value)),
+      mathsoc: shelves.some(value => !/watsfic/i.test(value)),
+    };
+  }
+
   function filterGames(allGames, state) {
     const query = state.query.trim().toLowerCase();
     return allGames.filter(game => {
       if (!game.title.toLowerCase().includes(query)) return false;
+      if (state.collection && !gameCollections(game)[state.collection]) return false;
       if (state.availability === 'available' && game.available <= 0) return false;
       if (state.availability === 'unavailable' && game.available > 0) return false;
       const bgg = game.bgg;
@@ -286,7 +295,7 @@ try {
 
   // Save local preferences and wishlist votes without a remote service.
   function saveState(state) {
-    window.mathsocState.save({ query: state.query, sort: state.sort, availability: state.availability, players: state.players, maxMinutes: state.maxMinutes, complexity: state.complexity, view: state.view, wishlist: state.wishlist });
+    window.mathsocState.save({ collection: state.collection, query: state.query, sort: state.sort, availability: state.availability, players: state.players, maxMinutes: state.maxMinutes, complexity: state.complexity, view: state.view, wishlist: state.wishlist });
   }
 
   // A new notice ID makes an updated announcement visible again.
@@ -363,6 +372,7 @@ try {
 
     const saved = window.mathsocState.saved;
     const state = {
+      collection: ['mathsoc', 'watsfic'].includes(saved.collection) ? saved.collection : '',
       query: saved.query || '', sort: ['popular', 'az', 'za', 'replay-high', 'replay-low'].includes(saved.sort) ? saved.sort : 'popular',
       availability: ['all', 'available', 'unavailable'].includes(saved.availability) ? saved.availability : 'available',
       players: ['solo', 'two', 'small', 'large'].includes(saved.players) ? saved.players : '',
@@ -372,6 +382,18 @@ try {
       limit: saved.view === 'compact' ? 24 : settings.pageSize, selected: null, showShelf: true,
       wishlist: Array.isArray(saved.wishlist) ? saved.wishlist.filter(entry => entry && typeof entry.title === 'string').slice(0, 30).map(entry => ({ title: String(entry.title).slice(0, 100), kind: entry.kind === 'copies' ? 'copies' : 'new', bggId: Number.isSafeInteger(Number(entry.bggId)) && Number(entry.bggId) > 0 ? Number(entry.bggId) : null, votes: Number(entry.votes) || 0, userVote: [-1, 1].includes(entry.userVote) ? entry.userVote : entry.voted ? 1 : 0 })) : [],
     };
+    const collectionSelect = document.createElement('select');
+    collectionSelect.dataset.filter = 'collection';
+    collectionSelect.setAttribute('aria-label', 'Collection');
+    [['', 'All collections'], ['mathsoc', 'MathSoc'], ['watsfic', 'WatSFiC']].forEach(([value, title]) => {
+      const option = document.createElement('option'); option.value = value; option.textContent = title; collectionSelect.append(option);
+    });
+    app.querySelector('.ms-toolbar').append(collectionSelect);
+    const collectionNote = document.createElement('aside');
+    collectionNote.className = 'ms-collection-notice';
+    collectionNote.setAttribute('aria-label', 'About the collections');
+    collectionNote.textContent = 'MathSoc and WatSFiC share shelf space in the MathSoc Office by agreement. Games marked WatSFiC belong to WatSFiC; games marked MathSoc belong to MathSoc. Filter by collection to find either group’s games. For titles in both collections, availability and copy totals include both.';
+    app.querySelector('.ms-subnav').after(collectionNote);
     const grid = app.querySelector('.ms-grid');
     const detail = app.querySelector('.ms-detail');
     app.querySelector('.ms-picks').append(detail);
@@ -536,6 +558,7 @@ try {
         control.value = String(state[control.dataset.filter] || '');
       });
       const captions = [];
+      if (state.collection) captions.push(state.collection === 'watsfic' ? 'WatSFiC collection' : 'MathSoc collection');
       if (state.players) captions.push(({ solo: 'Solo', two: 'Two players', small: 'Small group · 3–4', large: 'Large group · 5+' })[state.players]);
       if (state.maxMinutes) captions.push(`Up to ${state.maxMinutes} min`);
       if (state.complexity) captions.push(`${{ light: 'Light', medium: 'Medium', heavy: 'Heavy' }[state.complexity]} complexity`);
@@ -756,7 +779,7 @@ try {
       state.query = search.value;
       state.sort = sort.value;
       const key = event?.target.dataset.filter;
-      if (key) state[key] = ['availability', 'complexity', 'players'].includes(key) ? event.target.value : Number(event.target.value);
+      if (key) state[key] = ['availability', 'complexity', 'players', 'collection'].includes(key) ? event.target.value : Number(event.target.value);
       syncPreferences();
       state.view = view.value;
       app.dataset.cardView = state.view;
@@ -805,12 +828,12 @@ try {
       state.limit += state.view === 'compact' ? 24 : settings.pageSize; renderCatalogue();
     });
     app.querySelector('.ms-reset-preferences').addEventListener('click', () => {
-      state.availability = 'available'; state.players = ''; state.maxMinutes = 0; state.complexity = '';
+      state.collection = ''; state.availability = 'available'; state.players = ''; state.maxMinutes = 0; state.complexity = '';
       syncPreferences(); updateFilters();
     });
     app.querySelector('.ms-roll').addEventListener('click', rollForGame);
     const hasBgg = games.some(game => game.bgg);
-    app.querySelectorAll('[data-filter]:not([data-filter="availability"])').forEach(select => { select.disabled = !hasBgg; });
+    app.querySelectorAll('[data-filter]:not([data-filter="availability"]):not([data-filter="collection"])').forEach(select => { select.disabled = !hasBgg; });
     const realCount = games.filter(game => game.bgg && !game.bgg.demo && game.bgg.source !== "collection").length;
     const demoCount = games.filter(game => game.bgg?.demo).length;
     if (hasBgg) app.querySelector('.ms-bgg-note').textContent = `${realCount} games with BGG data · ${demoCount} with illustrative stats. Games without metadata are excluded when metadata filters are selected.`;
