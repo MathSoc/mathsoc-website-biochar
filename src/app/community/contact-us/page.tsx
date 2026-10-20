@@ -25,7 +25,7 @@ export default async function ContactPage() {
       <MarkdownSection src="src/app/community/contact-us/contact-us-locations.md" />
       <h2>General inquiries</h2>
       <p>
-        React out at{" "}
+        Reach out at{" "}
         <a href="mailto:info@mathsoc.uwaterloo.ca">info@mathsoc.uwaterloo.ca</a>
         .
       </p>
