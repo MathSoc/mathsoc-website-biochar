@@ -96,6 +96,7 @@ function findTable(rows: string[][], columns: string[]) {
 
   return {
     rows: rows.slice(headerIndex + 1),
+    firstDataRow: headerIndex + 2,
     column: (name: string) => headers.findIndex(header => header.toLowerCase().replace(/[ _]+/g, " ") === name.toLowerCase().replace(/[ _]+/g, " ")),
   };
 }
@@ -152,7 +153,7 @@ export async function GET() {
     const shelves = new Map<string, Set<string>>();
     const copyIds = new Set<string>();
 
-    for (const row of inventory.rows) {
+    for (const [rowIndex, row] of inventory.rows.entries()) {
       const title = row[inventory.column("Title")]?.trim();
       const copyId = row[inventory.column("Copy ID")]?.trim();
 
@@ -160,8 +161,15 @@ export async function GET() {
 
       const match = copyId?.match(/^(G\d+)-\d+$/);
 
-      if (!title || !match || copyIds.has(copyId)) {
-        throw new Error("An inventory copy ID is missing or duplicated.");
+      const sheetRow = inventory.firstDataRow + rowIndex;
+      if (!title || !copyId) {
+        throw new Error(`Published inventory row ${sheetRow}: missing ${!title ? "Title" : "Copy ID"}; Copy ID=${JSON.stringify(copyId || "")}.`);
+      }
+      if (!match) {
+        throw new Error(`Published inventory row ${sheetRow}: malformed Copy ID=${JSON.stringify(copyId)}; expected G0001-01.`);
+      }
+      if (copyIds.has(copyId)) {
+        throw new Error(`Published inventory row ${sheetRow}: duplicate Copy ID=${JSON.stringify(copyId)}.`);
       }
 
       copyIds.add(copyId);
