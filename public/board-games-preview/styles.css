@@ -566,3 +566,37 @@ body{background:#18191c}
 #mathsoc-games .ms-watsfic-notice p { margin: 0 0 8px; }
 #mathsoc-games .ms-watsfic-notice button { font-size: 13px; padding: 6px 10px; }
 #mathsoc-games .ms-watsfic-notice button.ms-watsfic-notice-close { position: absolute; top: 4px; right: 4px; width: 40px; height: 40px; padding: 0; border: 0; background: transparent; font-size: 24px; }
+
+#mathsoc-games .ms-owner-control { display: flex; flex-direction: column; gap: 4px; font-size: 12px; }
+#mathsoc-games .ms-owner-control select { width: 100%; }
+#mathsoc-games .ms-owner-status { font-size: 13px; color: var(--ms-muted); }
+#mathsoc-games .ms-active-filters { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin: 12px 0; padding: 10px 12px; border-left: 3px solid var(--ms-pink); background: var(--ms-panel); }
+#mathsoc-games .ms-active-filters p { flex: 1; margin: 0; font-size: 13px; }
+#mathsoc-games .ms-active-filters button { font-size: 13px; padding: 6px 10px; }
+
+/* A small transmission from the WatSFiC fleet. */
+#mathsoc-games .ms-watsfic-notice {
+  border: 1px solid #826eb0; border-left: 3px solid #c6a6ff;
+  border-radius: 10px; color: #f3edf9;
+  background-color: #252031;
+  background-image: radial-gradient(circle at 92% 23%, #e7d6ff 0 1px, transparent 2px), radial-gradient(circle at 76% 72%, #b6ddff 0 1px, transparent 2px), radial-gradient(circle at 96% 82%, #a68fc6 0 1px, transparent 2px), linear-gradient(115deg, #252031, #202738);
+  box-shadow: inset 0 0 24px #ae82e808;
+}
+#mathsoc-games .ms-watsfic-transmission { display: block; margin-bottom: 7px; color: #dac4ff; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+#mathsoc-games .ms-watsfic-notice p { line-height: 1.6; max-width: 850px; }
+#mathsoc-games .ms-watsfic-notice button { border-color: #a48ac5; color: #f1e6ff; background: #393046; }
+#mathsoc-games .ms-watsfic-notice button:hover { background: #493c5c; }
+#mathsoc-games .ms-watsfic-notice button:focus-visible { outline: 2px solid #bde6ff; outline-offset: 3px; }
+
+/* Owner labels accompany colour so the distinction is readable by everyone. */
+#mathsoc-games .ms-collection-badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 7px 0; }
+#mathsoc-games .ms-collection-badges:empty { display: none; }
+#mathsoc-games .ms-owner-badge { display: inline-block; width: fit-content; padding: 3px 8px; border: 1px solid; border-radius: 999px; font-size: 11px; font-weight: 600; line-height: 1.4; }
+#mathsoc-games .ms-owner-mathsoc { color: #ff83bf; border-color: #ae4c80; background: #382333; }
+#mathsoc-games .ms-owner-watsfic { color: #69f4ff; border-color: #35a9b8; background: #142f36; }
+#mathsoc-games .ms-game[data-collection="watsfic"], #mathsoc-games .ms-detail[data-collection="watsfic"] { --ms-pink: #69f4ff; border-color: #39c7d6; box-shadow: inset 0 0 18px #42dbea0a; }
+#mathsoc-games .ms-game[data-collection="watsfic"] .ms-game-title,
+#mathsoc-games .ms-detail[data-collection="watsfic"] h3 { color: #69f4ff; }
+#mathsoc-games .ms-game[data-collection="watsfic"] .ms-cover:not(.ms-cover-image) { background: #203139; color: #69f4ff; }
+#mathsoc-games .ms-game[data-collection="watsfic"] .ms-stat:not(.ms-available):not(.ms-unavailable) { background-color: #24343e; }
+#mathsoc-games .ms-game[data-collection="both"], #mathsoc-games .ms-detail[data-collection="both"] { border-color: #a9a2df; box-shadow: inset 3px 0 #ff58aa, inset -3px 0 #69f4ff; }

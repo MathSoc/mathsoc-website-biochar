@@ -295,16 +295,27 @@ async function refreshCatalogue() {
     return `<span class="ms-game-type">${game.gameType === 'base' ? 'Base game · Play on its own' : 'Game type awaiting confirmation'}</span>`;
   }
 
+  function collectionTheme(game) {
+    const owners = gameCollections(game);
+    return owners.watsfic ? (owners.mathsoc ? 'both' : 'watsfic') : (owners.mathsoc ? 'mathsoc' : 'unknown');
+  }
+  function collectionBadges(game) {
+    const owners = gameCollections(game);
+    return '<span class="ms-collection-badges">' +
+      (owners.mathsoc ? '<span class="ms-owner-badge ms-owner-mathsoc">MathSoc</span>' : '') +
+      (owners.watsfic ? '<span class="ms-owner-badge ms-owner-watsfic">✦ WatSFiC</span>' : '') + '</span>';
+  }
+
   function createGameCard(game, showShelf) {
     const image = getImageUrl(game);
     const initials = game.title.split(/\s+/).slice(0, 2).map(word => word[0]).join('');
     const cover = image
       ? `<img src="${escapeHtml(image)}" alt="" loading="lazy">`
       : `<b>${escapeHtml(initials)}</b>`;
-    return `<button type="button" class="ms-game cursor-interaction" data-game="${escapeHtml(game.id)}">
+    return `<button type="button" class="ms-game cursor-interaction" data-collection="${collectionTheme(game)}" data-game="${escapeHtml(game.id)}">
       <div class="ms-cover${image ? ' ms-cover-image' : ''}" aria-hidden="true">${cover}</div>
       <div class="ms-game-info">
-        <span class="ms-game-title">${escapeHtml(game.title)}</span>${gameTypeLabel(game)}
+        <span class="ms-game-title">${escapeHtml(game.title)}</span>${collectionBadges(game)}${gameTypeLabel(game)}
         ${gameDescriptions[game.title] ? `<span class="ms-card-description">${escapeHtml(gameDescriptions[game.title])}</span>` : ''}
         <span class="ms-card-stats">${renderAvailability(game)}${game.bgg ? renderPlayerTime(game.bgg) + renderDifficulty(game.bgg.weight) : '<span class="ms-stat"><span class="ms-stat-label">Players</span><span class="ms-stat-value">–</span><small>Not matched yet</small></span><span class="ms-stat"><span class="ms-stat-label">Play time</span><span class="ms-stat-value">–</span><small>Not matched yet</small></span><span class="ms-stat"><span class="ms-stat-label">Complexity</span><span class="ms-stat-value">– / 5</span><small>Not matched yet</small></span>'}</span>
         ${game.bgg && !game.bgg.demo ? '' : `<span class="ms-card-note">${game.bgg?.demo ? 'Illustrative stats · BGG connection pending' : 'Player count, time & difficulty await BGG matching.'}</span>`}
@@ -406,13 +417,38 @@ async function refreshCatalogue() {
     const hasOwnerData = games.some(game => Array.isArray(game.collections) && game.collections.length);
     if (!hasOwnerData) state.collection = '';
     const collectionSelect = document.createElement('select');
-    collectionSelect.hidden = !hasOwnerData;
+    collectionSelect.disabled = !hasOwnerData;
+    collectionSelect.title = hasOwnerData ? 'Filter by game owner' : 'Ownership information has not loaded yet';
     collectionSelect.dataset.filter = 'collection';
     collectionSelect.setAttribute('aria-label', 'Collection');
     [['', 'All collections'], ['mathsoc', 'MathSoc'], ['watsfic', 'WatSFiC']].forEach(([value, title]) => {
       const option = document.createElement('option'); option.value = value; option.textContent = title; collectionSelect.append(option);
     });
-    app.querySelector('.ms-toolbar').append(collectionSelect);
+    const ownerLabel = document.createElement('label');
+    ownerLabel.className = 'ms-owner-control';
+    const ownerTitle = document.createElement('span'); ownerTitle.textContent = 'Collection';
+    ownerLabel.append(ownerTitle, collectionSelect);
+    app.querySelector('.ms-toolbar').append(ownerLabel);
+    const ownerStatus = document.createElement('p');
+    ownerStatus.className = 'ms-owner-status';
+    ownerStatus.setAttribute('role', 'status');
+    ownerStatus.textContent = hasOwnerData ? '' : 'Collection filtering is temporarily unavailable because ownership information has not loaded. You can still browse all games.';
+    ownerStatus.hidden = hasOwnerData;
+    app.querySelector('.ms-toolbar').after(ownerStatus);
+    const filterFeedback = document.createElement('div');
+    filterFeedback.className = 'ms-active-filters';
+    const filterText = document.createElement('p');
+    filterText.setAttribute('role', 'status');
+    filterText.setAttribute('aria-live', 'polite');
+    const clearFilters = document.createElement('button');
+    clearFilters.type = 'button'; clearFilters.textContent = 'Clear filters';
+    clearFilters.addEventListener('click', () => {
+      search.value = ''; state.query = ''; state.collection = ''; state.availability = 'all';
+      state.players = ''; state.maxMinutes = 0; state.complexity = '';
+      updateFilters();
+    });
+    filterFeedback.append(filterText, clearFilters);
+    app.querySelector('.ms-count').before(filterFeedback);
     const collectionNote = document.createElement('details');
     collectionNote.className = 'ms-collection-disclosure';
     const collectionSummary = document.createElement('summary');
@@ -429,17 +465,24 @@ async function refreshCatalogue() {
       notice.className = 'ms-watsfic-notice';
       notice.setAttribute('aria-label', 'WatSFiC collection');
       const message = document.createElement('p');
-      message.textContent = 'WatSFiC members: find your games housed in the MathSoc Office by choosing WatSFiC in the collection filter.';
+      const transmission = document.createElement('strong');
+      transmission.className = 'ms-watsfic-transmission';
+      transmission.textContent = '✦ Incoming transmission · WatSFiC';
+      message.textContent = 'Calling all WatSFiC travellers! Your games have docked at the MathSoc Office. Set your collection filter to WatSFiC and chart a course for your next adventure.';
       const shortcut = document.createElement('button');
       shortcut.type = 'button';
-      shortcut.textContent = 'Browse WatSFiC games';
-      shortcut.disabled = !hasOwnerData;
+      shortcut.textContent = 'Explore the WatSFiC fleet →';
+
       shortcut.addEventListener('click', () => {
-        state.collection = 'watsfic';
+        state.collection = hasOwnerData ? 'watsfic' : '';
         state.availability = 'all'; state.players = ''; state.maxMinutes = 0; state.complexity = '';
         search.value = ''; state.query = '';
         updateFilters();
-        collectionSelect.focus({ preventScroll: true });
+        if (hasOwnerData) collectionSelect.focus({ preventScroll: true });
+        else {
+          ownerStatus.textContent = 'WatSFiC filtering is not available yet: ownership information has not loaded. Showing all games for now.';
+          ownerStatus.hidden = false;
+        }
         app.querySelector('.ms-library').scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
       });
       const close = document.createElement('button');
@@ -451,7 +494,7 @@ async function refreshCatalogue() {
         try { localStorage.setItem(noticeKey, 'dismissed'); } catch {}
         notice.remove(); app.querySelector('.ms-roll').focus({ preventScroll: true });
       });
-      notice.append(message, shortcut, close);
+      notice.append(transmission, message, shortcut, close);
       app.querySelector('.ms-hero').before(notice);
     }
     const grid = app.querySelector('.ms-grid');
@@ -625,6 +668,8 @@ async function refreshCatalogue() {
       captions.push({ all: 'All games', available: 'Available now', unavailable: 'Unavailable' }[state.availability]);
       if (state.query.trim()) captions.push(`Search: ${state.query.trim()}`);
       app.querySelector('.ms-dice-filter-summary').textContent = captions.join(' · ');
+      filterText.textContent = 'Showing: ' + (state.collection ? '' : 'All collections · ') + captions.join(' · ') + '. Filters apply immediately.';
+      clearFilters.hidden = !state.collection && state.availability === 'all' && !state.players && !state.maxMinutes && !state.complexity && !state.query.trim();
     }
     syncPreferences();
 
@@ -742,7 +787,8 @@ async function refreshCatalogue() {
       const image = getImageUrl(game);
       const initials = game.title.split(/\s+/).slice(0, 2).map(word => word[0]).join('');
       const detailCover = `<div class="ms-cover ms-detail-cover${image ? ' ms-cover-image' : ''}" data-game-id="${escapeHtml(game.id)}" aria-hidden="true">${image ? `<img src="${escapeHtml(image)}" alt="" decoding="async">` : `<b>${escapeHtml(initials)}</b>`}</div>`;
-      detail.innerHTML = `<div class="ms-detail-head">${detailCover}<div class="ms-detail-title"><h3>${escapeHtml(game.title)}</h3>${gameDescriptions[game.title] ? `<p class="ms-detail-description">${escapeHtml(gameDescriptions[game.title])}</p>` : ''}</div><button type="button" class="ms-close cursor-interaction">Close</button></div>
+      detail.dataset.collection = collectionTheme(game);
+      detail.innerHTML = `<div class="ms-detail-head">${detailCover}<div class="ms-detail-title"><h3>${escapeHtml(game.title)}</h3>${collectionBadges(game)}${gameDescriptions[game.title] ? `<p class="ms-detail-description">${escapeHtml(gameDescriptions[game.title])}</p>` : ''}</div><button type="button" class="ms-close cursor-interaction">Close</button></div>
         ${gameTypeLabel(game)}<p class="ms-detail-stock">${renderAvailability(game)} <button type="button" class="ms-request-copy" data-copy="${escapeHtml(game.id)}" ${state.wishlist.some(entry => entry.kind === 'copies' && entry.title.toLowerCase() === game.title.toLowerCase()) ? 'disabled' : ''}>${state.wishlist.some(entry => entry.kind === 'copies' && entry.title.toLowerCase() === game.title.toLowerCase()) ? '✓ Requested' : 'Request another copy'}</button> · ${game.total} ${game.total === 1 ? 'copy' : 'copies'} · ${game.rentals ?? 0} rentals${state.showShelf ? ' · Shelf ' + escapeHtml(game.shelf) : ''}</p>
         ${bgg ? `<div class="ms-detail-facts">${renderPlayerTime(bgg)}${renderDifficulty(bgg.weight)}</div><p class="ms-bgg-note">${bgg.demo ? 'Illustrative metadata · not fetched from BGG' : bgg.source === 'collection' ? 'Player count supplied by MathSoc' : 'Game information from BGG'}</p>` : '<p>Game information will appear here after this title is matched to BGG.</p>'}`;
       detail.innerHTML += `<section class="ms-replay"><span class="ms-replay-label">Would you play this again?</span><p class="ms-replay-summary" aria-live="polite">${playAgainSummary(game.id)}</p><div class="ms-replay-buttons"><button type="button" aria-label="Would play again" title="Would play again" data-replay="yes" data-replay-id="${escapeHtml(game.id)}" aria-pressed="${playAgain[game.id] === 'yes'}"><svg class="ms-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v11H3V10h4Zm0 0 5-7c1-1 3 0 3 2l-1 5h5a2 2 0 0 1 2 2l-2 7a2 2 0 0 1-2 2H7"/></svg></button><button type="button" aria-label="Would not play again" title="Would not play again" data-replay="no" data-replay-id="${escapeHtml(game.id)}" aria-pressed="${playAgain[game.id] === 'no'}"><svg class="ms-thumb-icon ms-thumb-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v11H3V10h4Zm0 0 5-7c1-1 3 0 3 2l-1 5h5a2 2 0 0 1 2 2l-2 7a2 2 0 0 1-2 2H7"/></svg></button></div><small>Local preview vote · click again to undo.</small></section>`;
@@ -896,6 +942,7 @@ async function refreshCatalogue() {
     function updateMetadataControls() {
       const hasBgg = games.some(game => game.bgg);
       app.querySelectorAll('[data-filter]:not([data-filter="availability"]):not([data-filter="collection"])').forEach(select => { select.disabled = !hasBgg; });
+    collectionSelect.disabled = !hasOwnerData;
       const realCount = games.filter(game => game.bgg && !game.bgg.demo && game.bgg.source !== "collection").length;
       const demoCount = games.filter(game => game.bgg?.demo).length;
       app.querySelector('.ms-bgg-note').textContent = hasBgg
