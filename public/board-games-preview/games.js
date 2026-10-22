@@ -18,39 +18,85 @@ const metadataById = new Map(
   snapshot.map(game => [game.id, game])
 );
 
+const refreshInterval = 30 * 60 * 1000;
+const officeClock = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'America/Toronto', weekday: 'short', hour: '2-digit', hourCycle: 'h23',
+});
+const refreshClock = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'America/Toronto', dateStyle: 'medium', timeStyle: 'short',
+});
+let lastCheckedAt = null;
+
+function isOfficeOpen(date = new Date()) {
+  const parts = Object.fromEntries(officeClock.formatToParts(date).map(part => [part.type, part.value]));
+  return ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].includes(parts.weekday)
+    && Number(parts.hour) >= 10 && Number(parts.hour) < 17;
+}
+
+function refreshCaption(failed = false) {
+  const checked = lastCheckedAt
+    ? `Catalogue last checked: ${refreshClock.format(lastCheckedAt)} (Toronto time).`
+    : 'Showing saved availability. Please check with office staff.';
+  const rentals = liveData?.popularityRefreshed
+    ? ` Rental stats updated: ${liveData.popularityRefreshed}.` : '';
+  updateCaption.textContent = checked + rentals
+    + (failed ? ' Update check failed; keeping the displayed catalogue.' : '');
+}
 let games = snapshot.filter(game => game.id !== "G0309");
 let liveData = null;
+let lastAttempt = null;
+let refreshing = false;
+let catalogueSignature = null;
+const refreshViews = [];
+// Keep these containers stable: community features retain references to them.
+const gamesById = new Map(games.map(game => [game.id, game]));
+const alphabeticalGames = sortGames(games, 'az');
+const popularGames = sortGames(games, 'popular');
 
-try {
-  const response = await fetch('/api/board-games', {
-    cache: 'no-store',
-    signal: AbortSignal.timeout(55000),
-  });
-
-  if (!response.ok) {
-    throw new Error(`Catalogue request failed: ${response.status}`);
+async function refreshCatalogue() {
+  if (refreshing) return;
+  // The first page-load request runs at any hour. Later checks require an open office.
+  if (lastAttempt !== null && (document.visibilityState === 'hidden' || !isOfficeOpen())) return;
+  if (lastAttempt !== null && Date.now() - lastAttempt < refreshInterval) return;
+  refreshing = true;
+  lastAttempt = Date.now();
+  try {
+    const response = await fetch('/api/board-games', {
+      cache: 'no-store',
+      signal: AbortSignal.timeout(55000),
+    });
+    if (!response.ok) throw new Error(`Catalogue request failed: ${response.status}`);
+    const data = await response.json();
+    if (!Array.isArray(data.games) || !data.games.length || data.games.some(game =>
+      !game || typeof game.id !== 'string' || typeof game.title !== 'string'
+    )) throw new Error('The catalogue response is empty or invalid.');
+    // Ignore servedAt: an unchanged catalogue should not redraw cards.
+    const signature = JSON.stringify([data.games, data.popularityRefreshed]);
+    if (signature !== catalogueSignature) {
+      const nextGames = data.games.filter(game => game.id !== "G0309").map(game => ({
+        ...metadataById.get(game.id),
+        ...game,
+        ...(game.id === "G0049" ? { gameType: "expansion", baseGame: "Saboteur" } : {}),
+        bgg: game.manualStats ? { ...game.bgg, ...game.manualStats, imageUrl: game.bgg?.imageUrl || null, source: "collection", demo: false } : game.bgg || null,
+      }));
+      games = nextGames;
+      gamesById.clear();
+      games.forEach(game => gamesById.set(game.id, game));
+      alphabeticalGames.splice(0, alphabeticalGames.length, ...sortGames(games, 'az'));
+      popularGames.splice(0, popularGames.length, ...sortGames(games, 'popular'));
+      refreshViews.forEach(render => render());
+      catalogueSignature = signature;
+    }
+    liveData = data;
+    lastCheckedAt = new Date();
+    refreshCaption();
+  } catch (error) {
+    console.error('Catalogue loading failed:', error);
+    refreshCaption(true);
+  } finally {
+    refreshing = false;
   }
-
-  const data = await response.json();
-
-  if (!Array.isArray(data.games) || !data.games.length) {
-    throw new Error('The catalogue response is empty.');
-  }
-
-  games = data.games.map(game => ({
-    ...metadataById.get(game.id),
-    ...game,
-    ...(game.id === "G0049" ? { gameType: "expansion", baseGame: "Saboteur" } : {}),
-    bgg: game.manualStats ? { ...game.bgg, ...game.manualStats, imageUrl: game.bgg?.imageUrl || null, source: "collection", demo: false } : game.bgg || null,
-  }));
-
-  liveData = data;
-} catch (error) {
-  console.error('Catalogue loading failed:', error);
 }
-  const gamesById = new Map(games.map(game => [game.id, game]));
-  const alphabeticalGames = sortGames(games, 'az');
-  const popularGames = sortGames(games, 'popular');
   // Small editorial blurbs, easy to edit without touching the rendering code.
   const gameDescriptions = {
     Catan: 'Trade resources, build settlements, and negotiate your way across the island.',
@@ -672,10 +718,11 @@ try {
       app.querySelector('.ms-roll').disabled = isRolling || !matches.some(canRollGame);
     }
 
-    function showGameDetails(game) {
+    function showGameDetails(game, scroll = true) {
       if (!game) return;
       clearReplayReaction();
       state.selected = game.title;
+      detail.dataset.gameId = game.id;
       detail.hidden = false;
       const bgg = game.bgg;
       const image = getImageUrl(game);
@@ -686,7 +733,7 @@ try {
         ${bgg ? `<div class="ms-detail-facts">${renderPlayerTime(bgg)}${renderDifficulty(bgg.weight)}</div><p class="ms-bgg-note">${bgg.demo ? 'Illustrative metadata · not fetched from BGG' : bgg.source === 'collection' ? 'Player count supplied by MathSoc' : 'Game information from BGG'}</p>` : '<p>Game information will appear here after this title is matched to BGG.</p>'}`;
       detail.innerHTML += `<section class="ms-replay"><span class="ms-replay-label">Would you play this again?</span><p class="ms-replay-summary" aria-live="polite">${playAgainSummary(game.id)}</p><div class="ms-replay-buttons"><button type="button" aria-label="Would play again" title="Would play again" data-replay="yes" data-replay-id="${escapeHtml(game.id)}" aria-pressed="${playAgain[game.id] === 'yes'}"><svg class="ms-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v11H3V10h4Zm0 0 5-7c1-1 3 0 3 2l-1 5h5a2 2 0 0 1 2 2l-2 7a2 2 0 0 1-2 2H7"/></svg></button><button type="button" aria-label="Would not play again" title="Would not play again" data-replay="no" data-replay-id="${escapeHtml(game.id)}" aria-pressed="${playAgain[game.id] === 'no'}"><svg class="ms-thumb-icon ms-thumb-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v11H3V10h4Zm0 0 5-7c1-1 3 0 3 2l-1 5h5a2 2 0 0 1 2 2l-2 7a2 2 0 0 1-2 2H7"/></svg></button></div><small>Local preview vote · click again to undo.</small></section>`;
       saveState(state);
-      detail.scrollIntoView({ block: 'nearest', behavior: 'auto' });
+      if (scroll) detail.scrollIntoView({ block: 'nearest', behavior: 'auto' });
     }
 
     function renderLeaderboard() {
@@ -832,13 +879,29 @@ try {
       syncPreferences(); updateFilters();
     });
     app.querySelector('.ms-roll').addEventListener('click', rollForGame);
-    const hasBgg = games.some(game => game.bgg);
-    app.querySelectorAll('[data-filter]:not([data-filter="availability"]):not([data-filter="collection"])').forEach(select => { select.disabled = !hasBgg; });
-    const realCount = games.filter(game => game.bgg && !game.bgg.demo && game.bgg.source !== "collection").length;
-    const demoCount = games.filter(game => game.bgg?.demo).length;
-    if (hasBgg) app.querySelector('.ms-bgg-note').textContent = `${realCount} games with BGG data · ${demoCount} with illustrative stats. Games without metadata are excluded when metadata filters are selected.`;
+    function updateMetadataControls() {
+      const hasBgg = games.some(game => game.bgg);
+      app.querySelectorAll('[data-filter]:not([data-filter="availability"]):not([data-filter="collection"])').forEach(select => { select.disabled = !hasBgg; });
+      const realCount = games.filter(game => game.bgg && !game.bgg.demo && game.bgg.source !== "collection").length;
+      const demoCount = games.filter(game => game.bgg?.demo).length;
+      app.querySelector('.ms-bgg-note').textContent = hasBgg
+        ? `${realCount} games with BGG data · ${demoCount} with illustrative stats. Games without metadata are excluded when metadata filters are selected.`
+        : 'Game metadata is currently unavailable.';
+    }
+    updateMetadataControls();
     renderCatalogue(); renderLeaderboard(); renderWishlist();
-    initializeCommunityFeatures(app, gamesById, popularGames, showGameDetails, escapeHtml, renderAvailability);
+    const refreshCommunity = initializeCommunityFeatures(app, gamesById, popularGames, showGameDetails, escapeHtml, renderAvailability);
+    refreshViews.push(() => {
+      updateMetadataControls();
+      renderCatalogue();
+      renderLeaderboard();
+      refreshCommunity();
+      if (!detail.hidden) {
+        const selected = gamesById.get(detail.dataset.gameId);
+        if (selected) showGameDetails(selected, false);
+        else { detail.hidden = true; state.selected = null; }
+      }
+    });
 
   }
 
@@ -848,11 +911,14 @@ try {
   updateCaption.className = 'ms-update-caption';
   updateCaption.setAttribute('role', 'status');
 
-  updateCaption.textContent = liveData
-    ? `Rental stats refreshed: ${
-        liveData.popularityRefreshed || 'date unavailable'
-      }`
-    : 'Showing saved availability. Please check with office staff.';
+  refreshCaption();
 
   root.querySelector('.ms-hero').after(updateCaption);
+  // Render the saved catalogue immediately; live requests never block browsing.
+  void refreshCatalogue();
+  // A cheap clock check lets a tab left open overnight resume near office opening.
+  // Network requests still occur at most once per 30 minutes.
+  setInterval(() => { void refreshCatalogue(); }, 60 * 1000);
+  document.addEventListener('visibilitychange', () => { void refreshCatalogue(); });
+  window.addEventListener('pageshow', () => { void refreshCatalogue(); });
 })();

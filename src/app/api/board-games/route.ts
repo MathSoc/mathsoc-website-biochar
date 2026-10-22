@@ -113,9 +113,9 @@ function readCount(value: string | undefined): number {
   return number;
 }
 
-async function downloadCsv(url: string): Promise<string[][]> {
+async function downloadCsv(url: string, revalidate: number): Promise<string[][]> {
   const response = await fetch(url, {
-    next: { revalidate: 300 },
+    next: { revalidate },
     signal: AbortSignal.timeout(15000),
   });
 
@@ -129,8 +129,8 @@ async function downloadCsv(url: string): Promise<string[][]> {
 export async function GET() {
   try {
     const [inventoryRows, popularityRows] = await Promise.all([
-      downloadCsv(INVENTORY_URL),
-      downloadCsv(POPULARITY_URL),
+      downloadCsv(INVENTORY_URL, 1800), // Cache availability for 30 minutes.
+      downloadCsv(POPULARITY_URL, 86400), // Rankings can refresh daily.
     ]);
 
     const inventory = findTable(inventoryRows, [

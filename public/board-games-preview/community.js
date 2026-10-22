@@ -222,7 +222,7 @@ function initializeCommunityFeatures(app, gamesById, popularGames, showGameDetai
     window.mathsocState.save({ rankingPeriod: activePeriod });
   }
 
-  const searchableGames = [...gamesById.values()].sort((a, b) => a.title.localeCompare(b.title));
+  let searchableGames = [...gamesById.values()].sort((a, b) => a.title.localeCompare(b.title));
   // The hidden select retains game IDs for the existing submission handler.
   gameSelect.hidden = true;
   gameSelect.required = false;
@@ -307,4 +307,21 @@ function initializeCommunityFeatures(app, gamesById, popularGames, showGameDetai
   form.querySelector('h3').textContent = 'Suggest a game';
   // Keep the dice and its result directly above the collection.
   app.querySelector('.ms-columns').before(app.querySelector('.ms-picks'));
+  // Refresh live data without rebuilding forms or registering duplicate listeners.
+  return function refreshCatalogueViews() {
+    searchableGames = [...gamesById.values()].sort((a, b) => a.title.localeCompare(b.title));
+    gameSelect.replaceChildren();
+    const empty = document.createElement('option');
+    empty.value = '';
+    gameSelect.append(empty);
+    searchableGames.forEach(game => {
+      const option = document.createElement('option');
+      option.value = game.id;
+      option.textContent = game.title;
+      gameSelect.append(option);
+    });
+    updateGameSuggestions();
+    renderPodium(activePeriod);
+  };
+
 }
