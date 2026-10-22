@@ -18,30 +18,7 @@ const metadataById = new Map(
   snapshot.map(game => [game.id, game])
 );
 
-const refreshInterval = 30 * 60 * 1000;
-const officeClock = new Intl.DateTimeFormat('en-CA', {
-  timeZone: 'America/Toronto', weekday: 'short', hour: '2-digit', hourCycle: 'h23',
-});
-const refreshClock = new Intl.DateTimeFormat('en-CA', {
-  timeZone: 'America/Toronto', dateStyle: 'medium', timeStyle: 'short',
-});
-let lastCheckedAt = null;
-
-function isOfficeOpen(date = new Date()) {
-  const parts = Object.fromEntries(officeClock.formatToParts(date).map(part => [part.type, part.value]));
-  return ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].includes(parts.weekday)
-    && Number(parts.hour) >= 10 && Number(parts.hour) < 17;
-}
-
-function refreshCaption(failed = false) {
-  const checked = lastCheckedAt
-    ? `Catalogue last checked: ${refreshClock.format(lastCheckedAt)} (Toronto time).`
-    : 'Showing saved availability. Please check with office staff.';
-  const rentals = liveData?.popularityRefreshed
-    ? ` Rental stats updated: ${liveData.popularityRefreshed}.` : '';
-  updateCaption.textContent = checked + rentals
-    + (failed ? ' Update check failed; keeping the displayed catalogue.' : '');
-}
+const refreshInterval = 5 * 60 * 1000;
 let games = snapshot.filter(game => game.id !== "G0309");
 let liveData = null;
 let lastAttempt = null;
@@ -54,9 +31,7 @@ const alphabeticalGames = sortGames(games, 'az');
 const popularGames = sortGames(games, 'popular');
 
 async function refreshCatalogue() {
-  if (refreshing) return;
-  // The first page-load request runs at any hour. Later checks require an open office.
-  if (lastAttempt !== null && (document.visibilityState === 'hidden' || !isOfficeOpen())) return;
+  if (refreshing || document.visibilityState === 'hidden') return;
   if (lastAttempt !== null && Date.now() - lastAttempt < refreshInterval) return;
   refreshing = true;
   lastAttempt = Date.now();
@@ -88,11 +63,12 @@ async function refreshCatalogue() {
       catalogueSignature = signature;
     }
     liveData = data;
-    lastCheckedAt = new Date();
-    refreshCaption();
+    updateCaption.textContent = `Rental stats refreshed: ${data.popularityRefreshed || 'date unavailable'}`;
   } catch (error) {
     console.error('Catalogue loading failed:', error);
-    refreshCaption(true);
+    updateCaption.textContent = liveData
+      ? 'Could not check for updates. Showing the last loaded catalogue; retrying automatically.'
+      : 'Showing saved availability. Please check with office staff.';
   } finally {
     refreshing = false;
   }
@@ -183,10 +159,9 @@ async function refreshCatalogue() {
   }
 
   function gameCollections(game) {
-    const shelves = String(game.shelf || '').split(',').map(value => value.trim()).filter(Boolean);
     return {
-      watsfic: shelves.some(value => /watsfic/i.test(value)),
-      mathsoc: shelves.some(value => !/watsfic/i.test(value)),
+      watsfic: Array.isArray(game.collections) && game.collections.includes('watsfic'),
+      mathsoc: Array.isArray(game.collections) && game.collections.includes('mathsoc'),
     };
   }
 
@@ -428,18 +403,55 @@ async function refreshCatalogue() {
       limit: saved.view === 'compact' ? 24 : settings.pageSize, selected: null, showShelf: true,
       wishlist: Array.isArray(saved.wishlist) ? saved.wishlist.filter(entry => entry && typeof entry.title === 'string').slice(0, 30).map(entry => ({ title: String(entry.title).slice(0, 100), kind: entry.kind === 'copies' ? 'copies' : 'new', bggId: Number.isSafeInteger(Number(entry.bggId)) && Number(entry.bggId) > 0 ? Number(entry.bggId) : null, votes: Number(entry.votes) || 0, userVote: [-1, 1].includes(entry.userVote) ? entry.userVote : entry.voted ? 1 : 0 })) : [],
     };
+    const hasOwnerData = games.some(game => Array.isArray(game.collections) && game.collections.length);
+    if (!hasOwnerData) state.collection = '';
     const collectionSelect = document.createElement('select');
+    collectionSelect.hidden = !hasOwnerData;
     collectionSelect.dataset.filter = 'collection';
     collectionSelect.setAttribute('aria-label', 'Collection');
     [['', 'All collections'], ['mathsoc', 'MathSoc'], ['watsfic', 'WatSFiC']].forEach(([value, title]) => {
       const option = document.createElement('option'); option.value = value; option.textContent = title; collectionSelect.append(option);
     });
     app.querySelector('.ms-toolbar').append(collectionSelect);
-    const collectionNote = document.createElement('aside');
-    collectionNote.className = 'ms-collection-notice';
-    collectionNote.setAttribute('aria-label', 'About the collections');
-    collectionNote.textContent = 'MathSoc and WatSFiC share shelf space in the MathSoc Office by agreement. Games marked WatSFiC belong to WatSFiC; games marked MathSoc belong to MathSoc. Filter by collection to find either group’s games. For titles in both collections, availability and copy totals include both.';
-    app.querySelector('.ms-subnav').after(collectionNote);
+    const collectionNote = document.createElement('details');
+    collectionNote.className = 'ms-collection-disclosure';
+    const collectionSummary = document.createElement('summary');
+    collectionSummary.textContent = 'About MathSoc and WatSFiC games';
+    const collectionText = document.createElement('p');
+    collectionText.textContent = 'WatSFiC shares shelf space in the MathSoc Office by agreement. Games labelled WatSFiC belong to WatSFiC; games labelled MathSoc belong to MathSoc. Shelf location does not determine ownership. For titles in both collections, availability and copy totals include both.';
+    collectionNote.append(collectionSummary, collectionText);
+    app.querySelector('.ms-library > h3').after(collectionNote);
+    const noticeKey = 'mathsoc-watsfic-collection-notice-v1';
+    let noticeDismissed = false;
+    try { noticeDismissed = localStorage.getItem(noticeKey) === 'dismissed'; } catch {}
+    if (hasOwnerData && !noticeDismissed) {
+      const notice = document.createElement('aside');
+      notice.className = 'ms-watsfic-notice';
+      notice.setAttribute('aria-label', 'WatSFiC collection');
+      const message = document.createElement('p');
+      message.textContent = 'WatSFiC members: find your games housed in the MathSoc Office by choosing WatSFiC in the collection filter.';
+      const shortcut = document.createElement('button');
+      shortcut.type = 'button';
+      shortcut.textContent = 'Browse WatSFiC games';
+      shortcut.addEventListener('click', () => {
+        state.collection = 'watsfic';
+        state.availability = 'all'; state.players = ''; state.maxMinutes = 0; state.complexity = '';
+        search.value = ''; state.query = '';
+        updateFilters();
+        collectionSelect.focus();
+      });
+      const close = document.createElement('button');
+      close.type = 'button';
+      close.className = 'ms-watsfic-notice-close';
+      close.setAttribute('aria-label', 'Dismiss WatSFiC notice');
+      close.textContent = '×';
+      close.addEventListener('click', () => {
+        try { localStorage.setItem(noticeKey, 'dismissed'); } catch {}
+        notice.remove(); collectionSummary.focus();
+      });
+      notice.append(message, shortcut, close);
+      collectionNote.after(notice);
+    }
     const grid = app.querySelector('.ms-grid');
     const detail = app.querySelector('.ms-detail');
     app.querySelector('.ms-picks').append(detail);
@@ -911,14 +923,16 @@ async function refreshCatalogue() {
   updateCaption.className = 'ms-update-caption';
   updateCaption.setAttribute('role', 'status');
 
-  refreshCaption();
+  updateCaption.textContent = liveData
+    ? `Rental stats refreshed: ${
+        liveData.popularityRefreshed || 'date unavailable'
+      }`
+    : 'Showing saved availability. Please check with office staff.';
 
   root.querySelector('.ms-hero').after(updateCaption);
   // Render the saved catalogue immediately; live requests never block browsing.
   void refreshCatalogue();
-  // A cheap clock check lets a tab left open overnight resume near office opening.
-  // Network requests still occur at most once per 30 minutes.
-  setInterval(() => { void refreshCatalogue(); }, 60 * 1000);
+  setInterval(() => { void refreshCatalogue(); }, refreshInterval);
   document.addEventListener('visibilitychange', () => { void refreshCatalogue(); });
   window.addEventListener('pageshow', () => { void refreshCatalogue(); });
 })();

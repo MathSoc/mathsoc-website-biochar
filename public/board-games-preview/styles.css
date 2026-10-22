@@ -558,3 +558,11 @@ body{background:#18191c}
 }
 
 #mathsoc-games .ms-collection-notice { margin: 0 0 20px; padding: 14px 18px; border-left: 3px solid var(--ms-pink); background: var(--ms-panel); color: var(--ms-muted); font-size: 14px; line-height: 1.6; }
+
+#mathsoc-games .ms-collection-disclosure { margin: 0 0 16px; font-size: 13px; color: var(--ms-muted); }
+#mathsoc-games .ms-collection-disclosure summary { cursor: pointer; width: fit-content; }
+#mathsoc-games .ms-collection-disclosure p { max-width: 760px; margin: 8px 0; line-height: 1.6; }
+#mathsoc-games .ms-watsfic-notice { position: relative; margin-bottom: 16px; padding: 12px 48px 12px 14px; border-left: 3px solid var(--ms-pink); background: var(--ms-panel); font-size: 14px; }
+#mathsoc-games .ms-watsfic-notice p { margin: 0 0 8px; }
+#mathsoc-games .ms-watsfic-notice button { font-size: 13px; padding: 6px 10px; }
+#mathsoc-games .ms-watsfic-notice button.ms-watsfic-notice-close { position: absolute; top: 4px; right: 4px; width: 40px; height: 40px; padding: 0; border: 0; background: transparent; font-size: 24px; }

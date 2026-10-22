@@ -24,6 +24,7 @@ type Game = {
   total: number;
   available: number;
   shelf: string;
+  collections: string[];
   rentals: number;
   uniqueBorrowers: number;
   lastRented: string | null;
@@ -83,7 +84,7 @@ function parseCsv(text: string): string[][] {
 function findTable(rows: string[][], columns: string[]) {
   const headerIndex = rows.findIndex((row) =>
     columns.every((column) =>
-      row.some((cell) => cell.trim() === column),
+      row.some((cell) => cell.trim().toLowerCase().replace(/[ _]+/g, " ") === column.toLowerCase().replace(/[ _]+/g, " ")),
     ),
   );
 
@@ -95,7 +96,7 @@ function findTable(rows: string[][], columns: string[]) {
 
   return {
     rows: rows.slice(headerIndex + 1),
-    column: (name: string) => headers.indexOf(name),
+    column: (name: string) => headers.findIndex(header => header.toLowerCase().replace(/[ _]+/g, " ") === name.toLowerCase().replace(/[ _]+/g, " ")),
   };
 }
 
@@ -129,7 +130,7 @@ async function downloadCsv(url: string, revalidate: number): Promise<string[][]>
 export async function GET() {
   try {
     const [inventoryRows, popularityRows] = await Promise.all([
-      downloadCsv(INVENTORY_URL, 1800), // Cache availability for 30 minutes.
+      downloadCsv(INVENTORY_URL, 300), // Availability changes during office hours.
       downloadCsv(POPULARITY_URL, 86400), // Rankings can refresh daily.
     ]);
 
@@ -177,6 +178,7 @@ export async function GET() {
           needsReview: 0,
           available: 0,
           shelf: "",
+          collections: [],
           rentals: 0,
           uniqueBorrowers: 0,
           lastRented: null,
@@ -190,6 +192,9 @@ export async function GET() {
         throw new Error("Copies of a game have conflicting titles.");
       }
 
+      const owner = row[inventory.column("Owner")]?.trim().toLowerCase().replace(/[^a-z]/g, "") || "";
+      if (owner.includes("mathsoc") && !game.collections.includes("mathsoc")) game.collections.push("mathsoc");
+      if (owner.includes("watsfic") && !game.collections.includes("watsfic")) game.collections.push("watsfic");
       game.total++;
 
       const status = row[inventory.column("Status")]?.trim();
