@@ -421,10 +421,10 @@ async function refreshCatalogue() {
     collectionText.textContent = 'WatSFiC shares shelf space in the MathSoc Office by agreement. Games labelled WatSFiC belong to WatSFiC; games labelled MathSoc belong to MathSoc. Shelf location does not determine ownership. For titles in both collections, availability and copy totals include both.';
     collectionNote.append(collectionSummary, collectionText);
     app.querySelector('.ms-library > h3').after(collectionNote);
-    const noticeKey = 'mathsoc-watsfic-collection-notice-v1';
+    const noticeKey = 'mathsoc-watsfic-top-notice-v2';
     let noticeDismissed = false;
     try { noticeDismissed = localStorage.getItem(noticeKey) === 'dismissed'; } catch {}
-    if (hasOwnerData && !noticeDismissed) {
+    if (!noticeDismissed) {
       const notice = document.createElement('aside');
       notice.className = 'ms-watsfic-notice';
       notice.setAttribute('aria-label', 'WatSFiC collection');
@@ -433,12 +433,14 @@ async function refreshCatalogue() {
       const shortcut = document.createElement('button');
       shortcut.type = 'button';
       shortcut.textContent = 'Browse WatSFiC games';
+      shortcut.disabled = !hasOwnerData;
       shortcut.addEventListener('click', () => {
         state.collection = 'watsfic';
         state.availability = 'all'; state.players = ''; state.maxMinutes = 0; state.complexity = '';
         search.value = ''; state.query = '';
         updateFilters();
-        collectionSelect.focus();
+        collectionSelect.focus({ preventScroll: true });
+        app.querySelector('.ms-library').scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
       });
       const close = document.createElement('button');
       close.type = 'button';
@@ -447,10 +449,10 @@ async function refreshCatalogue() {
       close.textContent = '×';
       close.addEventListener('click', () => {
         try { localStorage.setItem(noticeKey, 'dismissed'); } catch {}
-        notice.remove(); collectionSummary.focus();
+        notice.remove(); app.querySelector('.ms-roll').focus({ preventScroll: true });
       });
       notice.append(message, shortcut, close);
-      collectionNote.after(notice);
+      app.querySelector('.ms-hero').before(notice);
     }
     const grid = app.querySelector('.ms-grid');
     const detail = app.querySelector('.ms-detail');
