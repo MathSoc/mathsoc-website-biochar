@@ -158,6 +158,12 @@ export async function GET() {
       const copyId = row[inventory.column("Copy ID")]?.trim();
 
       if (!title && !copyId) continue;
+      // QUERY output can retain the source header as a second header row.
+      // Skip only a complete, recognised header, never an invalid game record.
+      const headerKey = (value: string | undefined) => (value || "").trim().toLowerCase().replace(/[ _]+/g, " ");
+      if (headerKey(copyId) === "copy id" && headerKey(title) === "title" &&
+          headerKey(row[inventory.column("Status")]) === "status" &&
+          headerKey(row[inventory.column("Shelf Location")]) === "shelf location") continue;
 
       const match = copyId?.match(/^(G\d+)-\d+$/);
 
