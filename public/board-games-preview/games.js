@@ -414,7 +414,7 @@ async function refreshCatalogue() {
       limit: saved.view === 'compact' ? 24 : settings.pageSize, selected: null, showShelf: true,
       wishlist: Array.isArray(saved.wishlist) ? saved.wishlist.filter(entry => entry && typeof entry.title === 'string').slice(0, 30).map(entry => ({ title: String(entry.title).slice(0, 100), kind: entry.kind === 'copies' ? 'copies' : 'new', bggId: Number.isSafeInteger(Number(entry.bggId)) && Number(entry.bggId) > 0 ? Number(entry.bggId) : null, votes: Number(entry.votes) || 0, userVote: [-1, 1].includes(entry.userVote) ? entry.userVote : entry.voted ? 1 : 0 })) : [],
     };
-    const hasOwnerData = games.some(game => Array.isArray(game.collections) && game.collections.length);
+    let hasOwnerData = games.some(game => Array.isArray(game.collections) && game.collections.length);
     if (!hasOwnerData) state.collection = '';
     const collectionSelect = document.createElement('select');
     collectionSelect.disabled = !hasOwnerData;
@@ -468,7 +468,7 @@ async function refreshCatalogue() {
       const transmission = document.createElement('strong');
       transmission.className = 'ms-watsfic-transmission';
       transmission.textContent = '✦ Incoming transmission · WatSFiC';
-      message.textContent = 'Calling all WatSFiC travellers! Your games have docked at the MathSoc Office. Set your collection filter to WatSFiC and chart a course for your next adventure.';
+      message.textContent = 'WatSFiC travellers: your games are docked at the MathSoc Office!';
       const shortcut = document.createElement('button');
       shortcut.type = 'button';
       shortcut.textContent = 'Explore the WatSFiC fleet →';
@@ -953,6 +953,13 @@ async function refreshCatalogue() {
     renderCatalogue(); renderLeaderboard(); renderWishlist();
     const refreshCommunity = initializeCommunityFeatures(app, gamesById, popularGames, showGameDetails, escapeHtml, renderAvailability);
     refreshViews.push(() => {
+      hasOwnerData = games.some(game => Array.isArray(game.collections) && game.collections.length);
+      if (!hasOwnerData) state.collection = '';
+      collectionSelect.disabled = !hasOwnerData;
+      collectionSelect.title = hasOwnerData ? 'Filter by game owner' : 'Ownership information has not loaded yet';
+      ownerStatus.hidden = hasOwnerData;
+      if (!hasOwnerData) ownerStatus.textContent = 'Ownership information is not available in the loaded inventory. Showing all collections.';
+      syncPreferences();
       updateMetadataControls();
       renderCatalogue();
       renderLeaderboard();
