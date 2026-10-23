@@ -41,9 +41,9 @@ const Council: React.FC = () => {
           image="/img/councillor-images/saijilla.jpg"
         />
         <Headshot
-          name="Anvay Mukim"
+          name="Jason Tang"
           position="At-Large Representative"
-          email="amukim@uwaterloo.ca"
+          //email="amukim@uwaterloo.ca"
         />
       </HeadshotGrid>
       <h2>First Year Reps</h2>
