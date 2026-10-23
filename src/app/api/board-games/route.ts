@@ -24,6 +24,7 @@ type Game = {
   total: number;
   available: number;
   shelf: string;
+  collections: string[];
   rentals: number;
   uniqueBorrowers: number;
   lastRented: string | null;
@@ -83,7 +84,7 @@ function parseCsv(text: string): string[][] {
 function findTable(rows: string[][], columns: string[]) {
   const headerIndex = rows.findIndex((row) =>
     columns.every((column) =>
-      row.some((cell) => cell.trim() === column),
+      row.some((cell) => cell.trim().toLowerCase().replace(/[ _]+/g, " ") === column.toLowerCase().replace(/[ _]+/g, " ")),
     ),
   );
 
@@ -95,7 +96,8 @@ function findTable(rows: string[][], columns: string[]) {
 
   return {
     rows: rows.slice(headerIndex + 1),
-    column: (name: string) => headers.indexOf(name),
+    firstDataRow: headerIndex + 2,
+    column: (name: string) => headers.findIndex(header => header.toLowerCase().replace(/[ _]+/g, " ") === name.toLowerCase().replace(/[ _]+/g, " ")),
   };
 }
 
@@ -113,9 +115,9 @@ function readCount(value: string | undefined): number {
   return number;
 }
 
-async function downloadCsv(url: string): Promise<string[][]> {
+async function downloadCsv(url: string, revalidate: number): Promise<string[][]> {
   const response = await fetch(url, {
-    next: { revalidate: 300 },
+    next: { revalidate },
     signal: AbortSignal.timeout(15000),
   });
 
@@ -129,8 +131,8 @@ async function downloadCsv(url: string): Promise<string[][]> {
 export async function GET() {
   try {
     const [inventoryRows, popularityRows] = await Promise.all([
-      downloadCsv(INVENTORY_URL),
-      downloadCsv(POPULARITY_URL),
+      downloadCsv(INVENTORY_URL, 300), // Availability changes during office hours.
+      downloadCsv(POPULARITY_URL, 86400), // Rankings can refresh daily.
     ]);
 
     const inventory = findTable(inventoryRows, [
@@ -151,16 +153,29 @@ export async function GET() {
     const shelves = new Map<string, Set<string>>();
     const copyIds = new Set<string>();
 
-    for (const row of inventory.rows) {
+    for (const [rowIndex, row] of inventory.rows.entries()) {
       const title = row[inventory.column("Title")]?.trim();
       const copyId = row[inventory.column("Copy ID")]?.trim();
 
       if (!title && !copyId) continue;
+      // QUERY output can retain the source header as a second header row.
+      // Skip only a complete, recognised header, never an invalid game record.
+      const headerKey = (value: string | undefined) => (value || "").trim().toLowerCase().replace(/[ _]+/g, " ");
+      if (headerKey(copyId) === "copy id" && headerKey(title) === "title" &&
+          headerKey(row[inventory.column("Status")]) === "status" &&
+          headerKey(row[inventory.column("Shelf Location")]) === "shelf location") continue;
 
       const match = copyId?.match(/^(G\d+)-\d+$/);
 
-      if (!title || !match || copyIds.has(copyId)) {
-        throw new Error("An inventory copy ID is missing or duplicated.");
+      const sheetRow = inventory.firstDataRow + rowIndex;
+      if (!title || !copyId) {
+        throw new Error(`Published inventory row ${sheetRow}: missing ${!title ? "Title" : "Copy ID"}; Copy ID=${JSON.stringify(copyId || "")}.`);
+      }
+      if (!match) {
+        throw new Error(`Published inventory row ${sheetRow}: malformed Copy ID=${JSON.stringify(copyId)}; expected G0001-01.`);
+      }
+      if (copyIds.has(copyId)) {
+        throw new Error(`Published inventory row ${sheetRow}: duplicate Copy ID=${JSON.stringify(copyId)}.`);
       }
 
       copyIds.add(copyId);
@@ -177,6 +192,7 @@ export async function GET() {
           needsReview: 0,
           available: 0,
           shelf: "",
+          collections: [],
           rentals: 0,
           uniqueBorrowers: 0,
           lastRented: null,
@@ -190,6 +206,9 @@ export async function GET() {
         throw new Error("Copies of a game have conflicting titles.");
       }
 
+      const owner = row[inventory.column("Owner")]?.trim().toLowerCase().replace(/[^a-z]/g, "") || "";
+      if (owner.includes("mathsoc") && !game.collections.includes("mathsoc")) game.collections.push("mathsoc");
+      if (owner.includes("watsfic") && !game.collections.includes("watsfic")) game.collections.push("watsfic");
       game.total++;
 
       const status = row[inventory.column("Status")]?.trim();

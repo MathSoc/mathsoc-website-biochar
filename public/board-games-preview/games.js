@@ -18,39 +18,61 @@ const metadataById = new Map(
   snapshot.map(game => [game.id, game])
 );
 
+const refreshInterval = 5 * 60 * 1000;
 let games = snapshot.filter(game => game.id !== "G0309");
 let liveData = null;
+let lastAttempt = null;
+let refreshing = false;
+let catalogueSignature = null;
+const refreshViews = [];
+// Keep these containers stable: community features retain references to them.
+const gamesById = new Map(games.map(game => [game.id, game]));
+const alphabeticalGames = sortGames(games, 'az');
+const popularGames = sortGames(games, 'popular');
 
-try {
-  const response = await fetch('/api/board-games', {
-    cache: 'no-store',
-    signal: AbortSignal.timeout(55000),
-  });
-
-  if (!response.ok) {
-    throw new Error(`Catalogue request failed: ${response.status}`);
+async function refreshCatalogue() {
+  if (refreshing || document.visibilityState === 'hidden') return;
+  if (lastAttempt !== null && Date.now() - lastAttempt < refreshInterval) return;
+  refreshing = true;
+  lastAttempt = Date.now();
+  try {
+    const response = await fetch('/api/board-games', {
+      cache: 'no-store',
+      signal: AbortSignal.timeout(55000),
+    });
+    if (!response.ok) throw new Error(`Catalogue request failed: ${response.status}`);
+    const data = await response.json();
+    if (!Array.isArray(data.games) || !data.games.length || data.games.some(game =>
+      !game || typeof game.id !== 'string' || typeof game.title !== 'string'
+    )) throw new Error('The catalogue response is empty or invalid.');
+    // Ignore servedAt: an unchanged catalogue should not redraw cards.
+    const signature = JSON.stringify([data.games, data.popularityRefreshed]);
+    if (signature !== catalogueSignature) {
+      const nextGames = data.games.filter(game => game.id !== "G0309").map(game => ({
+        ...metadataById.get(game.id),
+        ...game,
+        ...(game.id === "G0049" ? { gameType: "expansion", baseGame: "Saboteur" } : {}),
+        bgg: game.manualStats ? { ...game.bgg, ...game.manualStats, imageUrl: game.bgg?.imageUrl || null, source: "collection", demo: false } : game.bgg || null,
+      }));
+      games = nextGames;
+      gamesById.clear();
+      games.forEach(game => gamesById.set(game.id, game));
+      alphabeticalGames.splice(0, alphabeticalGames.length, ...sortGames(games, 'az'));
+      popularGames.splice(0, popularGames.length, ...sortGames(games, 'popular'));
+      refreshViews.forEach(render => render());
+      catalogueSignature = signature;
+    }
+    liveData = data;
+    updateCaption.textContent = `Rental stats refreshed: ${data.popularityRefreshed || 'date unavailable'}`;
+  } catch (error) {
+    console.error('Catalogue loading failed:', error);
+    updateCaption.textContent = liveData
+      ? 'Could not check for updates. Showing the last loaded catalogue; retrying automatically.'
+      : 'Showing saved availability. Please check with office staff.';
+  } finally {
+    refreshing = false;
   }
-
-  const data = await response.json();
-
-  if (!Array.isArray(data.games) || !data.games.length) {
-    throw new Error('The catalogue response is empty.');
-  }
-
-  games = data.games.map(game => ({
-    ...metadataById.get(game.id),
-    ...game,
-    ...(game.id === "G0049" ? { gameType: "expansion", baseGame: "Saboteur" } : {}),
-    bgg: game.manualStats ? { ...game.bgg, ...game.manualStats, imageUrl: game.bgg?.imageUrl || null, source: "collection", demo: false } : game.bgg || null,
-  }));
-
-  liveData = data;
-} catch (error) {
-  console.error('Catalogue loading failed:', error);
 }
-  const gamesById = new Map(games.map(game => [game.id, game]));
-  const alphabeticalGames = sortGames(games, 'az');
-  const popularGames = sortGames(games, 'popular');
   // Small editorial blurbs, easy to edit without touching the rendering code.
   const gameDescriptions = {
     Catan: 'Trade resources, build settlements, and negotiate your way across the island.',
@@ -136,10 +158,18 @@ try {
     return false;
   }
 
+  function gameCollections(game) {
+    return {
+      watsfic: Array.isArray(game.collections) && game.collections.includes('watsfic'),
+      mathsoc: Array.isArray(game.collections) && game.collections.includes('mathsoc'),
+    };
+  }
+
   function filterGames(allGames, state) {
     const query = state.query.trim().toLowerCase();
     return allGames.filter(game => {
       if (!game.title.toLowerCase().includes(query)) return false;
+      if (state.collection && !gameCollections(game)[state.collection]) return false;
       if (state.availability === 'available' && game.available <= 0) return false;
       if (state.availability === 'unavailable' && game.available > 0) return false;
       const bgg = game.bgg;
@@ -265,16 +295,27 @@ try {
     return `<span class="ms-game-type">${game.gameType === 'base' ? 'Base game · Play on its own' : 'Game type awaiting confirmation'}</span>`;
   }
 
+  function collectionTheme(game) {
+    const owners = gameCollections(game);
+    return owners.watsfic ? (owners.mathsoc ? 'both' : 'watsfic') : (owners.mathsoc ? 'mathsoc' : 'unknown');
+  }
+  function collectionBadges(game) {
+    const owners = gameCollections(game);
+    return '<span class="ms-collection-badges">' +
+      (owners.mathsoc ? '<span class="ms-owner-badge ms-owner-mathsoc">MathSoc</span>' : '') +
+      (owners.watsfic ? '<span class="ms-owner-badge ms-owner-watsfic">✦ WatSFiC</span>' : '') + '</span>';
+  }
+
   function createGameCard(game, showShelf) {
     const image = getImageUrl(game);
     const initials = game.title.split(/\s+/).slice(0, 2).map(word => word[0]).join('');
     const cover = image
       ? `<img src="${escapeHtml(image)}" alt="" loading="lazy">`
       : `<b>${escapeHtml(initials)}</b>`;
-    return `<button type="button" class="ms-game cursor-interaction" data-game="${escapeHtml(game.id)}">
+    return `<button type="button" class="ms-game cursor-interaction" data-collection="${collectionTheme(game)}" data-game="${escapeHtml(game.id)}">
       <div class="ms-cover${image ? ' ms-cover-image' : ''}" aria-hidden="true">${cover}</div>
       <div class="ms-game-info">
-        <span class="ms-game-title">${escapeHtml(game.title)}</span>${gameTypeLabel(game)}
+        <span class="ms-game-title">${escapeHtml(game.title)}</span>${collectionBadges(game)}${gameTypeLabel(game)}
         ${gameDescriptions[game.title] ? `<span class="ms-card-description">${escapeHtml(gameDescriptions[game.title])}</span>` : ''}
         <span class="ms-card-stats">${renderAvailability(game)}${game.bgg ? renderPlayerTime(game.bgg) + renderDifficulty(game.bgg.weight) : '<span class="ms-stat"><span class="ms-stat-label">Players</span><span class="ms-stat-value">–</span><small>Not matched yet</small></span><span class="ms-stat"><span class="ms-stat-label">Play time</span><span class="ms-stat-value">–</span><small>Not matched yet</small></span><span class="ms-stat"><span class="ms-stat-label">Complexity</span><span class="ms-stat-value">– / 5</span><small>Not matched yet</small></span>'}</span>
         ${game.bgg && !game.bgg.demo ? '' : `<span class="ms-card-note">${game.bgg?.demo ? 'Illustrative stats · BGG connection pending' : 'Player count, time & difficulty await BGG matching.'}</span>`}
@@ -286,7 +327,7 @@ try {
 
   // Save local preferences and wishlist votes without a remote service.
   function saveState(state) {
-    window.mathsocState.save({ query: state.query, sort: state.sort, availability: state.availability, players: state.players, maxMinutes: state.maxMinutes, complexity: state.complexity, view: state.view, wishlist: state.wishlist });
+    window.mathsocState.save({ collection: state.collection, query: state.query, sort: state.sort, availability: state.availability, players: state.players, maxMinutes: state.maxMinutes, complexity: state.complexity, view: state.view, wishlist: state.wishlist });
   }
 
   // A new notice ID makes an updated announcement visible again.
@@ -363,6 +404,7 @@ try {
 
     const saved = window.mathsocState.saved;
     const state = {
+      collection: ['mathsoc', 'watsfic'].includes(saved.collection) ? saved.collection : '',
       query: saved.query || '', sort: ['popular', 'az', 'za', 'replay-high', 'replay-low'].includes(saved.sort) ? saved.sort : 'popular',
       availability: ['all', 'available', 'unavailable'].includes(saved.availability) ? saved.availability : 'available',
       players: ['solo', 'two', 'small', 'large'].includes(saved.players) ? saved.players : '',
@@ -372,6 +414,89 @@ try {
       limit: saved.view === 'compact' ? 24 : settings.pageSize, selected: null, showShelf: true,
       wishlist: Array.isArray(saved.wishlist) ? saved.wishlist.filter(entry => entry && typeof entry.title === 'string').slice(0, 30).map(entry => ({ title: String(entry.title).slice(0, 100), kind: entry.kind === 'copies' ? 'copies' : 'new', bggId: Number.isSafeInteger(Number(entry.bggId)) && Number(entry.bggId) > 0 ? Number(entry.bggId) : null, votes: Number(entry.votes) || 0, userVote: [-1, 1].includes(entry.userVote) ? entry.userVote : entry.voted ? 1 : 0 })) : [],
     };
+    let hasOwnerData = games.some(game => Array.isArray(game.collections) && game.collections.length);
+    if (!hasOwnerData) state.collection = '';
+    const collectionSelect = document.createElement('select');
+    collectionSelect.disabled = !hasOwnerData;
+    collectionSelect.title = hasOwnerData ? 'Filter by game owner' : 'Ownership information has not loaded yet';
+    collectionSelect.dataset.filter = 'collection';
+    collectionSelect.setAttribute('aria-label', 'Collection');
+    [['', 'All collections'], ['mathsoc', 'MathSoc'], ['watsfic', 'WatSFiC']].forEach(([value, title]) => {
+      const option = document.createElement('option'); option.value = value; option.textContent = title; collectionSelect.append(option);
+    });
+    const ownerLabel = document.createElement('label');
+    ownerLabel.className = 'ms-owner-control';
+    const ownerTitle = document.createElement('span'); ownerTitle.textContent = 'Collection';
+    ownerLabel.append(ownerTitle, collectionSelect);
+    app.querySelector('.ms-toolbar').append(ownerLabel);
+    const ownerStatus = document.createElement('p');
+    ownerStatus.className = 'ms-owner-status';
+    ownerStatus.setAttribute('role', 'status');
+    ownerStatus.textContent = hasOwnerData ? '' : 'Collection filtering is temporarily unavailable because ownership information has not loaded. You can still browse all games.';
+    ownerStatus.hidden = hasOwnerData;
+    app.querySelector('.ms-toolbar').after(ownerStatus);
+    const filterFeedback = document.createElement('div');
+    filterFeedback.className = 'ms-active-filters';
+    const filterText = document.createElement('p');
+    filterText.setAttribute('role', 'status');
+    filterText.setAttribute('aria-live', 'polite');
+    const clearFilters = document.createElement('button');
+    clearFilters.type = 'button'; clearFilters.textContent = 'Clear filters';
+    clearFilters.addEventListener('click', () => {
+      search.value = ''; state.query = ''; state.collection = ''; state.availability = 'all';
+      state.players = ''; state.maxMinutes = 0; state.complexity = '';
+      updateFilters();
+    });
+    filterFeedback.append(filterText, clearFilters);
+    app.querySelector('.ms-count').before(filterFeedback);
+    const collectionNote = document.createElement('details');
+    collectionNote.className = 'ms-collection-disclosure';
+    const collectionSummary = document.createElement('summary');
+    collectionSummary.textContent = 'About MathSoc and WatSFiC games';
+    const collectionText = document.createElement('p');
+    collectionText.textContent = 'WatSFiC shares shelf space in the MathSoc Office by agreement. Games labelled WatSFiC belong to WatSFiC; games labelled MathSoc belong to MathSoc. Shelf location does not determine ownership. For titles in both collections, availability and copy totals include both.';
+    collectionNote.append(collectionSummary, collectionText);
+    app.querySelector('.ms-library > h3').after(collectionNote);
+    const noticeKey = 'mathsoc-watsfic-top-notice-v2';
+    let noticeDismissed = false;
+    try { noticeDismissed = localStorage.getItem(noticeKey) === 'dismissed'; } catch {}
+    if (!noticeDismissed) {
+      const notice = document.createElement('aside');
+      notice.className = 'ms-watsfic-notice';
+      notice.setAttribute('aria-label', 'WatSFiC collection');
+      const message = document.createElement('p');
+      const transmission = document.createElement('strong');
+      transmission.className = 'ms-watsfic-transmission';
+      transmission.textContent = '✦ Incoming transmission · WatSFiC';
+      message.textContent = 'WatSFiC travellers: your games are docked at the MathSoc Office!';
+      const shortcut = document.createElement('button');
+      shortcut.type = 'button';
+      shortcut.textContent = 'Explore the WatSFiC fleet →';
+
+      shortcut.addEventListener('click', () => {
+        state.collection = hasOwnerData ? 'watsfic' : '';
+        state.availability = 'all'; state.players = ''; state.maxMinutes = 0; state.complexity = '';
+        search.value = ''; state.query = '';
+        updateFilters();
+        if (hasOwnerData) collectionSelect.focus({ preventScroll: true });
+        else {
+          ownerStatus.textContent = 'WatSFiC filtering is not available yet: ownership information has not loaded. Showing all games for now.';
+          ownerStatus.hidden = false;
+        }
+        app.querySelector('.ms-library').scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+      });
+      const close = document.createElement('button');
+      close.type = 'button';
+      close.className = 'ms-watsfic-notice-close';
+      close.setAttribute('aria-label', 'Dismiss WatSFiC notice');
+      close.textContent = '×';
+      close.addEventListener('click', () => {
+        try { localStorage.setItem(noticeKey, 'dismissed'); } catch {}
+        notice.remove(); app.querySelector('.ms-roll').focus({ preventScroll: true });
+      });
+      notice.append(transmission, message, shortcut, close);
+      app.querySelector('.ms-hero').before(notice);
+    }
     const grid = app.querySelector('.ms-grid');
     const detail = app.querySelector('.ms-detail');
     app.querySelector('.ms-picks').append(detail);
@@ -536,12 +661,15 @@ try {
         control.value = String(state[control.dataset.filter] || '');
       });
       const captions = [];
+      if (state.collection) captions.push(state.collection === 'watsfic' ? 'WatSFiC collection' : 'MathSoc collection');
       if (state.players) captions.push(({ solo: 'Solo', two: 'Two players', small: 'Small group · 3–4', large: 'Large group · 5+' })[state.players]);
       if (state.maxMinutes) captions.push(`Up to ${state.maxMinutes} min`);
       if (state.complexity) captions.push(`${{ light: 'Light', medium: 'Medium', heavy: 'Heavy' }[state.complexity]} complexity`);
       captions.push({ all: 'All games', available: 'Available now', unavailable: 'Unavailable' }[state.availability]);
       if (state.query.trim()) captions.push(`Search: ${state.query.trim()}`);
       app.querySelector('.ms-dice-filter-summary').textContent = captions.join(' · ');
+      filterText.textContent = 'Showing: ' + (state.collection ? '' : 'All collections · ') + captions.join(' · ') + '. Filters apply immediately.';
+      clearFilters.hidden = !state.collection && state.availability === 'all' && !state.players && !state.maxMinutes && !state.complexity && !state.query.trim();
     }
     syncPreferences();
 
@@ -649,21 +777,23 @@ try {
       app.querySelector('.ms-roll').disabled = isRolling || !matches.some(canRollGame);
     }
 
-    function showGameDetails(game) {
+    function showGameDetails(game, scroll = true) {
       if (!game) return;
       clearReplayReaction();
       state.selected = game.title;
+      detail.dataset.gameId = game.id;
       detail.hidden = false;
       const bgg = game.bgg;
       const image = getImageUrl(game);
       const initials = game.title.split(/\s+/).slice(0, 2).map(word => word[0]).join('');
       const detailCover = `<div class="ms-cover ms-detail-cover${image ? ' ms-cover-image' : ''}" data-game-id="${escapeHtml(game.id)}" aria-hidden="true">${image ? `<img src="${escapeHtml(image)}" alt="" decoding="async">` : `<b>${escapeHtml(initials)}</b>`}</div>`;
-      detail.innerHTML = `<div class="ms-detail-head">${detailCover}<div class="ms-detail-title"><h3>${escapeHtml(game.title)}</h3>${gameDescriptions[game.title] ? `<p class="ms-detail-description">${escapeHtml(gameDescriptions[game.title])}</p>` : ''}</div><button type="button" class="ms-close cursor-interaction">Close</button></div>
+      detail.dataset.collection = collectionTheme(game);
+      detail.innerHTML = `<div class="ms-detail-head">${detailCover}<div class="ms-detail-title"><h3>${escapeHtml(game.title)}</h3>${collectionBadges(game)}${gameDescriptions[game.title] ? `<p class="ms-detail-description">${escapeHtml(gameDescriptions[game.title])}</p>` : ''}</div><button type="button" class="ms-close cursor-interaction">Close</button></div>
         ${gameTypeLabel(game)}<p class="ms-detail-stock">${renderAvailability(game)} <button type="button" class="ms-request-copy" data-copy="${escapeHtml(game.id)}" ${state.wishlist.some(entry => entry.kind === 'copies' && entry.title.toLowerCase() === game.title.toLowerCase()) ? 'disabled' : ''}>${state.wishlist.some(entry => entry.kind === 'copies' && entry.title.toLowerCase() === game.title.toLowerCase()) ? '✓ Requested' : 'Request another copy'}</button> · ${game.total} ${game.total === 1 ? 'copy' : 'copies'} · ${game.rentals ?? 0} rentals${state.showShelf ? ' · Shelf ' + escapeHtml(game.shelf) : ''}</p>
         ${bgg ? `<div class="ms-detail-facts">${renderPlayerTime(bgg)}${renderDifficulty(bgg.weight)}</div><p class="ms-bgg-note">${bgg.demo ? 'Illustrative metadata · not fetched from BGG' : bgg.source === 'collection' ? 'Player count supplied by MathSoc' : 'Game information from BGG'}</p>` : '<p>Game information will appear here after this title is matched to BGG.</p>'}`;
       detail.innerHTML += `<section class="ms-replay"><span class="ms-replay-label">Would you play this again?</span><p class="ms-replay-summary" aria-live="polite">${playAgainSummary(game.id)}</p><div class="ms-replay-buttons"><button type="button" aria-label="Would play again" title="Would play again" data-replay="yes" data-replay-id="${escapeHtml(game.id)}" aria-pressed="${playAgain[game.id] === 'yes'}"><svg class="ms-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v11H3V10h4Zm0 0 5-7c1-1 3 0 3 2l-1 5h5a2 2 0 0 1 2 2l-2 7a2 2 0 0 1-2 2H7"/></svg></button><button type="button" aria-label="Would not play again" title="Would not play again" data-replay="no" data-replay-id="${escapeHtml(game.id)}" aria-pressed="${playAgain[game.id] === 'no'}"><svg class="ms-thumb-icon ms-thumb-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v11H3V10h4Zm0 0 5-7c1-1 3 0 3 2l-1 5h5a2 2 0 0 1 2 2l-2 7a2 2 0 0 1-2 2H7"/></svg></button></div><small>Local preview vote · click again to undo.</small></section>`;
       saveState(state);
-      detail.scrollIntoView({ block: 'nearest', behavior: 'auto' });
+      if (scroll) detail.scrollIntoView({ block: 'nearest', behavior: 'auto' });
     }
 
     function renderLeaderboard() {
@@ -756,7 +886,7 @@ try {
       state.query = search.value;
       state.sort = sort.value;
       const key = event?.target.dataset.filter;
-      if (key) state[key] = ['availability', 'complexity', 'players'].includes(key) ? event.target.value : Number(event.target.value);
+      if (key) state[key] = ['availability', 'complexity', 'players', 'collection'].includes(key) ? event.target.value : Number(event.target.value);
       syncPreferences();
       state.view = view.value;
       app.dataset.cardView = state.view;
@@ -805,17 +935,41 @@ try {
       state.limit += state.view === 'compact' ? 24 : settings.pageSize; renderCatalogue();
     });
     app.querySelector('.ms-reset-preferences').addEventListener('click', () => {
-      state.availability = 'available'; state.players = ''; state.maxMinutes = 0; state.complexity = '';
+      state.collection = ''; state.availability = 'available'; state.players = ''; state.maxMinutes = 0; state.complexity = '';
       syncPreferences(); updateFilters();
     });
     app.querySelector('.ms-roll').addEventListener('click', rollForGame);
-    const hasBgg = games.some(game => game.bgg);
-    app.querySelectorAll('[data-filter]:not([data-filter="availability"])').forEach(select => { select.disabled = !hasBgg; });
-    const realCount = games.filter(game => game.bgg && !game.bgg.demo && game.bgg.source !== "collection").length;
-    const demoCount = games.filter(game => game.bgg?.demo).length;
-    if (hasBgg) app.querySelector('.ms-bgg-note').textContent = `${realCount} games with BGG data · ${demoCount} with illustrative stats. Games without metadata are excluded when metadata filters are selected.`;
+    function updateMetadataControls() {
+      const hasBgg = games.some(game => game.bgg);
+      app.querySelectorAll('[data-filter]:not([data-filter="availability"]):not([data-filter="collection"])').forEach(select => { select.disabled = !hasBgg; });
+    collectionSelect.disabled = !hasOwnerData;
+      const realCount = games.filter(game => game.bgg && !game.bgg.demo && game.bgg.source !== "collection").length;
+      const demoCount = games.filter(game => game.bgg?.demo).length;
+      app.querySelector('.ms-bgg-note').textContent = hasBgg
+        ? `${realCount} games with BGG data · ${demoCount} with illustrative stats. Games without metadata are excluded when metadata filters are selected.`
+        : 'Game metadata is currently unavailable.';
+    }
+    updateMetadataControls();
     renderCatalogue(); renderLeaderboard(); renderWishlist();
-    initializeCommunityFeatures(app, gamesById, popularGames, showGameDetails, escapeHtml, renderAvailability);
+    const refreshCommunity = initializeCommunityFeatures(app, gamesById, popularGames, showGameDetails, escapeHtml, renderAvailability);
+    refreshViews.push(() => {
+      hasOwnerData = games.some(game => Array.isArray(game.collections) && game.collections.length);
+      if (!hasOwnerData) state.collection = '';
+      collectionSelect.disabled = !hasOwnerData;
+      collectionSelect.title = hasOwnerData ? 'Filter by game owner' : 'Ownership information has not loaded yet';
+      ownerStatus.hidden = hasOwnerData;
+      if (!hasOwnerData) ownerStatus.textContent = 'Ownership information is not available in the loaded inventory. Showing all collections.';
+      syncPreferences();
+      updateMetadataControls();
+      renderCatalogue();
+      renderLeaderboard();
+      refreshCommunity();
+      if (!detail.hidden) {
+        const selected = gamesById.get(detail.dataset.gameId);
+        if (selected) showGameDetails(selected, false);
+        else { detail.hidden = true; state.selected = null; }
+      }
+    });
 
   }
 
@@ -832,4 +986,9 @@ try {
     : 'Showing saved availability. Please check with office staff.';
 
   root.querySelector('.ms-hero').after(updateCaption);
+  // Render the saved catalogue immediately; live requests never block browsing.
+  void refreshCatalogue();
+  setInterval(() => { void refreshCatalogue(); }, refreshInterval);
+  document.addEventListener('visibilitychange', () => { void refreshCatalogue(); });
+  window.addEventListener('pageshow', () => { void refreshCatalogue(); });
 })();
