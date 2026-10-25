@@ -1,6 +1,55 @@
 import { Meeting } from "@/app/resources/meetings/components/meetings-tables/meetings-tables";
 
 export const councilMeetings: Meeting[] = [
+    {
+    date: "July 28 2026",
+    agenda:
+      "https://docs.google.com/document/d/1qMq_tqnJulTcaECCDCKaXLvcgubGZ8cTX21iI47HUXU/edit?usp=sharing",
+    minutes:
+      "https://docs.google.com/document/d/1TDnKWrnBrabWDqrkfgr27cV37256NoN_ltUmLcD7Sgc/edit?usp=sharing",
+  },
+    {
+    date: "July 22 2026",
+    agenda:
+      "https://docs.google.com/document/d/1_o5rYVHhc9BGyc9xCIcIz9uSvfPf_GAz3sta2ZlwUdM/edit?usp=sharing",
+    minutes:
+      "https://docs.google.com/document/d/1Q3tneKlp6H252jIa-F4saOgTLIgOHuYjSE-yH40AVMM/edit?usp=sharing",
+  },
+    {
+    date: "July 7 2026",
+    agenda:
+      "https://docs.google.com/document/d/18zcNKKj9VIOZnyeNBde9BITbJruZg-9e52R1MEwkZp0/edit?usp=sharing",
+    minutes:
+      "https://docs.google.com/document/d/1E_TGUadaeE_Sp8YKW4RaTeVcrauHorTtmkBqz3f-2s4/edit?usp=sharing",
+  },
+    {
+    date: "June 16 2026",
+    agenda:
+      "https://docs.google.com/document/d/1WVzlAakBmDjm7PEQq_hPjwV9WX4fk_SvPhnG5wFCfLU/edit?usp=sharing",
+    minutes:
+      "https://docs.google.com/document/d/1fF1xHXlWP5rT_Or0i00pgs8ApJk2BG7J8vaDn7fLuZc/edit?usp=sharing",
+  },
+    {
+    date: "June 2 2026",
+    agenda:
+      "https://docs.google.com/document/d/1xFiJ7kB9hM-00I8DB5_8DAk_2eXLxxy5647YQVzHyQY/edit?usp=sharing",
+    minutes:
+      "https://docs.google.com/document/d/1MGe2ysAEo1dXm9jc_SHEfRa6f4sEfkD-CgRA94YoF_I/edit?usp=sharing",
+  },
+    {
+    date: "May 28 2026",
+    agenda:
+      "https://docs.google.com/document/d/1JXrIgebHqJrb4yk0EWv2PGdksinz8W81vTExMuo9rpQ/edit?usp=sharing",
+    minutes:
+      "https://docs.google.com/document/d/1VfwvCsfKfhVgwLVtoVSz9pTYv9CRUnGZXg6DEjBSIR0/edit?usp=sharing",
+  },
+  {
+    date: "May 12 2026",
+    agenda:
+      "https://docs.google.com/document/d/1-w1-vUk50SpDoOx4yhXsYilfEA576ILWsUnl-Qb21hI/edit?usp=sharing",
+    minutes:
+      "https://docs.google.com/document/d/1VE1qPc1bWGzmKO1jVfKR1LF0iHtLNpwFYb1RdFCbbqM/edit?usp=sharing",
+  },
   {
     date: "February 24 2026",
     agenda:
