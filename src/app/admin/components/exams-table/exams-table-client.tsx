@@ -232,6 +232,7 @@ export const ExamsTableClient: React.FC<{
                   {assessmentCount === 1 ? "assessment" : "assessments"}
                 </span>
               </div>
+            );
           })}
         </div>
       
