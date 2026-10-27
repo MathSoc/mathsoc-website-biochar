@@ -49,16 +49,28 @@
   }
 
   .exams-suggestion {
+    // ADDED: Separate the course name and count.
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  
     padding: 12px 16px;
     border-radius: 4px;
     cursor: pointer;
-
-    // Highlight both mouse-hovered and keyboard-selected courses.
+  
     &:hover,
     &[aria-selected="true"] {
       background: #fff0f8;
       color: #850053;
     }
+  }
+  
+  // ADDED: Make the count smaller and less prominent.
+  .exams-suggestion-count {
+    color: #666;
+    font-size: 0.85rem;
+    text-align: right;
   }
 
   .exams-course-message {
