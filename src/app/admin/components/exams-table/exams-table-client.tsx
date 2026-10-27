@@ -6,7 +6,8 @@ import { Button as ClientButton } from "../../../components/button/button.client
 import "./exams-table.scss";
 import { deleteExamAction } from "@/app/admin/actions";
 import { Column } from "../../../components/layout/layout-components";
-import { useCallback, useState } from "react";
+// ADDED: useID gives suggestions a unique ID
+import { useCallback, useId, useState } from "react";
 import { toast } from "react-toastify";
 import { Exam } from "../../types";
 
@@ -26,6 +27,14 @@ export const ExamsTableClient: React.FC<{
   // ADDED: Remember which date order the user wants.
   const [sortOrder, setSortOrder] = useState("newest");
 
+  // ADDED: Track whether suggestions are visible.
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  
+  // -1 means no suggestion is highlighted with the keyboard.
+  const [activeSuggestion, setActiveSuggestion] = useState(-1);
+  
+  const suggestionsId = useId();
+
   // ADDED: Read the course from each filename.
   // Example: "math-135-1259-final" becomes "MATH 135".
   const courses = exams.map((exam) => {
@@ -38,25 +47,37 @@ export const ExamsTableClient: React.FC<{
     a.localeCompare(b, undefined, { numeric: true }),
   );
 
+  // Ignore spaces, hyphens, and capitalization.
+  const normalize = (value: string) =>
+    value.toLowerCase().replace(/[\s-]/g, "");
+  
+  const search = normalize(query);
+  
+  // Find course suggestions independently of term/year filters.
+  const matchingCourses = availableCourses.filter((course) =>
+    normalize(course).includes(search),
+  );
+  
+  const suggestionsOpen =
+    showSuggestions && search !== "" && matchingCourses.length > 0;
+  
+  const isFullCourse = availableCourses.some(
+    (course) => normalize(course) === search,
+  );
+  
+  // Keep this function separate from the suggestion variables above.
   const examMatchesQuery = (exam: Exam) => {
     const [department, coursecode] = exam.name.split("-");
-    const course = `${department} ${coursecode}`;
+    const course = normalize(`${department} ${coursecode}`);
   
-    // Ignore spaces, hyphens, and capitalization.
-    // This lets "math135", "MATH 135", and "math-135" match.
-    const normalize = (value: string) =>
-      value.toLowerCase().replace(/[\s-]/g, "");
+    return isFullCourse ? course === search : course.includes(search);
+  };
   
-    const search = normalize(query);
-  
-    // Selecting a full course gives an exact match.
-    const isFullCourse = availableCourses.some(
-      (availableCourse) => normalize(availableCourse) === search,
-    );
-  
-    return isFullCourse
-      ? normalize(course) === search
-      : normalize(course).includes(search);
+  // Fill the search and close the suggestions.
+  const selectCourse = (course: string) => {
+    setQuery(course);
+    setShowSuggestions(false);
+    setActiveSuggestion(-1);
   };
 
     // ADDED: Build the year dropdown from the exams we actually have.
@@ -99,24 +120,112 @@ export const ExamsTableClient: React.FC<{
 
   return (
     <Column className="exams-table-container">
-    
-      <label htmlFor="exam-course-search">Search by course</label>
-
-      <input
-        id="exam-course-search"
-        className="exams-query"
-        placeholder="e.g. CS 452 or MATH 135"
-        list="exam-course-options"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
+      <div className="exams-course-search">
+        <label htmlFor={`${suggestionsId}-search`}>
+          Search by course
+        </label>
       
-      {/* The input's list attribute matches this datalist's id. */}
-      <datalist id="exam-course-options">
-        {availableCourses.map((course) => (
-          <option key={course} value={course} />
-        ))}
-      </datalist>
+        <input
+          id={`${suggestionsId}-search`}
+          className="exams-query"
+          placeholder="e.g. CS 452 or MATH 135"
+          value={query}
+          autoComplete="off"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-expanded={suggestionsOpen}
+          aria-controls={suggestionsId}
+          aria-activedescendant={
+            suggestionsOpen && activeSuggestion >= 0
+              ? `${suggestionsId}-${activeSuggestion}`
+              : undefined
+          }
+          onChange={(event) => {
+            setQuery(event.target.value);
+            setShowSuggestions(true);
+            setActiveSuggestion(-1);
+          }}
+          onFocus={() => {
+            setShowSuggestions(true);
+            setActiveSuggestion(-1);
+          }}
+          onBlur={() => {
+            setShowSuggestions(false);
+            setActiveSuggestion(-1);
+          }}
+          onKeyDown={(event) => {
+            // Escape closes suggestions without clearing the search.
+            if (event.key === "Escape") {
+              setShowSuggestions(false);
+              setActiveSuggestion(-1);
+              return;
+            }
+      
+            // Enter chooses the keyboard-highlighted suggestion.
+            if (
+              event.key === "Enter" &&
+              suggestionsOpen &&
+              activeSuggestion >= 0
+            ) {
+              event.preventDefault();
+              selectCourse(matchingCourses[activeSuggestion]);
+              return;
+            }
+      
+            // Only handle arrow navigation when suggestions are available.
+            if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
+            if (search === "" || matchingCourses.length === 0) return;
+      
+            event.preventDefault();
+            setShowSuggestions(true);
+      
+            setActiveSuggestion((current) => {
+              if (event.key === "ArrowDown") {
+                return Math.min(current + 1, matchingCourses.length - 1);
+              }
+      
+              return current <= 0 ? 0 : current - 1;
+            });
+          }}
+        />
+      
+        {/* This list stays below the input and pushes the filters down. */}
+        <div
+          id={suggestionsId}
+          className="exams-suggestions"
+          role="listbox"
+          aria-label="Matching courses"
+          hidden={!suggestionsOpen}
+        >
+          {matchingCourses.map((course, index) => (
+            <div
+              id={`${suggestionsId}-${index}`}
+              key={course}
+              className="exams-suggestion"
+              role="option"
+              aria-selected={activeSuggestion === index}
+              // Keep the input focused until the click selects the course.
+              onMouseDown={(event) => event.preventDefault()}
+              onClick={() => selectCourse(course)}
+              ref={(element) => {
+                // Keep keyboard-highlighted suggestions visible when scrolling.
+                if (suggestionsOpen && activeSuggestion === index) {
+                  element?.scrollIntoView({ block: "nearest" });
+                }
+              }}
+            >
+              {course}
+            </div>
+          ))}
+        </div>
+      
+        {/* This message depends on course availability, not term/year filters. */}
+        {search !== "" && matchingCourses.length === 0 && (
+          <p className="exams-course-message" role="status">
+            No exams available for this course.
+          </p>
+        )}
+      </div>
 
       {/* ADDED: Changing a control updates its state above.
           React then updates the filtered results automatically. */}
