@@ -197,26 +197,42 @@ export const ExamsTableClient: React.FC<{
           aria-label="Matching courses"
           hidden={!suggestionsOpen}
         >
-          {matchingCourses.map((course, index) => (
-            <div
-              id={`${suggestionsId}-${index}`}
-              key={course}
-              className="exams-suggestion"
-              role="option"
-              aria-selected={activeSuggestion === index}
-              // Keep the input focused until the click selects the course.
-              onMouseDown={(event) => event.preventDefault()}
-              onClick={() => selectCourse(course)}
-              ref={(element) => {
-                // Keep keyboard-highlighted suggestions visible when scrolling.
-                if (suggestionsOpen && activeSuggestion === index) {
-                  element?.scrollIntoView({ block: "nearest" });
-                }
-              }}
-            >
-              {course}
-            </div>
-          ))}
+          {matchingCourses.map((course, index) => {
+            // ADDED: Count all assessment records belonging to this course.
+            // One record with both an exam and solutions still counts as one.
+            const assessmentCount = exams.filter((exam) => {
+              const [department, coursecode] = exam.name.split("-");
+          
+              return normalize(`${department} ${coursecode}`) === normalize(course);
+            }).length;
+          
+            return (
+              <div
+                id={`${suggestionsId}-${index}`}
+                key={course}
+                className="exams-suggestion"
+                role="option"
+                aria-selected={activeSuggestion === index}
+                // Keep the input focused until the click selects the course.
+                onMouseDown={(event) => event.preventDefault()}
+                onClick={() => selectCourse(course)}
+                ref={(element) => {
+                  // Keep keyboard-highlighted suggestions visible when scrolling.
+                  if (suggestionsOpen && activeSuggestion === index) {
+                    element?.scrollIntoView({ block: "nearest" });
+                  }
+                }}
+              >
+                {/* Course name on the left. */}
+                <span>{course}</span>
+          
+                {/* ADDED: Assessment count on the right. */}
+                <span className="exams-suggestion-count">
+                  {assessmentCount}{" "}
+                  {assessmentCount === 1 ? "assessment" : "assessments"}
+                </span>
+              </div>
+          })}
         </div>
       
         {/* This message depends on course availability, not term/year filters. */}
