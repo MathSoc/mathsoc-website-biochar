@@ -1,12 +1,79 @@
 .exams-table-container {
   margin-top: 32px;
 
+  // Make course search look like an editable field.
   .exams-query {
+    box-sizing: border-box;
     width: 100%;
+    min-height: 44px;
+    padding: 12px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    background: white;
+    color: #333;
+    font: inherit;
     font-size: 1rem;
     text-align: center;
+
+    &::placeholder {
+      color: #666;
+    }
   }
 
+  // Arrange dropdowns and checkbox in a wrapping row (yayyy, we got filters now)
+  .exams-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 16px;
+    margin: 16px 0;
+
+    // Give each dropdown a label above it.
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.9rem;
+    }
+
+     select {
+      box-sizing: border-box;
+      min-width: 150px;
+      min-height: 44px;
+      padding: 8px 12px;
+      border: 1px solid #aaa;
+      border-radius: 4px;
+      background: white;
+      color: #333;
+      font: inherit;
+    }
+
+    // Keep the checkbox beside its text rather than above it.
+    label:has(input[type="checkbox"]) {
+      flex-direction: row;
+      align-items: center;
+      min-height: 44px;
+      cursor: pointer;
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      flex-shrink: 0;
+      accent-color: #c00078;
+    }
+  }
+
+    // ADDED: Show keyboard users which control has focus.
+  .exams-query:focus-visible,
+  .exams-filters select:focus-visible,
+  .exams-filters input:focus-visible {
+    outline: 2px solid #c00078;
+    outline-offset: 2px;
+  }
+
+  // Keep current table styles.
   .exams-table {
     text-transform: uppercase;
     font-size: 0.8rem;
@@ -26,6 +93,18 @@
       margin: 4px;
 
       width: 100%;
+    }
+  }
+
+  // ADDED: Stack the filter controls on smaller screens.
+  @media (max-width: 600px) {
+    .exams-filters {
+      flex-direction: column;
+      align-items: stretch;
+
+      select {
+        width: 100%;
+      }
     }
   }
 }
