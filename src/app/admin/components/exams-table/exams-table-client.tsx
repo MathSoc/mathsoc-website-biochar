@@ -17,6 +17,15 @@ export const ExamsTableClient: React.FC<{
   const [query, setQuery] = useState<string>("");
   const [exams, setExams] = useState<Exam[]>(initialExams);
 
+  // ADDED: Remember the user's filter choices.
+  // An empty string means "show all".
+  const [term, setTerm] = useState("");
+  const [year, setYear] = useState("");
+  const [hasBoth, setHasBoth] = useState(false);
+
+  // ADDED: Remember which date order the user wants.
+  const [sortOrder, setSortOrder] = useState("newest");
+
   const examMatchesQuery = (exam: Exam) => {
     return (
       query === "" ||
@@ -27,6 +36,44 @@ export const ExamsTableClient: React.FC<{
     );
   };
 
+    // ADDED: Build the year dropdown from the exams we actually have.
+  const years = exams.map((exam) => {
+    // Filenames follow: department-course-term-type (e.g. math-135-1259-final).
+    // Array positions start at 0, so [2] gives us the term code.
+    const termCode = Number(exam.name.split("-")[2]);
+
+    return 1900 + Math.floor(termCode / 10);
+  });
+
+  // Set removes repeated years. Sort puts the newest year first.
+  const availableYears = [...new Set(years)].sort((a, b) => b - a);
+
+  // ADDED: Apply all filters before displaying the rows.
+  const filteredExams = exams
+    .filter((exam) => {
+      const termCode = Number(exam.name.split("-")[2]);
+
+      // Example: 1259 becomes year 2025 and term 9 (Fall).
+      const examYear = 1900 + Math.floor(termCode / 10);
+      const examTerm = termCode % 10;
+
+      // Each condition must pass for this exam to appear.
+      return (
+        examMatchesQuery(exam) &&
+        (term === "" || examTerm === Number(term)) &&
+        (year === "" || examYear === Number(year)) &&
+        (!hasBoth || Boolean(exam.examFile && exam.solutionFile))
+      );
+    })
+    .sort((a, b) => {
+      const termA = Number(a.name.split("-")[2]);
+      const termB = Number(b.name.split("-")[2]);
+
+      // Larger term codes are more recent.
+      // Sort according to the dropdown selection.
+      return sortOrder === "newest" ? termB - termA : termA - termB;
+    });
+
   return (
     <Column className="exams-table-container">
       <input
@@ -35,31 +82,83 @@ export const ExamsTableClient: React.FC<{
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
+
+      {/* ADDED: Changing a control updates its state above.
+          React then updates the filtered results automatically. */}
+      <div className="exams-filters">
+        {/* ADDED: Choose the date order. */}
+        <label>
+          Sort by{" "}
+          <select
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+          >
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+          </select>
+        </label>
+        
+        <label>
+          Term{" "}
+          <select value={term} onChange={(e) => setTerm(e.target.value)}>
+            <option value="">All terms</option>
+            {/* These values match the last digit of a term code. */}
+            <option value="9">Fall</option>
+            <option value="1">Winter</option>
+            <option value="5">Spring</option>
+          </select>
+        </label>
+
+        <label>
+          Year{" "}
+          <select value={year} onChange={(e) => setYear(e.target.value)}>
+            <option value="">All years</option>
+            {availableYears.map((availableYear) => (
+              <option key={availableYear} value={availableYear}>
+                {availableYear}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            checked={hasBoth}
+            onChange={(e) => setHasBoth(e.target.checked)}
+          />
+          {" "}Has exam + solutions
+        </label>
+      </div>
+
       <table className="exams-table">
         <thead>
           <tr>
             <th>Course</th>
-            <th>Type</th>
-            <th>Offering</th>
+            <th>Term</th>
+            <th>Assessment type</th>
             <th>Exam</th>
             <th>Solutions</th>
           </tr>
         </thead>
         <tbody>
-          {exams.map((exam) => {
-            if (!examMatchesQuery(exam)) {
-              return null;
-            }
-
-            return (
-              <ExamRow
-                exam={exam}
-                key={exam.name}
-                isAdmin={isAdmin}
-                setExams={setExams}
-              />
-            );
-          })}
+          {/* CHANGED: Display the results after filtering and sorting. */}
+          {filteredExams.map((exam) => (
+            <ExamRow
+              exam={exam}
+              key={exam.name}
+              isAdmin={isAdmin}
+              setExams={setExams}
+            />
+          ))}
+        
+          {filteredExams.length === 0 && (
+            <tr>
+              <td colSpan={5}>
+                No exams match. Try changing your search or filters.
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </Column>
