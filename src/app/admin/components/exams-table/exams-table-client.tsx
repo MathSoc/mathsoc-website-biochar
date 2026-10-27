@@ -26,14 +26,37 @@ export const ExamsTableClient: React.FC<{
   // ADDED: Remember which date order the user wants.
   const [sortOrder, setSortOrder] = useState("newest");
 
+  // ADDED: Read the course from each filename.
+  // Example: "math-135-1259-final" becomes "MATH 135".
+  const courses = exams.map((exam) => {
+    const [department, coursecode] = exam.name.split("-");
+    return `${department} ${coursecode}`.toUpperCase();
+  });
+  
+  // Remove duplicates and sort the course suggestions.
+  const availableCourses = [...new Set(courses)].sort((a, b) =>
+    a.localeCompare(b, undefined, { numeric: true }),
+  );
+
   const examMatchesQuery = (exam: Exam) => {
-    return (
-      query === "" ||
-      exam.name
-        .toLowerCase()
-        .replaceAll(/\s/g, "-")
-        .includes(query.toLowerCase().replace(/\s/g, "-"))
+    const [department, coursecode] = exam.name.split("-");
+    const course = `${department} ${coursecode}`;
+  
+    // Ignore spaces, hyphens, and capitalization.
+    // This lets "math135", "MATH 135", and "math-135" match.
+    const normalize = (value: string) =>
+      value.toLowerCase().replace(/[\s-]/g, "");
+  
+    const search = normalize(query);
+  
+    // Selecting a full course gives an exact match.
+    const isFullCourse = availableCourses.some(
+      (availableCourse) => normalize(availableCourse) === search,
     );
+  
+    return isFullCourse
+      ? normalize(course) === search
+      : normalize(course).includes(search);
   };
 
     // ADDED: Build the year dropdown from the exams we actually have.
@@ -76,12 +99,24 @@ export const ExamsTableClient: React.FC<{
 
   return (
     <Column className="exams-table-container">
+    
+      <label htmlFor="exam-course-search">Search by course</label>
+
       <input
+        id="exam-course-search"
         className="exams-query"
         placeholder="e.g. CS 452 or MATH 135"
+        list="exam-course-options"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
+      
+      {/* The input's list attribute matches this datalist's id. */}
+      <datalist id="exam-course-options">
+        {availableCourses.map((course) => (
+          <option key={course} value={course} />
+        ))}
+      </datalist>
 
       {/* ADDED: Changing a control updates its state above.
           React then updates the filtered results automatically. */}
