@@ -78,7 +78,7 @@ export const ExamsTableClient: React.FC<{
     <Column className="exams-table-container">
       <input
         className="exams-query"
-        placeholder="CS 452"
+        placeholder="e.g. CS 452 or MATH 135"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
