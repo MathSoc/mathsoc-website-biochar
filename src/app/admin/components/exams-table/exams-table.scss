@@ -1,12 +1,152 @@
 .exams-table-container {
   margin-top: 32px;
 
-  .exams-query {
-    width: 100%;
-    font-size: 1rem;
-    text-align: center;
+  // ADDED: Keep the course label, input, and suggestions together.
+  .exams-course-search {
+    min-width: 0;
+
+    > label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
   }
 
+  .exams-query {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 16px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    background: white;
+    color: #333;
+    font: inherit;
+    font-size: 1rem;
+
+    // CHANGED: Align typing with the suggestions underneath.
+    text-align: left;
+
+    &::placeholder {
+      color: #666;
+    }
+  }
+
+  // ADDED: The suggestions push the filters down rather than cover them.
+  .exams-suggestions {
+    max-height: 220px;
+    overflow-y: auto;
+    margin-top: 8px;
+    padding: 6px;
+    border: 1px solid #ddd2d9;
+    border-radius: 8px;
+    background: white;
+
+    // Keep the list hidden when React sets hidden=true.
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  .exams-suggestion {
+    // ADDED: Separate the course name and count.
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  
+    padding: 12px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  
+    &:hover,
+    &[aria-selected="true"] {
+      background: #fff0f8;
+      color: #850053;
+    }
+  }
+  
+  // ADDED: Make the count smaller and less prominent.
+  .exams-suggestion-count {
+    color: #666;
+    font-size: 0.85rem;
+    text-align: right;
+  }
+
+  .exams-course-message {
+    margin: 12px 0 0;
+    color: #494d57;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  // CHANGED: Give the dropdowns three equally sized columns.
+  .exams-filters {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    margin: 28px 0;
+    padding-top: 24px;
+    border-top: 1px solid #e5dfe3;
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 0;
+      font-size: 0.9rem;
+    }
+
+    select {
+      box-sizing: border-box;
+      width: 100%;
+      min-width: 0;
+      min-height: 48px;
+
+      // Leave extra room between the text and dropdown arrow.
+      padding: 12px 48px 12px 14px;
+      border: 1px solid #aaa;
+      border-radius: 8px;
+      background-color: white;
+      color: #333;
+      font: inherit;
+
+      // Replace the browser arrow so we can position it consistently.
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23494d57' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      background-size: 16px;
+    }
+
+    // CHANGED: Put the checkbox above the dropdowns on its own row.
+    label:has(input[type="checkbox"]) {
+      grid-column: 1 / -1;
+      grid-row: 1;
+      flex-direction: row;
+      align-items: center;
+      min-height: 44px;
+      cursor: pointer;
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      flex-shrink: 0;
+      accent-color: #c00078;
+    }
+  }
+
+  // Show keyboard users which control has focus.
+  .exams-query:focus-visible,
+  .exams-filters select:focus-visible,
+  .exams-filters input:focus-visible {
+    outline: 2px solid #c00078;
+    outline-offset: 2px;
+  }
+
+  // EXISTING: Keep the table styles.
   .exams-table {
     text-transform: uppercase;
     font-size: 0.8rem;
@@ -24,8 +164,23 @@
 
     .button {
       margin: 4px;
-
       width: 100%;
+    }
+  }
+
+  // CHANGED: Stack the dropdowns on smaller screens.
+  @media (max-width: 600px) {
+    .exams-filters {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // Use the browser's arrow in Windows high-contrast mode.
+  @media (forced-colors: active) {
+    .exams-filters select {
+      appearance: auto;
+      background-image: none;
+      padding-right: 14px;
     }
   }
 }
