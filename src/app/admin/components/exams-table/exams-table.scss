@@ -1,8 +1,17 @@
 .exams-table-container {
-  margin-top: 32px;
+  // Give the search, filters, and table one shared content width.
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1100px;
+  margin: 32px auto 0;
+  padding-inline: 20px;
+  
+  // Prevent the Column layout from centering narrow children.
+  align-items: stretch;
 
   // ADDED: Keep the course label, input, and suggestions together.
   .exams-course-search {
+    width: 100%;
     min-width: 0;
 
     > label {
@@ -88,6 +97,9 @@
     margin: 28px 0;
     padding-top: 24px;
     border-top: 1px solid #e5dfe3;
+    // Spread the three dropdown columns across the content area.
+    box-sizing: border-box;
+    width: 100%;
 
     label {
       display: flex;
@@ -149,7 +161,9 @@
   // EXISTING: Keep the table styles.
   .exams-table {
     text-transform: uppercase;
-    font-size: 0.8rem;
+    width: 100%;
+    // Increase the existing 0.8rem text slightly for readability.
+    font-size: 0.9rem;
 
     th {
       font-weight: 300;
